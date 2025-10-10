@@ -50,7 +50,11 @@ npm run dev
 The `.env` file contains:
 
 ```bash
+# For standalone development
 VITE_API_URL=http://localhost:8082
+
+# When running via docker-compose infrastructure (recommended)
+VITE_API_URL=http://localhost/api/v1
 ```
 
 Vite automatically loads environment variables from `.env` files.
@@ -110,12 +114,18 @@ docker build -t public-web .
 ### Run Container
 
 ```bash
+# Standalone mode
 docker run -p 8080:80 -e VITE_API_URL=http://localhost:8082 public-web
+
+# With Traefik reverse proxy (see infrastructure repo)
+docker run -p 8080:80 -e VITE_API_URL=http://localhost/api/v1 public-web
 ```
 
-### Docker Compose
+**Note:** For production deployment, use the centralized docker-compose setup in the [infrastructure repository](https://github.com/GunarsK-portfolio/infrastructure) which includes Traefik reverse proxy.
 
-Create `docker-compose.yml`:
+### Docker Compose (Standalone)
+
+For standalone testing without Traefik:
 
 ```yaml
 version: '3.8'
@@ -186,7 +196,11 @@ docker run -p 80:80 public-web
 Check that `VITE_API_URL` is set correctly and the API is running:
 
 ```bash
+# Standalone mode
 curl http://localhost:8082/api/v1/health
+
+# Via Traefik (infrastructure setup)
+curl http://localhost/api/v1/profile
 ```
 
 ### Build Fails

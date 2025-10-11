@@ -1,222 +1,131 @@
-# Portfolio Public Web
+# Public Web
 
-Public-facing Vue.js portfolio website that displays professional information and miniature painting projects.
+Public-facing portfolio website built with Vue.js.
 
 ## Features
 
-- Responsive design with Tailwind CSS + DaisyUI
-- Vue.js 3 Composition API
-- Pinia for state management
+- Browse projects portfolio
+- View skills and experience
+- Responsive design with TailwindCSS
+- DaisyUI components
+- State management with Pinia
 - Vue Router for navigation
-- Fetches data from Public API
-- Production-ready Nginx setup
 
 ## Tech Stack
 
-- **Framework**: Vue.js 3
+- **Framework**: Vue 3 (Composition API)
 - **Build Tool**: Vite
-- **Styling**: Tailwind CSS + DaisyUI
-- **State**: Pinia
-- **Router**: Vue Router
+- **Styling**: TailwindCSS + DaisyUI
+- **State Management**: Pinia
 - **HTTP Client**: Axios
-- **Server**: Nginx (production)
+- **Routing**: Vue Router
 
-## Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Node.js 18+
 - npm or yarn
-
-### Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Copy environment file
-cp .env.example .env
-
-# Edit .env if needed (defaults should work)
-
-# Start dev server
-npm run dev
-
-# Open browser to http://localhost:5173
-```
-
-### Environment Variables
-
-The `.env` file contains:
-
-```bash
-# For standalone development
-VITE_API_URL=http://localhost:8082
-
-# When running via docker-compose infrastructure (recommended)
-VITE_API_URL=http://localhost/api/v1
-```
-
-Vite automatically loads environment variables from `.env` files.
 
 ## Project Structure
 
 ```
 public-web/
-├── public/               # Static assets
 ├── src/
-│   ├── assets/
-│   │   └── style.css    # Tailwind styles
-│   ├── components/      # Reusable components
-│   ├── views/           # Page components
-│   │   ├── Home.vue
-│   │   ├── Experience.vue
-│   │   ├── Miniatures.vue
-│   │   └── MiniatureDetail.vue
-│   ├── router/
-│   │   └── index.js     # Route definitions
-│   ├── services/
-│   │   └── api.js       # API client
-│   ├── App.vue
-│   └── main.js
-├── Dockerfile
-├── nginx.conf
-├── package.json
-├── vite.config.js
-└── tailwind.config.js
+│   ├── assets/           # Static assets
+│   ├── components/       # Reusable components
+│   ├── views/            # Page components
+│   ├── router/           # Route definitions
+│   ├── stores/           # Pinia stores
+│   ├── services/         # API service layer
+│   ├── App.vue           # Root component
+│   └── main.js           # Application entry
+├── public/               # Public static files
+└── index.html            # HTML template
 ```
 
-## Pages
+## Quick Start
 
-- **Home** (`/`) - Profile information and navigation cards
-- **Experience** (`/experience`) - Work experience and certifications
-- **Miniatures** (`/miniatures`) - Gallery of miniature painting projects
-- **Miniature Detail** (`/miniatures/:id`) - Detailed view with images
-
-## Build for Production
+### Using Docker Compose
 
 ```bash
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+docker-compose up -d
 ```
 
-## Docker
+### Local Development
 
-### Build Image
-
+1. Install dependencies:
 ```bash
-docker build -t public-web .
-```
-
-### Run Container
-
-```bash
-# Standalone mode
-docker run -p 8080:80 -e VITE_API_URL=http://localhost:8082 public-web
-
-# With Traefik reverse proxy (see infrastructure repo)
-docker run -p 8080:80 -e VITE_API_URL=http://localhost/api/v1 public-web
-```
-
-**Note:** For production deployment, use the centralized docker-compose setup in the [infrastructure repository](https://github.com/GunarsK-portfolio/infrastructure) which includes Traefik reverse proxy.
-
-### Docker Compose (Standalone)
-
-For standalone testing without Traefik:
-
-```yaml
-version: '3.8'
-
-services:
-  public-web:
-    build: .
-    ports:
-      - "8080:80"
-    environment:
-      - VITE_API_URL=http://localhost:8082
-    depends_on:
-      - public-api
-```
-
-## Customization
-
-### Themes
-
-DaisyUI themes can be changed in `tailwind.config.js`:
-
-```js
-daisyui: {
-  themes: ["light", "dark", "cupcake", "bumblebee"],
-}
-```
-
-### Colors and Styles
-
-Modify `tailwind.config.js` to customize colors, fonts, and other design tokens.
-
-## API Integration
-
-The app connects to the Public API to fetch:
-- Profile information
-- Work experience
-- Certifications
-- Miniature projects and images
-
-API client is configured in `src/services/api.js`.
-
-## Deployment
-
-### Production Checklist
-
-1. Set `VITE_API_URL` to your production API URL
-2. Build the app: `npm run build`
-3. Deploy `dist/` folder to:
-   - Nginx server
-   - AWS S3 + CloudFront
-   - Vercel/Netlify
-   - Docker container
-
-### Nginx Deployment
-
-```bash
-# Copy built files to nginx
-cp -r dist/* /var/www/html/
-
-# Or use the Docker image
-docker run -p 80:80 public-web
-```
-
-## Troubleshooting
-
-### API Connection Issues
-
-Check that `VITE_API_URL` is set correctly and the API is running:
-
-```bash
-# Standalone mode
-curl http://localhost:8082/api/v1/health
-
-# Via Traefik (infrastructure setup)
-curl http://localhost/api/v1/profile
-```
-
-### Build Fails
-
-Clear node_modules and reinstall:
-
-```bash
-rm -rf node_modules package-lock.json
 npm install
 ```
 
-## Related Repositories
+2. Create `.env` file (optional):
+```env
+VITE_API_URL=http://localhost:8082/api/v1
+```
 
-- [infrastructure](https://github.com/GunarsK-portfolio/infrastructure)
-- [public-api](https://github.com/GunarsK-portfolio/public-api)
-- [admin-web](https://github.com/GunarsK-portfolio/admin-web)
+3. Run development server:
+```bash
+npm run dev
+```
+
+4. Access at: `http://localhost:8080`
+
+## Available Commands
+
+```bash
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run preview   # Preview production build
+```
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_URL` | Public API base URL | `https://localhost/api/v1` |
+
+## Development Server
+
+The development server runs on port 8080 and supports HTTPS if certificates are available in `../infrastructure/docker/traefik/certs/`.
+
+## Building for Production
+
+```bash
+npm run build
+```
+
+Output is in the `dist/` directory.
+
+## Deployment
+
+The app is containerized with nginx:
+
+```dockerfile
+# Build stage
+FROM node:18-alpine as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+```
+
+## API Integration
+
+The app connects to the public-api service for portfolio data:
+- Projects
+- Skills
+- Experience
+- About information
+
+API service configuration is in `src/services/api.js`.
+
+## Styling
+
+TailwindCSS utilities and DaisyUI components are used throughout. Configure themes in [tailwind.config.js](tailwind.config.js).
 
 ## License
 

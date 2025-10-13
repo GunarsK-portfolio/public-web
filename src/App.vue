@@ -1,29 +1,49 @@
 <template>
-  <div class="min-h-screen bg-base-100">
-    <nav class="navbar bg-base-200 shadow-lg">
-      <div class="navbar-start">
-        <router-link to="/" class="btn btn-ghost text-xl">Portfolio</router-link>
-      </div>
-      <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/experience">Experience</router-link></li>
-          <li><router-link to="/miniatures">Miniatures</router-link></li>
-        </ul>
-      </div>
-    </nav>
+  <n-config-provider :theme="theme">
+    <n-layout style="min-height: 100vh">
+      <n-layout-header bordered>
+        <div style="display: flex; align-items: center; padding: 0 24px; height: 64px">
+          <router-link to="/" style="text-decoration: none; color: inherit; font-size: 20px; font-weight: bold; margin-right: auto">
+            Portfolio
+          </router-link>
+          <n-menu
+            mode="horizontal"
+            :options="menuOptions"
+            style="flex: 1; justify-content: center"
+          />
+        </div>
+      </n-layout-header>
 
-    <main class="container mx-auto p-4">
-      <router-view />
-    </main>
+      <n-layout-content style="padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%">
+        <router-view />
+      </n-layout-content>
 
-    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
-      <div>
-        <p>© 2024 Portfolio - Built with Vue.js & Tailwind CSS</p>
-      </div>
-    </footer>
-  </div>
+      <n-layout-footer bordered style="padding: 16px; text-align: center">
+        <p>© 2024 Portfolio - Built with Vue.js & Naive UI</p>
+      </n-layout-footer>
+    </n-layout>
+  </n-config-provider>
 </template>
 
 <script setup>
+import { h } from 'vue'
+import { RouterLink } from 'vue-router'
+import { NConfigProvider, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NMenu } from 'naive-ui'
+
+const theme = null
+
+const menuOptions = [
+  {
+    label: () => h(RouterLink, { to: '/' }, { default: () => 'Home' }),
+    key: 'home'
+  },
+  {
+    label: () => h(RouterLink, { to: '/experience' }, { default: () => 'Experience' }),
+    key: 'experience'
+  },
+  {
+    label: () => h(RouterLink, { to: '/miniatures' }, { default: () => 'Miniatures' }),
+    key: 'miniatures'
+  }
+]
 </script>

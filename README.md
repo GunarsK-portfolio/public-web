@@ -6,8 +6,8 @@ Public-facing portfolio website built with Vue.js.
 
 - Browse projects portfolio
 - View skills and experience
-- Responsive design with TailwindCSS
-- DaisyUI components
+- Responsive design with Naive UI
+- Modern Vue 3 UI components
 - State management with Pinia
 - Vue Router for navigation
 
@@ -15,7 +15,7 @@ Public-facing portfolio website built with Vue.js.
 
 - **Framework**: Vue 3 (Composition API)
 - **Build Tool**: Vite
-- **Styling**: TailwindCSS + DaisyUI
+- **UI Library**: Naive UI
 - **State Management**: Pinia
 - **HTTP Client**: Axios
 - **Routing**: Vue Router
@@ -128,7 +128,7 @@ API service configuration is in `src/services/api.js`.
 
 ## Styling
 
-TailwindCSS utilities and DaisyUI components are used throughout. Configure themes in [tailwind.config.js](tailwind.config.js).
+The application uses Naive UI components for the user interface.
 
 ## License
 

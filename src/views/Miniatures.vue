@@ -1,35 +1,36 @@
 <template>
-  <div class="space-y-6">
-    <h1 class="text-4xl font-bold">Miniature Painting Projects</h1>
+  <n-space vertical :size="24">
+    <h1 style="font-size: 36px; font-weight: bold">Miniature Painting Projects</h1>
 
-    <div v-if="loading" class="flex justify-center">
-      <span class="loading loading-spinner loading-lg"></span>
-    </div>
+    <n-space v-if="loading" justify="center">
+      <n-spin size="large" />
+    </n-space>
 
-    <div v-else class="grid md:grid-cols-3 gap-6">
-      <div v-for="project in miniatures" :key="project.id" class="card bg-base-200 shadow-xl">
-        <figure v-if="project.images && project.images[0]" class="px-10 pt-10">
-          <img :src="project.images[0].url" :alt="project.title" class="rounded-xl" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">{{ project.title }}</h2>
-          <p>{{ project.description }}</p>
-          <p v-if="project.completed_date" class="text-sm opacity-70">
+    <n-grid v-else :cols="3" :x-gap="24" :y-gap="24" responsive="screen">
+      <n-grid-item v-for="project in miniatures" :key="project.id">
+        <n-card hoverable>
+          <template #cover v-if="project.images && project.images[0]">
+            <img :src="project.images[0].url" :alt="project.title" style="width: 100%; height: 200px; object-fit: cover" />
+          </template>
+          <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 8px">{{ project.title }}</h2>
+          <p style="margin-bottom: 8px">{{ project.description }}</p>
+          <p v-if="project.completed_date" style="font-size: 14px; opacity: 0.7; margin-bottom: 16px">
             Completed: {{ project.completed_date }}
           </p>
-          <div class="card-actions justify-end">
-            <router-link :to="`/miniatures/${project.id}`" class="btn btn-primary btn-sm">
-              View Details
+          <div style="text-align: right">
+            <router-link :to="`/miniatures/${project.id}`" style="text-decoration: none">
+              <n-button type="primary" size="small">View Details</n-button>
             </router-link>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </n-card>
+      </n-grid-item>
+    </n-grid>
+  </n-space>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { NSpace, NSpin, NGrid, NGridItem, NCard, NButton } from 'naive-ui'
 import api from '../services/api'
 
 const miniatures = ref([])

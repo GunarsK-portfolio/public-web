@@ -82,6 +82,9 @@ npm run preview   # Preview production build
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `VITE_API_URL` | Public API base URL | `https://localhost/api/v1` |
+| `VITE_CERT_DIR` | Certificate directory for HTTPS dev server | `../infrastructure/docker/traefik/certs` |
+| `VITE_CERT_FILE` | Certificate filename | `localhost.crt` |
+| `VITE_KEY_FILE` | Private key filename | `localhost.key` |
 
 ## Development Server
 

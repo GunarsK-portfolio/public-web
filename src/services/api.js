@@ -7,7 +7,7 @@ if (!API_URL) {
 }
 
 const api = axios.create({
-  baseURL: API_URL
+  baseURL: API_URL,
 })
 
 export default {
@@ -25,5 +25,5 @@ export default {
   },
   getMiniatureById(id) {
     return api.get(`/miniatures/${id}`)
-  }
+  },
 }

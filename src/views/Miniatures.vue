@@ -9,12 +9,21 @@
     <n-grid v-else :cols="3" :x-gap="24" :y-gap="24" responsive="screen">
       <n-grid-item v-for="project in miniatures" :key="project.id">
         <n-card hoverable>
-          <template #cover v-if="project.images && project.images[0]">
-            <img :src="project.images[0].url" :alt="project.title" style="width: 100%; height: 200px; object-fit: cover" />
+          <template v-if="project.images && project.images[0]" #cover>
+            <img
+              :src="project.images[0].url"
+              :alt="project.title"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
           </template>
-          <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 8px">{{ project.title }}</h2>
+          <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 8px">
+            {{ project.title }}
+          </h2>
           <p style="margin-bottom: 8px">{{ project.description }}</p>
-          <p v-if="project.completed_date" style="font-size: 14px; opacity: 0.7; margin-bottom: 16px">
+          <p
+            v-if="project.completed_date"
+            style="font-size: 14px; opacity: 0.7; margin-bottom: 16px"
+          >
             Completed: {{ project.completed_date }}
           </p>
           <div style="text-align: right">

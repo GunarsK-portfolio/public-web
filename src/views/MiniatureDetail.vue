@@ -1,8 +1,6 @@
 <template>
   <n-space vertical :size="24">
-    <n-button text @click="$router.back()">
-      ← Back
-    </n-button>
+    <n-button text @click="$router.back()"> ← Back </n-button>
 
     <n-space v-if="loading" justify="center">
       <n-spin size="large" />
@@ -17,14 +15,26 @@
         <p style="font-size: 16px; margin-bottom: 32px">{{ project.description }}</p>
       </div>
 
-      <n-grid v-if="project.images && project.images.length" :cols="2" :x-gap="16" :y-gap="16" responsive="screen">
+      <n-grid
+        v-if="project.images && project.images.length"
+        :cols="2"
+        :x-gap="16"
+        :y-gap="16"
+        responsive="screen"
+      >
         <n-grid-item v-for="image in project.images" :key="image.id">
           <n-card>
             <template #cover>
-              <img :src="image.url" :alt="image.title || project.title" style="width: 100%; object-fit: cover" />
+              <img
+                :src="image.url"
+                :alt="image.title || project.title"
+                style="width: 100%; object-fit: cover"
+              />
             </template>
             <template v-if="image.title || image.description">
-              <h3 v-if="image.title" style="font-size: 18px; font-weight: bold; margin-bottom: 4px">{{ image.title }}</h3>
+              <h3 v-if="image.title" style="font-size: 18px; font-weight: bold; margin-bottom: 4px">
+                {{ image.title }}
+              </h3>
               <p v-if="image.description">{{ image.description }}</p>
             </template>
           </n-card>

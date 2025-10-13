@@ -3,7 +3,16 @@
     <n-layout style="min-height: 100vh">
       <n-layout-header bordered>
         <div style="display: flex; align-items: center; padding: 0 24px; height: 64px">
-          <router-link to="/" style="text-decoration: none; color: inherit; font-size: 20px; font-weight: bold; margin-right: auto">
+          <router-link
+            to="/"
+            style="
+              text-decoration: none;
+              color: inherit;
+              font-size: 20px;
+              font-weight: bold;
+              margin-right: auto;
+            "
+          >
             Portfolio
           </router-link>
           <n-menu
@@ -28,22 +37,29 @@
 <script setup>
 import { h } from 'vue'
 import { RouterLink } from 'vue-router'
-import { NConfigProvider, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NMenu } from 'naive-ui'
+import {
+  NConfigProvider,
+  NLayout,
+  NLayoutHeader,
+  NLayoutContent,
+  NLayoutFooter,
+  NMenu,
+} from 'naive-ui'
 
 const theme = null
 
 const menuOptions = [
   {
     label: () => h(RouterLink, { to: '/' }, { default: () => 'Home' }),
-    key: 'home'
+    key: 'home',
   },
   {
     label: () => h(RouterLink, { to: '/experience' }, { default: () => 'Experience' }),
-    key: 'experience'
+    key: 'experience',
   },
   {
     label: () => h(RouterLink, { to: '/miniatures' }, { default: () => 'Miniatures' }),
-    key: 'miniatures'
-  }
+    key: 'miniatures',
+  },
 ]
 </script>

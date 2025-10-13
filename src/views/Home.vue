@@ -7,7 +7,9 @@
     <n-card v-else-if="profile" size="large" style="min-height: 400px">
       <template #default>
         <div style="text-align: center; padding: 40px 0">
-          <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 8px">{{ profile.full_name }}</h1>
+          <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 8px">
+            {{ profile.full_name }}
+          </h1>
           <p style="font-size: 20px; margin: 8px 0">{{ profile.title }}</p>
           <p style="margin: 24px 0">{{ profile.bio }}</p>
           <n-space vertical :size="8" style="margin-top: 16px">
@@ -31,7 +33,9 @@
       <n-grid-item>
         <router-link to="/miniatures" style="text-decoration: none">
           <n-card hoverable>
-            <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 8px">Miniature Painting</h2>
+            <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 8px">
+              Miniature Painting
+            </h2>
             <p>Explore my miniature painting projects</p>
           </n-card>
         </router-link>

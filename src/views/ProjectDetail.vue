@@ -161,7 +161,6 @@ const formatDate = (dateString) => {
 
 const loadProject = async () => {
   try {
-    await new Promise((r) => setTimeout(r, 2000))
     const id = route.params.id
     const response = await api.getProjectById(id)
     project.value = response.data

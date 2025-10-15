@@ -43,7 +43,6 @@ const loading = ref(true)
 
 const loadProfile = async () => {
   try {
-    await new Promise((r) => setTimeout(r, 2000))
     const response = await api.getProfile()
     profile.value = response.data
   } catch (error) {

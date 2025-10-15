@@ -8,19 +8,9 @@ const routes = [
     component: Home,
   },
   {
-    path: '/experience',
-    name: 'Experience',
-    component: () => import('../views/Experience.vue'),
-  },
-  {
     path: '/gallery',
     name: 'Gallery',
     component: () => import('../views/Gallery.vue'),
-  },
-  {
-    path: '/miniatures',
-    name: 'Miniatures',
-    component: () => import('../views/Miniatures.vue'),
   },
   {
     path: '/miniatures/:id',

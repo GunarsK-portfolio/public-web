@@ -1,5 +1,5 @@
 <template>
-  <n-space vertical size="large" style="padding: 24px; max-width: 1200px; margin: 0 auto">
+  <n-space vertical size="large" class="section-wrapper">
     <n-button text @click="$router.push('/')">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
@@ -18,101 +18,116 @@
       technologies used.
     </n-alert>
 
-    <n-card v-for="project in projects" :key="project.id" :title="project.title" hoverable>
-      <template #header-extra>
-        <n-space>
-          <n-tag :bordered="false" type="info">{{ project.period }}</n-tag>
-          <n-tag :bordered="false" type="success">{{ project.role }}</n-tag>
-        </n-space>
-      </template>
+    <n-space v-if="loading" justify="center">
+      <n-spin size="large" />
+    </n-space>
 
-      <n-space vertical size="medium">
-        <div>
-          <n-text strong>Company:</n-text>
-          <n-text> {{ project.company }}</n-text>
-        </div>
+    <transition-group name="fade-up" tag="div">
+      <div v-if="!loading" class="project-wrapper">
+        <n-card
+          v-for="project in projects"
+          :key="project.id"
+          :title="project.title"
+          hoverable
+          class="project-card"
+        >
+          <template #header-extra>
+            <n-space>
+              <n-tag :bordered="false" type="info">{{ project.period }}</n-tag>
+              <n-tag :bordered="false" type="success">{{ project.role }}</n-tag>
+            </n-space>
+          </template>
 
-        <div>
-          <n-text strong>Industry:</n-text>
-          <n-text> {{ project.industry }}</n-text>
-        </div>
+          <n-space vertical size="medium" class="project-content">
+            <div>
+              <n-text strong>Company:</n-text>
+              <n-text> {{ project.company }}</n-text>
+            </div>
 
-        <n-divider />
+            <div>
+              <n-text strong>Industry:</n-text>
+              <n-text> {{ project.industry }}</n-text>
+            </div>
 
-        <div>
-          <n-text strong style="display: block; margin-bottom: 8px">Project Overview:</n-text>
-          <n-text>{{ project.description }}</n-text>
-        </div>
+            <n-divider />
 
-        <n-divider />
+            <div>
+              <n-text strong class="section-title">Project Overview:</n-text>
+              <n-text>{{ project.description }}</n-text>
+            </div>
 
-        <div>
-          <n-text strong style="display: block; margin-bottom: 8px">Key Responsibilities:</n-text>
-          <n-list>
-            <n-list-item v-for="(resp, index) in project.responsibilities" :key="index">
-              <template #prefix>
-                <n-icon><CheckmarkOutline /></n-icon>
-              </template>
-              {{ resp }}
-            </n-list-item>
-          </n-list>
-        </div>
+            <n-divider />
 
-        <n-divider />
+            <div>
+              <n-text strong class="section-title">Key Responsibilities:</n-text>
+              <n-list>
+                <n-list-item v-for="(resp, index) in project.responsibilities" :key="index">
+                  <template #prefix>
+                    <n-icon><CheckmarkOutline /></n-icon>
+                  </template>
+                  {{ resp }}
+                </n-list-item>
+              </n-list>
+            </div>
 
-        <div>
-          <n-text strong style="display: block; margin-bottom: 8px">Technical Achievements:</n-text>
-          <n-list>
-            <n-list-item v-for="(achievement, index) in project.achievements" :key="index">
-              <template #prefix>
-                <n-icon color="#18a058"><TrophyOutline /></n-icon>
-              </template>
-              {{ achievement }}
-            </n-list-item>
-          </n-list>
-        </div>
+            <n-divider />
 
-        <n-divider />
+            <div>
+              <n-text strong class="section-title">Technical Achievements:</n-text>
+              <n-list>
+                <n-list-item v-for="(achievement, index) in project.achievements" :key="index">
+                  <template #prefix>
+                    <n-icon color="#18a058"><TrophyOutline /></n-icon>
+                  </template>
+                  {{ achievement }}
+                </n-list-item>
+              </n-list>
+            </div>
 
-        <div>
-          <n-text strong style="display: block; margin-bottom: 12px">Tech Stack:</n-text>
-          <n-space>
-            <n-tag
-              v-for="tech in project.technologies"
-              :key="tech"
-              :bordered="false"
-              :type="getTagType(tech)"
-            >
-              {{ tech }}
-            </n-tag>
+            <n-divider />
+
+            <div>
+              <n-text strong class="section-title">Tech Stack:</n-text>
+              <n-space>
+                <n-tag
+                  v-for="tech in project.technologies"
+                  :key="tech"
+                  :bordered="false"
+                  :type="getTagType(tech)"
+                >
+                  {{ tech }}
+                </n-tag>
+              </n-space>
+            </div>
+
+            <n-divider v-if="project.teamSize || project.methodology" />
+
+            <n-grid v-if="project.teamSize || project.methodology" :cols="2" :x-gap="16">
+              <n-grid-item v-if="project.teamSize">
+                <div>
+                  <n-text strong>Team Size:</n-text>
+                  <n-text> {{ project.teamSize }}</n-text>
+                </div>
+              </n-grid-item>
+              <n-grid-item v-if="project.methodology">
+                <div>
+                  <n-text strong>Methodology:</n-text>
+                  <n-text> {{ project.methodology }}</n-text>
+                </div>
+              </n-grid-item>
+            </n-grid>
           </n-space>
-        </div>
-
-        <n-divider v-if="project.teamSize || project.methodology" />
-
-        <n-grid v-if="project.teamSize || project.methodology" :cols="2" :x-gap="16">
-          <n-grid-item v-if="project.teamSize">
-            <div>
-              <n-text strong>Team Size:</n-text>
-              <n-text> {{ project.teamSize }}</n-text>
-            </div>
-          </n-grid-item>
-          <n-grid-item v-if="project.methodology">
-            <div>
-              <n-text strong>Methodology:</n-text>
-              <n-text> {{ project.methodology }}</n-text>
-            </div>
-          </n-grid-item>
-        </n-grid>
-      </n-space>
-    </n-card>
+        </n-card>
+      </div>
+    </transition-group>
   </n-space>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import {
   NSpace,
+  NSpin,
   NPageHeader,
   NButton,
   NIcon,
@@ -127,6 +142,8 @@ import {
   NGridItem,
 } from 'naive-ui'
 import { ArrowBackOutline, CheckmarkOutline, TrophyOutline } from '@vicons/ionicons5'
+
+const loading = ref(true)
 
 const projects = ref([
   {
@@ -252,4 +269,28 @@ const getTagType = (tech) => {
   if (devops.includes(tech)) return 'info'
   return 'default'
 }
+
+onMounted(async () => {
+  loading.value = false
+})
 </script>
+
+<style scoped>
+.project-card {
+  margin-bottom: 24px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.project-content .section-title {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+</style>

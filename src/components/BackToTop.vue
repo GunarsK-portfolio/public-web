@@ -5,13 +5,7 @@
       circle
       size="large"
       type="primary"
-      style="
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        z-index: 999;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      "
+      class="back-to-top"
       @click="scrollToTop"
     >
       <template #icon>
@@ -51,6 +45,20 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.back-to-top:hover {
+  transform: translateY(-2px);
+}
+
+/* Fade transition */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

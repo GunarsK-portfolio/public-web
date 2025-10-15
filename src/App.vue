@@ -3,46 +3,24 @@
     <n-notification-provider>
       <n-message-provider>
         <n-global-style />
-        <n-layout style="min-height: 100vh">
-          <n-layout-header
-            bordered
-            style="
-              position: fixed;
-              top: 0;
-              z-index: 100;
-              background: var(--n-color);
-              backdrop-filter: blur(8px);
-            "
-          >
-            <div
-              style="
-                display: flex;
-                align-items: center;
-                padding: 0 24px;
-                height: 64px;
-                max-width: 1200px;
-                margin: 0 auto;
-                width: 100%;
-              "
-            >
-              <router-link
-                to="/"
-                style="
-                  text-decoration: none;
-                  color: inherit;
-                  font-size: 20px;
-                  font-weight: bold;
-                  margin-right: auto;
-                "
-              >
-                Portfolio
-              </router-link>
-              <n-menu
-                mode="horizontal"
-                :options="menuOptions"
-                style="flex: 1; justify-content: center"
-              />
-              <n-button circle @click="toggleTheme">
+        <n-layout class="app-layout">
+          <n-layout-header bordered class="app-header">
+            <div class="header-inner">
+              <router-link to="/" class="header-logo"> Portfolio </router-link>
+
+              <!-- Desktop Menu -->
+              <n-menu mode="horizontal" :options="menuOptions" class="header-menu" />
+
+              <!-- Mobile Drawer Button -->
+              <n-button circle class="mobile-menu-btn" @click="drawerVisible = true">
+                <template #icon>
+                  <n-icon size="20">
+                    <MenuOutline />
+                  </n-icon>
+                </template>
+              </n-button>
+
+              <n-button circle class="theme-toggle" @click="toggleTheme">
                 <template #icon>
                   <n-icon size="20">
                     <MoonOutline v-if="isDark" />
@@ -53,11 +31,27 @@
             </div>
           </n-layout-header>
 
-          <n-layout-content style="padding-top: 64px">
+          <!-- Mobile Drawer -->
+          <n-drawer
+            v-model:show="drawerVisible"
+            placement="left"
+            size="240px"
+            :mask-closable="true"
+            show-footer="false"
+          >
+            <n-menu
+              mode="vertical"
+              :options="menuOptions"
+              style="margin-top: 24px"
+              @click="drawerVisible = false"
+            />
+          </n-drawer>
+
+          <n-layout-content class="app-content">
             <router-view />
           </n-layout-content>
 
-          <n-layout-footer bordered style="padding: 16px; text-align: center">
+          <n-layout-footer bordered class="app-footer">
             <p>© 2025 Portfolio - Built with Vue.js & Naive UI</p>
           </n-layout-footer>
         </n-layout>
@@ -83,12 +77,14 @@ import {
   NMenu,
   NButton,
   NIcon,
+  NDrawer,
   darkTheme,
 } from 'naive-ui'
-import { MoonOutline, SunnyOutline } from '@vicons/ionicons5'
+import { MoonOutline, SunnyOutline, MenuOutline } from '@vicons/ionicons5'
 import BackToTop from './components/BackToTop.vue'
 
 const isDark = ref(false)
+const drawerVisible = ref(false)
 
 const currentTheme = computed(() => (isDark.value ? darkTheme : null))
 
@@ -122,3 +118,96 @@ const menuOptions = [
   },
 ]
 </script>
+
+<style scoped>
+/* Layout base */
+.app-layout {
+  min-height: 100vh;
+  background-color: var(--n-color-background);
+  color: var(--n-text-color);
+}
+
+/* Header */
+.app-header {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  background-color: var(--n-color);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 3px;
+}
+
+/* Header inner wrapper */
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Logo / brand */
+.header-logo {
+  text-decoration: none;
+  color: inherit;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+/* Desktop menu */
+.header-menu {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  display: none;
+  margin-right: 8px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  margin-left: 16px;
+}
+
+/* Content */
+.app-content {
+  padding-top: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Footer */
+.app-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--n-text-color-3);
+}
+
+/* Back to Top button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 200;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-menu {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: flex;
+  }
+  .header-inner {
+    padding: 0 12px;
+  }
+}
+</style>

@@ -1,12 +1,7 @@
 <template>
-  <n-space
-    id="resume"
-    vertical
-    :size="32"
-    style="padding: 80px 20px; max-width: 900px; margin: 0 auto"
-  >
-    <n-space justify="space-between" align="center" style="width: 100%">
-      <h2 style="font-size: 36px; font-weight: 700; margin: 0">Resume</h2>
+  <n-space id="resume" vertical :size="32" class="hero-section-wrapper">
+    <n-space justify="space-between" align="center">
+      <h2 class="hero-title">Resume</h2>
       <n-button type="primary" @click="downloadResume">
         <template #icon>
           <n-icon><DownloadOutline /></n-icon>
@@ -17,61 +12,69 @@
 
     <n-divider />
 
+    <!-- Work Experience -->
+    <h3 class="section-title">Work Experience</h3>
+
     <n-space v-if="loadingExperience" justify="center">
       <n-spin size="large" />
     </n-space>
 
-    <div v-else>
-      <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 24px">Work Experience</h3>
-      <n-timeline>
-        <n-timeline-item
-          v-for="exp in experience"
-          :key="exp.id"
-          :title="exp.position"
-          :time="formatDateRange(exp)"
-        >
-          <n-card size="small">
-            <n-space vertical :size="8">
-              <n-text strong style="font-size: 16px">{{ exp.company }}</n-text>
-              <n-text>{{ exp.description }}</n-text>
-            </n-space>
-          </n-card>
-        </n-timeline-item>
-      </n-timeline>
-    </div>
+    <transition-group name="fade-up" tag="div">
+      <div v-if="!loadingExperience" key="experience-content">
+        <n-timeline>
+          <n-timeline-item
+            v-for="exp in experience"
+            :key="exp.id"
+            :title="exp.position"
+            :time="formatDateRange(exp)"
+          >
+            <n-card size="small" class="resume-card">
+              <n-space vertical :size="8">
+                <n-text strong class="resume-company">{{ exp.company }}</n-text>
+                <n-text class="resume-description">{{ exp.description }}</n-text>
+              </n-space>
+            </n-card>
+          </n-timeline-item>
+        </n-timeline>
+      </div>
+    </transition-group>
 
     <n-divider />
+
+    <!-- Certifications -->
+    <h3 class="section-title">Certifications</h3>
 
     <n-space v-if="loadingCertifications" justify="center">
       <n-spin size="large" />
     </n-space>
 
-    <div v-else>
-      <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 24px">Certifications</h3>
-      <n-grid :cols="2" :x-gap="16" :y-gap="16" responsive="screen">
-        <n-grid-item v-for="cert in certifications" :key="cert.id">
-          <n-card size="small" hoverable>
-            <n-space vertical :size="8">
-              <n-text strong>{{ cert.name }}</n-text>
-              <n-text depth="3">{{ cert.issuer }}</n-text>
-              <n-text depth="3" style="font-size: 14px">
-                Issued: {{ formatDate(cert.issue_date) }}
-              </n-text>
-              <n-button
-                v-if="cert.credential_url"
-                text
-                type="primary"
-                tag="a"
-                :href="cert.credential_url"
-                target="_blank"
-              >
-                View Credential →
-              </n-button>
-            </n-space>
-          </n-card>
-        </n-grid-item>
-      </n-grid>
-    </div>
+    <transition-group name="fade-up" tag="div">
+      <div v-if="!loadingCertifications" key="certifications-content">
+        <n-grid cols="1 512:2 768:3" :x-gap="16" :y-gap="16">
+          <n-grid-item v-for="cert in certifications" :key="cert.id">
+            <n-card size="small" hoverable class="resume-card">
+              <n-space vertical :size="8">
+                <n-text strong class="resume-cert-name">{{ cert.name }}</n-text>
+                <n-text depth="3" class="resume-cert-issuer">{{ cert.issuer }}</n-text>
+                <n-text depth="3" class="resume-cert-date">
+                  Issued: {{ formatDate(cert.issue_date) }}
+                </n-text>
+                <n-button
+                  v-if="cert.credential_url"
+                  text
+                  type="primary"
+                  tag="a"
+                  :href="cert.credential_url"
+                  target="_blank"
+                >
+                  View Credential →
+                </n-button>
+              </n-space>
+            </n-card>
+          </n-grid-item>
+        </n-grid>
+      </div>
+    </transition-group>
   </n-space>
 </template>
 
@@ -123,7 +126,7 @@ const loadCertifications = async () => {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   loadExperience()
   loadCertifications()
 })
@@ -141,7 +144,50 @@ const formatDate = (date) => {
 }
 
 const downloadResume = () => {
-  // TODO: Implement resume download
   window.open('/resume.pdf', '_blank')
 }
 </script>
+
+<style scoped>
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 24px 0;
+}
+
+.resume-card {
+  padding: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.resume-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.resume-company {
+  font-size: 16px;
+}
+
+.resume-description {
+  font-size: 14px;
+}
+
+.resume-cert-name {
+  font-size: 16px;
+}
+
+.resume-cert-issuer,
+.resume-cert-date {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.resume-button {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+</style>

@@ -1,11 +1,6 @@
 <template>
-  <n-space
-    id="skills"
-    vertical
-    :size="32"
-    style="padding: 80px 20px; max-width: 900px; margin: 0 auto"
-  >
-    <h2 style="font-size: 36px; font-weight: 700; margin: 0">Skills & Technologies</h2>
+  <n-space id="skills" vertical :size="32" class="hero-section-wrapper">
+    <h2 class="hero-title">Skills & Technologies</h2>
 
     <n-divider />
 
@@ -13,22 +8,24 @@
       <n-spin size="large" />
     </n-space>
 
-    <div v-for="category in skillCategories" v-else :key="category.name">
-      <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px">
-        {{ category.name }}
-      </h3>
-      <n-space :size="12" style="margin-bottom: 32px">
-        <n-tag
-          v-for="skill in category.skills"
-          :key="skill"
-          :type="category.type"
-          size="large"
-          round
-        >
-          {{ skill }}
-        </n-tag>
-      </n-space>
-    </div>
+    <transition-group name="fade-up" tag="div">
+      <div v-if="!loading">
+        <div v-for="category in skillCategories" :key="category.name" class="skills-category">
+          <h3 class="skills-category-title">{{ category.name }}</h3>
+          <n-space :size="12" class="skills-tags">
+            <n-tag
+              v-for="skill in category.skills"
+              :key="skill"
+              :type="category.type"
+              size="large"
+              round
+            >
+              {{ skill }}
+            </n-tag>
+          </n-space>
+        </div>
+      </div>
+    </transition-group>
   </n-space>
 </template>
 
@@ -46,7 +43,7 @@ const loading = ref(true)
 const loadSkills = async () => {
   try {
     const response = await api.getSkills()
-    // Transform the data to match the component's expected format
+    // Transform API data to component format
     skillCategories.value = response.data.map((category) => ({
       name: category.name,
       type: category.type,
@@ -63,3 +60,19 @@ onMounted(() => {
   loadSkills()
 })
 </script>
+
+<style scoped>
+.skills-category {
+  margin-bottom: 32px;
+}
+
+.skills-category-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.skills-tags {
+  flex-wrap: wrap;
+}
+</style>

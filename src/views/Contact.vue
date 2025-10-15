@@ -1,5 +1,5 @@
 <template>
-  <n-space vertical size="large" style="padding: 24px; max-width: 1200px; margin: 0 auto">
+  <n-space vertical size="large" class="section-wrapper">
     <n-button text @click="$router.push('/')">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
@@ -12,7 +12,7 @@
 
     <n-grid :x-gap="24" :y-gap="24" :cols="1" :l="2">
       <n-grid-item>
-        <n-card title="Send a Message">
+        <n-card title="Send a Message" class="contacts-card">
           <n-form ref="formRef" :model="formData" :rules="rules">
             <n-form-item label="Name" path="name">
               <n-input v-model:value="formData.name" placeholder="Your name" />
@@ -228,3 +228,18 @@ const handleReset = () => {
   }
 }
 </script>
+
+<style scoped>
+/* Card styling */
+.contacts-card {
+  padding: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contacts-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+</style>

@@ -127,72 +127,28 @@ import {
   NDescriptionsItem,
 } from 'naive-ui'
 import { ArrowBackOutline } from '@vicons/ionicons5'
-// import api from '../services/api'
+import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
 
 const route = useRoute()
+const { handleError } = useErrorHandler()
 const loading = ref(false)
 const miniature = ref(null)
 
-onMounted(async () => {
+const loadMiniature = async () => {
   loading.value = true
   try {
     const id = route.params.id
-    // TODO: Replace with actual API call
-    // miniature.value = await api.getMiniatureById(id)
-
-    // Placeholder data
-    miniature.value = {
-      id,
-      name: 'Red Dragon',
-      subtitle: 'Ancient Red Dragon for D&D Campaign',
-      scale: '28mm',
-      manufacturer: 'WizKids',
-      theme: 'Dungeons & Dragons',
-      completedDate: 'March 2024',
-      description:
-        'This ancient red dragon was painted for an epic boss battle in our ongoing D&D campaign. The focus was on creating a fiery, intimidating presence with heavy drybrushing and glazing techniques to achieve the molten lava effect on the wings and underbelly.',
-      timeSpent: '~15 hours',
-      difficulty: 'Intermediate',
-      techniques: [
-        'Drybrushing',
-        'Glazing',
-        'Edge Highlighting',
-        'OSL (Object Source Lighting)',
-        'Weathering',
-      ],
-      paints: [
-        { name: 'Mephiston Red', manufacturer: 'Citadel', color: '#9d0a0e' },
-        { name: 'Evil Sunz Scarlet', manufacturer: 'Citadel', color: '#c01411' },
-        { name: 'Wild Rider Red', manufacturer: 'Citadel', color: '#ea2f29' },
-        { name: 'Yriel Yellow', manufacturer: 'Citadel', color: '#ffda00' },
-        { name: 'Abaddon Black', manufacturer: 'Citadel', color: '#000000' },
-        { name: 'Eshin Grey', manufacturer: 'Citadel', color: '#4a4f52' },
-      ],
-      notes:
-        'The OSL effect on the ground was achieved by airbrushing yellow and orange glazes. The scales were individually highlighted to create depth and texture.',
-      images: [
-        {
-          url: 'https://via.placeholder.com/600x800?text=Red+Dragon+Front',
-          caption: 'Front view',
-        },
-        {
-          url: 'https://via.placeholder.com/600x800?text=Red+Dragon+Side',
-          caption: 'Side view showing wing detail',
-        },
-        {
-          url: 'https://via.placeholder.com/600x800?text=Red+Dragon+Back',
-          caption: 'Back view',
-        },
-        {
-          url: 'https://via.placeholder.com/600x800?text=Red+Dragon+Close',
-          caption: 'Close-up of head and fire effect',
-        },
-      ],
-    }
+    const response = await api.getMiniatureById(id)
+    miniature.value = response.data
   } catch (error) {
-    console.error('Failed to load miniature:', error)
+    handleError(error, { retryFn: loadMiniature })
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadMiniature()
 })
 </script>

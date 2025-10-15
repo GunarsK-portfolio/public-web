@@ -17,7 +17,11 @@
 
     <n-divider />
 
-    <div>
+    <n-space v-if="loadingExperience" justify="center">
+      <n-spin size="large" />
+    </n-space>
+
+    <div v-else>
       <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 24px">Work Experience</h3>
       <n-timeline>
         <n-timeline-item
@@ -38,7 +42,11 @@
 
     <n-divider />
 
-    <div>
+    <n-space v-if="loadingCertifications" justify="center">
+      <n-spin size="large" />
+    </n-space>
+
+    <div v-else>
       <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 24px">Certifications</h3>
       <n-grid :cols="2" :x-gap="16" :y-gap="16" responsive="screen">
         <n-grid-item v-for="cert in certifications" :key="cert.id">
@@ -71,6 +79,7 @@
 import { ref, onMounted } from 'vue'
 import {
   NSpace,
+  NSpin,
   NButton,
   NIcon,
   NDivider,
@@ -83,18 +92,40 @@ import {
 } from 'naive-ui'
 import { DownloadOutline } from '@vicons/ionicons5'
 import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
 
 const experience = ref([])
 const certifications = ref([])
+const loadingExperience = ref(true)
+const loadingCertifications = ref(true)
+
+const loadExperience = async () => {
+  try {
+    const response = await api.getExperience()
+    experience.value = response.data
+  } catch (error) {
+    handleError(error, { retryFn: loadExperience })
+  } finally {
+    loadingExperience.value = false
+  }
+}
+
+const loadCertifications = async () => {
+  try {
+    const response = await api.getCertifications()
+    certifications.value = response.data
+  } catch (error) {
+    handleError(error, { retryFn: loadCertifications })
+  } finally {
+    loadingCertifications.value = false
+  }
+}
 
 onMounted(async () => {
-  try {
-    const [expResp, certResp] = await Promise.all([api.getExperience(), api.getCertifications()])
-    experience.value = expResp.data
-    certifications.value = certResp.data
-  } catch (error) {
-    console.error('Failed to load resume data:', error)
-  }
+  loadExperience()
+  loadCertifications()
 })
 
 const formatDateRange = (exp) => {

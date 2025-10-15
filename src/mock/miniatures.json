@@ -1,0 +1,378 @@
+[
+  {
+    "id": 1,
+    "title": "Elven Ranger Warband",
+    "description": "A collection of 8 elven rangers painted in forest green and autumn colors. Features custom bases with woodland scenery and OSL effects on magical arrows.",
+    "completed_date": "2024-09-15",
+    "scale": "28mm",
+    "manufacturer": "Games Workshop",
+    "game_system": "Warhammer Age of Sigmar",
+    "painting_time_hours": 32,
+    "difficulty": "Advanced",
+    "techniques_used": [
+      "Object Source Lighting (OSL)",
+      "Non-Metallic Metal (NMM)",
+      "Wet Blending",
+      "Glazing",
+      "Custom Basing"
+    ],
+    "paints_used": [
+      "Citadel Moot Green",
+      "Citadel Warpstone Glow",
+      "Vallejo Model Color range",
+      "Army Painter Quickshade"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 1,
+        "url": "https://images.unsplash.com/photo-1611162458324-aae1eb4129a2?w=800",
+        "caption": "Full warband display",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 2,
+        "url": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800",
+        "caption": "Close-up of leader with OSL effects",
+        "is_primary": false,
+        "order": 2
+      },
+      {
+        "id": 3,
+        "url": "https://images.unsplash.com/photo-1599202875854-23b7cd490ff4?w=800",
+        "caption": "Custom woodland bases detail",
+        "is_primary": false,
+        "order": 3
+      }
+    ],
+    "notes": "First project attempting OSL on multiple miniatures. Learned a lot about color transitions and light placement. The custom bases really tie the warband together.",
+    "tags": ["fantasy", "elves", "OSL", "woodland", "warband"]
+  },
+  {
+    "id": 2,
+    "title": "Space Marine Dreadnought",
+    "description": "Imperial Fists Chapter Dreadnought with weathering effects and battle damage. Features magnetized weapons for interchangeable loadouts.",
+    "completed_date": "2024-07-22",
+    "scale": "28mm",
+    "manufacturer": "Games Workshop",
+    "game_system": "Warhammer 40,000",
+    "painting_time_hours": 18,
+    "difficulty": "Intermediate",
+    "techniques_used": [
+      "Weathering and Battle Damage",
+      "Stippling",
+      "Edge Highlighting",
+      "Decal Application",
+      "Magnetization"
+    ],
+    "paints_used": [
+      "Citadel Averland Sunset",
+      "Citadel Yriel Yellow",
+      "Citadel Nuln Oil",
+      "Citadel Ryza Rust",
+      "AK Interactive Weathering products"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 4,
+        "url": "https://images.unsplash.com/photo-1601534913050-54c03f4e3b71?w=800",
+        "caption": "Front view showing yellow armor",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 5,
+        "url": "https://images.unsplash.com/photo-1580234797602-22399b416b67?w=800",
+        "caption": "Battle damage and weathering detail",
+        "is_primary": false,
+        "order": 2
+      }
+    ],
+    "notes": "Experimented with sponge weathering technique for the first time. Very happy with how the battle damage turned out. Magnetization allows for different weapon configurations.",
+    "tags": ["sci-fi", "space marines", "imperial fists", "weathering", "40k"]
+  },
+  {
+    "id": 3,
+    "title": "Necromancer and Skeleton Crew",
+    "description": "Dark fantasy necromancer with retinue of 12 skeleton warriors. Featuring purple and green magical effects, bone textures, and spooky atmosphere.",
+    "completed_date": "2024-05-10",
+    "scale": "32mm",
+    "manufacturer": "Reaper Miniatures",
+    "game_system": "D&D 5th Edition",
+    "painting_time_hours": 24,
+    "difficulty": "Intermediate",
+    "techniques_used": [
+      "Dry Brushing",
+      "Glazing for magical effects",
+      "Bone texture techniques",
+      "Contrast paints",
+      "Rust effects"
+    ],
+    "paints_used": [
+      "Citadel Contrast Paints",
+      "Vallejo Bone White",
+      "Citadel Naggaroth Night",
+      "Citadel Hexwraith Flame",
+      "Tamiya Weathering Master"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 6,
+        "url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
+        "caption": "Necromancer with magical staff",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 7,
+        "url": "https://images.unsplash.com/photo-1611162458324-aae1eb4129a2?w=800",
+        "caption": "Skeleton warriors formation",
+        "is_primary": false,
+        "order": 2
+      },
+      {
+        "id": 8,
+        "url": "https://images.unsplash.com/photo-1564514239-db4c81ea32d0?w=800",
+        "caption": "Close-up of bone texture and rust",
+        "is_primary": false,
+        "order": 3
+      }
+    ],
+    "notes": "Used Citadel Contrast paints for the first time on the robes. Saved a lot of time while maintaining good depth. The purple-green color scheme creates a nice necromantic vibe.",
+    "tags": ["fantasy", "undead", "necromancer", "skeletons", "D&D"]
+  },
+  {
+    "id": 4,
+    "title": "Steampunk Airship Crew",
+    "description": "Victorian-era inspired crew of 6 miniatures with brass goggles, leather coats, and mechanical accessories. Each character has unique personality and detailing.",
+    "completed_date": "2024-03-18",
+    "scale": "32mm",
+    "manufacturer": "Privateer Press",
+    "game_system": "Warmachine",
+    "painting_time_hours": 28,
+    "difficulty": "Advanced",
+    "techniques_used": [
+      "Non-Metallic Metal",
+      "Leather textures",
+      "Facial details and expressions",
+      "Freehand insignia",
+      "TMM (True Metallic Metal)"
+    ],
+    "paints_used": [
+      "P3 Paints (Privateer Press)",
+      "Vallejo Model Color",
+      "Scale75 Scalecolor",
+      "Army Painter Metallics"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 9,
+        "url": "https://images.unsplash.com/photo-1589254066213-a0c9dc853511?w=800",
+        "caption": "Full crew with captain front center",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 10,
+        "url": "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800",
+        "caption": "Brass goggle and leather coat details",
+        "is_primary": false,
+        "order": 2
+      }
+    ],
+    "notes": "Most challenging project so far due to small details like goggles and watch chains. Practiced a lot of NMM on the brass elements. Really proud of the facial expressions.",
+    "tags": ["steampunk", "victorian", "crew", "NMM", "character"]
+  },
+  {
+    "id": 5,
+    "title": "Dragon Wyrmling",
+    "description": "Young red dragon with fire effects on base. First large creature project featuring detailed scales, wings, and OSL from fire breath.",
+    "completed_date": "2024-01-05",
+    "scale": "54mm",
+    "manufacturer": "WizKids",
+    "game_system": "D&D 5th Edition",
+    "painting_time_hours": 16,
+    "difficulty": "Intermediate",
+    "techniques_used": [
+      "Scale texture highlighting",
+      "Wing membrane techniques",
+      "OSL from fire",
+      "Airbrush base coating",
+      "Resin water effects"
+    ],
+    "paints_used": [
+      "Citadel Mephiston Red",
+      "Vallejo Game Air",
+      "Citadel Troll Slayer Orange",
+      "Vallejo Water Effects",
+      "Tamiya Clear paints"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 11,
+        "url": "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=800",
+        "caption": "Dragon with fire effect base",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 12,
+        "url": "https://images.unsplash.com/photo-1583225173245-b82f3c2b0c23?w=800",
+        "caption": "Wing membrane detail",
+        "is_primary": false,
+        "order": 2
+      },
+      {
+        "id": 13,
+        "url": "https://images.unsplash.com/photo-1628258334105-2a0b3d6efee1?w=800",
+        "caption": "Scale texture and shading",
+        "is_primary": false,
+        "order": 3
+      }
+    ],
+    "notes": "First time using an airbrush for base coating and it made a huge difference. The wing membranes were tricky but thinned paints helped create realistic translucency.",
+    "tags": ["fantasy", "dragon", "creature", "OSL", "fire", "D&D"]
+  },
+  {
+    "id": 6,
+    "title": "Cyberpunk Street Samurai",
+    "description": "Near-future warrior with neon effects, cybernetic enhancements, and detailed urban base. Inspired by Blade Runner aesthetics.",
+    "completed_date": "2023-11-20",
+    "scale": "32mm",
+    "manufacturer": "Studio McVey",
+    "game_system": "Infinity",
+    "painting_time_hours": 22,
+    "difficulty": "Advanced",
+    "techniques_used": [
+      "OSL from neon lights",
+      "Metallic effects",
+      "Urban weathering",
+      "Fluorescent paints",
+      "Wet palette blending"
+    ],
+    "paints_used": [
+      "Vallejo Game Color Fluorescent",
+      "Citadel Technical paints",
+      "Scale75 Metal n Alchemy",
+      "Green Stuff World Fluor paints"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 14,
+        "url": "https://images.unsplash.com/photo-1599202875854-23b7cd490ff4?w=800",
+        "caption": "Samurai with neon blade",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 15,
+        "url": "https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=800",
+        "caption": "Cybernetic details and glowing effects",
+        "is_primary": false,
+        "order": 2
+      }
+    ],
+    "notes": "Really pushed my OSL skills with multiple light sources. The fluorescent paints under black light look amazing. Urban base with graffiti adds to the cyberpunk atmosphere.",
+    "tags": ["cyberpunk", "sci-fi", "OSL", "neon", "futuristic"]
+  },
+  {
+    "id": 7,
+    "title": "Ork Warboss on Warbike",
+    "description": "Large greenskin warrior on heavily customized motorcycle. Features extensive kitbashing, rust effects, and checkered patterns.",
+    "completed_date": "2023-09-08",
+    "scale": "28mm",
+    "manufacturer": "Games Workshop",
+    "game_system": "Warhammer 40,000",
+    "painting_time_hours": 20,
+    "difficulty": "Intermediate",
+    "techniques_used": [
+      "Extensive weathering",
+      "Rust and corrosion",
+      "Freehand checkers",
+      "Green skin tones",
+      "Chipping effects"
+    ],
+    "paints_used": [
+      "Citadel Warboss Green",
+      "Citadel Ryza Rust",
+      "AK Interactive Rust Streaks",
+      "Citadel Agrax Earthshade",
+      "Vallejo Chipping Medium"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 16,
+        "url": "https://images.unsplash.com/photo-1598300056393-4aac492f4344?w=800",
+        "caption": "Warboss charging forward",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 17,
+        "url": "https://images.unsplash.com/photo-1580234797602-22399b416b67?w=800",
+        "caption": "Rust and weathering on bike",
+        "is_primary": false,
+        "order": 2
+      }
+    ],
+    "notes": "So much fun to paint! Orks are forgiving and encourage experimentation. The checkered pattern took patience but worth it. Weathering makes it look like it's been in many battles.",
+    "tags": ["sci-fi", "orks", "vehicle", "weathering", "40k", "kitbash"]
+  },
+  {
+    "id": 8,
+    "title": "Medieval Knight Display Bust",
+    "description": "75mm bust of medieval knight in full plate armor. Display piece focusing on realistic metal, leather textures, and heraldry.",
+    "completed_date": "2023-06-15",
+    "scale": "75mm bust",
+    "manufacturer": "Knight Models",
+    "game_system": "Display Only",
+    "painting_time_hours": 35,
+    "difficulty": "Expert",
+    "techniques_used": [
+      "True Metallic Metal",
+      "Advanced NMM",
+      "Oil paints for blending",
+      "Freehand heraldry",
+      "Realistic skin tones"
+    ],
+    "paints_used": [
+      "Scale75 full range",
+      "Winsor & Newton Oil paints",
+      "Vallejo Model Color",
+      "AK Interactive 3rd Generation Acrylics"
+    ],
+    "status": "Completed",
+    "images": [
+      {
+        "id": 18,
+        "url": "https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?w=800",
+        "caption": "Front view of knight bust",
+        "is_primary": true,
+        "order": 1
+      },
+      {
+        "id": 19,
+        "url": "https://images.unsplash.com/photo-1562013393-70b9e24aa198?w=800",
+        "caption": "Armor plate reflections detail",
+        "is_primary": false,
+        "order": 2
+      },
+      {
+        "id": 20,
+        "url": "https://images.unsplash.com/photo-1560258018-c7db7645254e?w=800",
+        "caption": "Heraldry and fabric detail",
+        "is_primary": false,
+        "order": 3
+      }
+    ],
+    "notes": "My most ambitious project to date. First time working with oils for blending. The larger scale allowed for incredible detail work. Won bronze medal at local painting competition.",
+    "tags": ["historical", "medieval", "knight", "bust", "display", "NMM", "competition"]
+  }
+]

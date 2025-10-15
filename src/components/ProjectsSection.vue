@@ -9,56 +9,61 @@
 
     <n-divider />
 
-    <n-grid :cols="1" :y-gap="24">
-      <n-grid-item>
+    <n-space v-if="loading" justify="center">
+      <n-spin size="large" />
+    </n-space>
+
+    <n-grid v-else :cols="1" :y-gap="24">
+      <n-grid-item v-for="project in featuredProjects" :key="project.id">
         <n-card hoverable>
           <n-space vertical :size="16">
             <n-space justify="space-between" align="center">
               <h3 style="font-size: 24px; font-weight: 600; margin: 0">
-                Portfolio Microservices Platform
+                {{ project.title }}
               </h3>
               <n-space :size="8">
-                <n-button text type="primary" tag="a" href="#" target="_blank"> GitHub </n-button>
+                <n-button
+                  v-if="project.github_url"
+                  text
+                  type="primary"
+                  tag="a"
+                  :href="project.github_url"
+                  target="_blank"
+                >
+                  GitHub
+                </n-button>
+                <n-button
+                  v-if="project.live_url"
+                  text
+                  type="success"
+                  tag="a"
+                  :href="project.live_url"
+                  target="_blank"
+                >
+                  Live Demo
+                </n-button>
               </n-space>
             </n-space>
 
-            <n-text>
-              A full-stack portfolio application demonstrating microservices architecture, message
-              queues, and modern DevOps practices.
-            </n-text>
+            <n-text>{{ project.description }}</n-text>
 
             <n-space :size="8" style="flex-wrap: wrap">
-              <n-tag type="info" size="small">Vue 3</n-tag>
-              <n-tag type="success" size="small">Go</n-tag>
-              <n-tag type="warning" size="small">RabbitMQ</n-tag>
-              <n-tag type="error" size="small">Docker</n-tag>
-              <n-tag type="info" size="small">PostgreSQL</n-tag>
-              <n-tag type="success" size="small">AWS</n-tag>
+              <n-tag
+                v-for="tech in project.technologies"
+                :key="tech.name"
+                :type="tech.type"
+                size="small"
+              >
+                {{ tech.name }}
+              </n-tag>
             </n-space>
 
-            <n-button type="primary" @click="$router.push('/project')"> View Details → </n-button>
-          </n-space>
-        </n-card>
-      </n-grid-item>
-
-      <n-grid-item>
-        <n-card hoverable>
-          <n-space vertical :size="16">
-            <h3 style="font-size: 24px; font-weight: 600; margin: 0">Previous Work Experience</h3>
-
-            <n-text>
-              Highlights and learnings from closed-source enterprise projects in medical imaging,
-              real-time systems, and web applications.
-            </n-text>
-
-            <n-space :size="8" style="flex-wrap: wrap">
-              <n-tag type="default" size="small">React</n-tag>
-              <n-tag type="default" size="small">C++</n-tag>
-              <n-tag type="default" size="small">Python</n-tag>
-              <n-tag type="default" size="small">Real-time Systems</n-tag>
-            </n-space>
-
-            <n-button @click="$router.push('/previous-work')">Read More →</n-button>
+            <n-button v-if="project.link_to" @click="$router.push(project.link_to)">
+              Read More →
+            </n-button>
+            <n-button v-else type="primary" @click="$router.push(`/projects/${project.id}`)">
+              View Details →
+            </n-button>
           </n-space>
         </n-card>
       </n-grid-item>
@@ -67,5 +72,32 @@
 </template>
 
 <script setup>
-import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton } from 'naive-ui'
+import { ref, computed, onMounted } from 'vue'
+import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
+import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
+const projects = ref([])
+const loading = ref(true)
+
+// Only show featured projects on home page
+const featuredProjects = computed(() => {
+  return projects.value.filter((p) => p.featured)
+})
+
+const loadProjects = async () => {
+  try {
+    const response = await api.getProjects()
+    projects.value = response.data
+  } catch (error) {
+    handleError(error, { retryFn: loadProjects })
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  loadProjects()
+})
 </script>

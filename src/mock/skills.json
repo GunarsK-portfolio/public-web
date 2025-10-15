@@ -1,0 +1,256 @@
+[
+  {
+    "id": 1,
+    "name": "Frontend",
+    "type": "info",
+    "icon": "laptop",
+    "description": "Modern frontend frameworks and tools",
+    "skills": [
+      {
+        "name": "Vue 3",
+        "level": "Expert",
+        "years": 4
+      },
+      {
+        "name": "React",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "TypeScript",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "JavaScript",
+        "level": "Expert",
+        "years": 6
+      },
+      {
+        "name": "Naive UI",
+        "level": "Advanced",
+        "years": 2
+      },
+      {
+        "name": "HTML/CSS",
+        "level": "Expert",
+        "years": 6
+      },
+      {
+        "name": "Vite",
+        "level": "Advanced",
+        "years": 2
+      },
+      {
+        "name": "Pinia",
+        "level": "Advanced",
+        "years": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Backend",
+    "type": "success",
+    "icon": "server",
+    "description": "Server-side technologies and databases",
+    "skills": [
+      {
+        "name": "Go",
+        "level": "Expert",
+        "years": 4
+      },
+      {
+        "name": "Node.js",
+        "level": "Advanced",
+        "years": 5
+      },
+      {
+        "name": "PostgreSQL",
+        "level": "Advanced",
+        "years": 5
+      },
+      {
+        "name": "Redis",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "REST APIs",
+        "level": "Expert",
+        "years": 6
+      },
+      {
+        "name": "GraphQL",
+        "level": "Intermediate",
+        "years": 2
+      },
+      {
+        "name": "JWT",
+        "level": "Advanced",
+        "years": 4
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "DevOps & Tools",
+    "type": "warning",
+    "icon": "construct",
+    "description": "Infrastructure, deployment, and tooling",
+    "skills": [
+      {
+        "name": "Docker",
+        "level": "Expert",
+        "years": 5
+      },
+      {
+        "name": "Kubernetes",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "AWS",
+        "level": "Advanced",
+        "years": 4
+      },
+      {
+        "name": "RabbitMQ",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "Git",
+        "level": "Expert",
+        "years": 6
+      },
+      {
+        "name": "GitHub Actions",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "Linux",
+        "level": "Advanced",
+        "years": 6
+      },
+      {
+        "name": "Nginx",
+        "level": "Advanced",
+        "years": 4
+      },
+      {
+        "name": "Traefik",
+        "level": "Intermediate",
+        "years": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Practices",
+    "type": "default",
+    "icon": "bulb",
+    "description": "Methodologies and best practices",
+    "skills": [
+      {
+        "name": "Microservices",
+        "level": "Expert",
+        "years": 4
+      },
+      {
+        "name": "CI/CD",
+        "level": "Advanced",
+        "years": 5
+      },
+      {
+        "name": "Agile",
+        "level": "Advanced",
+        "years": 6
+      },
+      {
+        "name": "Code Review",
+        "level": "Expert",
+        "years": 6
+      },
+      {
+        "name": "Testing",
+        "level": "Advanced",
+        "years": 5
+      },
+      {
+        "name": "Documentation",
+        "level": "Advanced",
+        "years": 6
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Additional Languages",
+    "type": "info",
+    "icon": "code",
+    "description": "Other programming languages and frameworks",
+    "skills": [
+      {
+        "name": "Python",
+        "level": "Advanced",
+        "years": 4
+      },
+      {
+        "name": "Django",
+        "level": "Intermediate",
+        "years": 2
+      },
+      {
+        "name": "Flask",
+        "level": "Intermediate",
+        "years": 2
+      },
+      {
+        "name": "C++",
+        "level": "Intermediate",
+        "years": 2
+      },
+      {
+        "name": "Rust",
+        "level": "Beginner",
+        "years": 1
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Data & Analytics",
+    "type": "success",
+    "icon": "analytics",
+    "description": "Data processing and analytics tools",
+    "skills": [
+      {
+        "name": "Elasticsearch",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "Prometheus",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "Grafana",
+        "level": "Advanced",
+        "years": 3
+      },
+      {
+        "name": "Apache Airflow",
+        "level": "Intermediate",
+        "years": 2
+      },
+      {
+        "name": "MongoDB",
+        "level": "Advanced",
+        "years": 4
+      }
+    ]
+  }
+]

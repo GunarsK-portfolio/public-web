@@ -9,7 +9,11 @@
 
     <n-divider />
 
-    <div v-for="category in skillCategories" :key="category.name">
+    <n-space v-if="loading" justify="center">
+      <n-spin size="large" />
+    </n-space>
+
+    <div v-for="category in skillCategories" v-else :key="category.name">
       <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px">
         {{ category.name }}
       </h3>
@@ -29,29 +33,33 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { NSpace, NDivider, NTag } from 'naive-ui'
+import { ref, onMounted } from 'vue'
+import { NSpace, NDivider, NTag, NSpin } from 'naive-ui'
+import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
 
-const skillCategories = ref([
-  {
-    name: 'Frontend',
-    type: 'info',
-    skills: ['Vue 3', 'React', 'TypeScript', 'JavaScript', 'Naive UI', 'HTML/CSS', 'Vite', 'Pinia'],
-  },
-  {
-    name: 'Backend',
-    type: 'success',
-    skills: ['Go', 'Node.js', 'PostgreSQL', 'Redis', 'REST APIs', 'GraphQL', 'JWT'],
-  },
-  {
-    name: 'DevOps & Tools',
-    type: 'warning',
-    skills: ['Docker', 'AWS', 'RabbitMQ', 'Git', 'GitHub Actions', 'Linux', 'Nginx', 'Traefik'],
-  },
-  {
-    name: 'Practices',
-    type: 'default',
-    skills: ['Microservices', 'CI/CD', 'Agile', 'Code Review', 'Testing', 'Documentation'],
-  },
-])
+const { handleError } = useErrorHandler()
+
+const skillCategories = ref([])
+const loading = ref(true)
+
+const loadSkills = async () => {
+  try {
+    const response = await api.getSkills()
+    // Transform the data to match the component's expected format
+    skillCategories.value = response.data.map((category) => ({
+      name: category.name,
+      type: category.type,
+      skills: category.skills.map((skill) => skill.name),
+    }))
+  } catch (error) {
+    handleError(error, { retryFn: loadSkills })
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  loadSkills()
+})
 </script>

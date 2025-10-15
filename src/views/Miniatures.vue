@@ -41,18 +41,25 @@
 import { ref, onMounted } from 'vue'
 import { NSpace, NSpin, NGrid, NGridItem, NCard, NButton } from 'naive-ui'
 import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
 
 const miniatures = ref([])
 const loading = ref(true)
 
-onMounted(async () => {
+const loadMiniatures = async () => {
   try {
     const response = await api.getMiniatures()
     miniatures.value = response.data
   } catch (error) {
-    console.error('Failed to load miniatures:', error)
+    handleError(error, { retryFn: loadMiniatures })
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadMiniatures()
 })
 </script>

@@ -33,7 +33,7 @@ const routes = [
     component: () => import('../views/Contact.vue'),
   },
   {
-    path: '/project',
+    path: '/projects/:id',
     name: 'ProjectDetail',
     component: () => import('../views/ProjectDetail.vue'),
   },
@@ -41,6 +41,16 @@ const routes = [
     path: '/previous-work',
     name: 'PreviousWork',
     component: () => import('../views/PreviousWork.vue'),
+  },
+  {
+    path: '/forbidden',
+    name: 'Forbidden',
+    component: () => import('../errors/Forbidden.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../errors/NotFound.vue'),
   },
 ]
 

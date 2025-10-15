@@ -62,20 +62,27 @@
 import { ref, onMounted } from 'vue'
 import { NSpace, NSpin, NTimeline, NTimelineItem, NCard, NGrid, NGridItem } from 'naive-ui'
 import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
 
 const experience = ref([])
 const certifications = ref([])
 const loading = ref(true)
 
-onMounted(async () => {
+const loadExperienceAndCertifications = async () => {
   try {
     const [expResp, certResp] = await Promise.all([api.getExperience(), api.getCertifications()])
     experience.value = expResp.data
     certifications.value = certResp.data
   } catch (error) {
-    console.error('Failed to load data:', error)
+    handleError(error, { retryFn: loadExperienceAndCertifications })
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadExperienceAndCertifications()
 })
 </script>

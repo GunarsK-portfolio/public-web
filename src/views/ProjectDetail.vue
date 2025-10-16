@@ -74,11 +74,11 @@
             <n-space :size="12">
               <n-tag
                 v-for="tech in project.technologies"
-                :key="tech.name"
-                :type="tech.type"
+                :key="tech.skill"
+                :type="getTagType(tech.type)"
                 size="large"
               >
-                {{ tech.name }}
+                {{ tech.skill }}
               </n-tag>
             </n-space>
           </n-card>
@@ -147,11 +147,14 @@ import {
 } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { getCategoryTagType } from '../constants/skills'
 
 const route = useRoute()
 const { handleError } = useErrorHandler()
 const project = ref(null)
 const loading = ref(true)
+
+const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
 const formatDate = (dateString) => {
   if (!dateString) return ''

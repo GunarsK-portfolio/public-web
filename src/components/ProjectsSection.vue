@@ -45,11 +45,11 @@
                 <n-space :size="8" class="project-tags">
                   <n-tag
                     v-for="tech in project.technologies"
-                    :key="tech.name"
-                    :type="tech.type"
+                    :key="tech.skill"
+                    :type="getTagType(tech.type)"
                     size="small"
                   >
-                    {{ tech.name }}
+                    {{ tech.skill }}
                   </n-tag>
                 </n-space>
 
@@ -73,12 +73,15 @@ import { ref, computed, onMounted } from 'vue'
 import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { getCategoryTagType } from '../constants/skills'
 
 const { handleError } = useErrorHandler()
 const projects = ref([])
 const loading = ref(true)
 
 const featuredProjects = computed(() => projects.value.filter((p) => p.featured))
+
+const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
 const loadProjects = async () => {
   try {

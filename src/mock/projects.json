@@ -10,12 +10,13 @@
     "liveUrl": "https://yourportfolio.com",
     "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
     "technologies": [
-      { "name": "Vue 3", "type": "info" },
-      { "name": "Go", "type": "success" },
-      { "name": "RabbitMQ", "type": "warning" },
-      { "name": "Docker", "type": "error" },
-      { "name": "PostgreSQL", "type": "info" },
-      { "name": "AWS", "type": "success" }
+      { "skill": "Vue 3", "type": "Frontend" },
+      { "skill": "Go", "type": "Backend" },
+      { "skill": "RabbitMQ", "type": "DevOps & Tools" },
+      { "skill": "Docker", "type": "DevOps & Tools" },
+      { "skill": "PostgreSQL", "type": "Backend" },
+      { "skill": "Redis", "type": "Backend" },
+      { "skill": "AWS", "type": "DevOps & Tools" }
     ],
     "features": [
       "Microservices architecture with independent services",
@@ -58,12 +59,9 @@
     "liveUrl": null,
     "imageUrl": "https://images.unsplash.com/photo-1557821552-17105176677c?w=800",
     "technologies": [
-      { "name": "React", "type": "info" },
-      { "name": "Node.js", "type": "success" },
-      { "name": "Express", "type": "success" },
-      { "name": "MongoDB", "type": "warning" },
-      { "name": "Stripe", "type": "default" },
-      { "name": "Redux", "type": "info" }
+      { "skill": "React", "type": "Frontend" },
+      { "skill": "Node.js", "type": "Backend" },
+      { "skill": "MongoDB", "type": "Data & Analytics" }
     ],
     "features": [
       "Product catalog with search and filtering",
@@ -104,11 +102,10 @@
     "liveUrl": "https://chat-app.example.com",
     "imageUrl": "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800",
     "technologies": [
-      { "name": "Vue 3", "type": "info" },
-      { "name": "Socket.io", "type": "success" },
-      { "name": "Node.js", "type": "success" },
-      { "name": "Redis", "type": "warning" },
-      { "name": "PostgreSQL", "type": "info" }
+      { "skill": "Vue 3", "type": "Frontend" },
+      { "skill": "Node.js", "type": "Backend" },
+      { "skill": "Redis", "type": "Backend" },
+      { "skill": "PostgreSQL", "type": "Backend" }
     ],
     "features": [
       "Real-time messaging with WebSocket",
@@ -149,12 +146,12 @@
     "liveUrl": "https://taskmanager.example.com",
     "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
     "technologies": [
-      { "name": "React", "type": "info" },
-      { "name": "TypeScript", "type": "info" },
-      { "name": "Go", "type": "success" },
-      { "name": "PostgreSQL", "type": "info" },
-      { "name": "Kubernetes", "type": "warning" },
-      { "name": "AWS", "type": "success" }
+      { "skill": "React", "type": "Frontend" },
+      { "skill": "TypeScript", "type": "Frontend" },
+      { "skill": "Go", "type": "Backend" },
+      { "skill": "PostgreSQL", "type": "Backend" },
+      { "skill": "Kubernetes", "type": "DevOps & Tools" },
+      { "skill": "AWS", "type": "DevOps & Tools" }
     ],
     "features": [
       "Kanban boards with drag-and-drop",
@@ -197,10 +194,9 @@
     "liveUrl": null,
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
     "technologies": [
-      { "name": "React", "type": "default" },
-      { "name": "C++", "type": "default" },
-      { "name": "Python", "type": "default" },
-      { "name": "Real-time Systems", "type": "default" }
+      { "skill": "React", "type": "Frontend" },
+      { "skill": "C++", "type": "Additional Languages" },
+      { "skill": "Python", "type": "Additional Languages" }
     ],
     "features": [
       "Enterprise financial management systems",

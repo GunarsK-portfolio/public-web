@@ -53,10 +53,7 @@
                   </n-tag>
                 </n-space>
 
-                <n-button v-if="project.linkTo" @click="$router.push(project.linkTo)">
-                  Read More →
-                </n-button>
-                <n-button v-else type="primary" @click="$router.push(`/projects/${project.id}`)">
+                <n-button type="primary" @click="$router.push(`/projects/${project.id}`)">
                   View Details →
                 </n-button>
               </n-space>

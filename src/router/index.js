@@ -28,11 +28,6 @@ const routes = [
     component: () => import('../views/ProjectDetail.vue'),
   },
   {
-    path: '/previous-work',
-    name: 'PreviousWork',
-    component: () => import('../views/PreviousWork.vue'),
-  },
-  {
     path: '/forbidden',
     name: 'Forbidden',
     component: () => import('../errors/Forbidden.vue'),

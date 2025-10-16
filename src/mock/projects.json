@@ -185,33 +185,51 @@
   },
   {
     "id": 5,
-    "title": "Previous Work Experience",
-    "description": "Highlights and learnings from closed-source enterprise projects in medical imaging, real-time systems, and web applications.",
-    "longDescription": "A collection of professional work experience from various companies, including enterprise-level applications in FinTech, IoT, and E-Commerce. Due to NDAs, specific details and code cannot be shared, but technical approaches, challenges, and learnings are documented.",
+    "title": "Enterprise Software Development (NDA-Protected)",
+    "description": "Professional work on closed-source enterprise applications in FinTech, IoT, and E-Commerce. Due to NDAs, source code cannot be shared.",
+    "longDescription": "Led development of enterprise-level applications across multiple companies, including financial management systems handling millions of transactions daily, IoT device management platforms supporting 100K+ concurrent connections, and e-commerce platform modernization efforts. Focused on scalable architectures, microservices patterns, real-time systems, and high-performance optimization.",
     "category": "Professional Experience",
     "featured": true,
     "githubUrl": null,
     "liveUrl": null,
     "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
     "technologies": [
+      { "skill": "Go", "type": "Backend" },
       { "skill": "React", "type": "Frontend" },
-      { "skill": "C++", "type": "Additional Languages" },
-      { "skill": "Python", "type": "Additional Languages" }
+      { "skill": "Python", "type": "Additional Languages" },
+      { "skill": "PostgreSQL", "type": "Backend" },
+      { "skill": "Redis", "type": "Backend" },
+      { "skill": "Docker", "type": "DevOps & Tools" },
+      { "skill": "Kubernetes", "type": "DevOps & Tools" },
+      { "skill": "AWS", "type": "DevOps & Tools" },
+      { "skill": "RabbitMQ", "type": "DevOps & Tools" }
     ],
     "features": [
-      "Enterprise financial management systems",
-      "IoT device management platforms",
+      "Financial transaction processing (millions daily)",
+      "IoT device management (100K+ concurrent connections)",
       "E-commerce platform modernization",
-      "Microservices migration",
-      "High-performance real-time processing"
+      "Microservices architecture migration",
+      "Real-time data processing and analytics",
+      "Automated testing and CI/CD pipelines"
     ],
-    "challenges": [],
-    "learnings": [],
+    "challenges": [
+      "Scaling systems to handle millions of users",
+      "Achieving 99.9% uptime with fault-tolerant architecture",
+      "Migrating legacy monoliths to microservices",
+      "Implementing PCI-DSS and security compliance",
+      "Optimizing database performance for high throughput"
+    ],
+    "learnings": [
+      "Enterprise-scale system design and architecture",
+      "Advanced performance optimization techniques",
+      "Building fault-tolerant distributed systems",
+      "Security and compliance in financial systems",
+      "Leading technical teams and mentoring developers"
+    ],
     "startDate": "2018-06",
     "endDate": "2024-09",
     "isOngoing": false,
-    "teamSize": null,
-    "role": "Various Senior Positions",
-    "linkTo": "/previous-work"
+    "teamSize": 15,
+    "role": "Senior Software Engineer"
   }
 ]

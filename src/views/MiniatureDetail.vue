@@ -1,6 +1,6 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="$router.push('/gallery')">
+    <n-button text @click="$router.back()">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>

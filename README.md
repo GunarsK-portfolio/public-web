@@ -4,21 +4,24 @@ Public-facing portfolio website built with Vue.js.
 
 ## Features
 
-- Browse projects portfolio
-- View skills and experience
+- Browse projects portfolio with detailed project pages
+- View skills, experience, and certifications
+- Miniatures gallery organized by themes
+- Contact page with form
+- Light/Dark theme toggle
 - Responsive design with Naive UI
-- Modern Vue 3 UI components
-- State management with Pinia
-- Vue Router for navigation
+- Mock data support for development
+- Error pages (404, 403)
+- Smooth scroll navigation
 
 ## Tech Stack
 
 - **Framework**: Vue 3 (Composition API)
 - **Build Tool**: Vite
 - **UI Library**: Naive UI
-- **State Management**: Pinia
 - **HTTP Client**: Axios
 - **Routing**: Vue Router
+- **Theme Management**: Custom composable
 
 ## Prerequisites
 
@@ -30,12 +33,18 @@ Public-facing portfolio website built with Vue.js.
 ```
 public-web/
 ├── src/
-│   ├── assets/           # Static assets
-│   ├── components/       # Reusable components
+│   ├── assets/           # Global styles
+│   ├── components/       # Vue components
+│   │   ├── home/         # Home page sections
+│   │   └── shared/       # Reusable components
+│   ├── composables/      # Reusable logic (theme, error handling)
+│   ├── constants/        # Shared constants
 │   ├── views/            # Page components
+│   ├── errors/           # Error pages (404, 403)
 │   ├── router/           # Route definitions
-│   ├── stores/           # Pinia stores
 │   ├── services/         # API service layer
+│   ├── mock/             # Mock data (JSON files)
+│   ├── config/           # Configuration
 │   ├── App.vue           # Root component
 │   └── main.js           # Application entry
 ├── public/               # Public static files
@@ -53,16 +62,26 @@ docker-compose up -d
 ### Local Development
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-2. Create `.env` file (optional):
+2. Create `.env` file:
+
 ```env
+# API Configuration
 VITE_API_URL=http://localhost:8082/api/v1
+VITE_USE_MOCK_DATA=true
+
+# HTTPS Configuration (optional)
+VITE_CERT_DIR=../infrastructure/docker/traefik/certs
+VITE_CERT_FILE=localhost.crt
+VITE_KEY_FILE=localhost.key
 ```
 
 3. Run development server:
+
 ```bash
 npm run dev
 ```
@@ -79,12 +98,13 @@ npm run preview   # Preview production build
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_URL` | Public API base URL | `https://localhost/api/v1` |
-| `VITE_CERT_DIR` | Certificate directory for HTTPS dev server | `../infrastructure/docker/traefik/certs` |
-| `VITE_CERT_FILE` | Certificate filename | `localhost.crt` |
-| `VITE_KEY_FILE` | Private key filename | `localhost.key` |
+| Variable             | Description                                | Default                                  |
+| -------------------- | ------------------------------------------ | ---------------------------------------- |
+| `VITE_API_URL`       | Public API base URL                        | `https://localhost/api/v1`               |
+| `VITE_USE_MOCK_DATA` | Use mock data instead of real API          | `true`                                   |
+| `VITE_CERT_DIR`      | Certificate directory for HTTPS dev server | `../infrastructure/docker/traefik/certs` |
+| `VITE_CERT_FILE`     | Certificate filename                       | `localhost.crt`                          |
+| `VITE_KEY_FILE`      | Private key filename                       | `localhost.key`                          |
 
 ## Development Server
 
@@ -118,17 +138,81 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 ## API Integration
 
-The app connects to the public-api service for portfolio data:
-- Projects
-- Skills
-- Experience
-- About information
+The app supports both mock data (for development) and real API integration.
+
+### Mock Data Mode (Development)
+
+Set `VITE_USE_MOCK_DATA=true` to use local JSON files from `src/mock/`:
+
+- Profile information
+- Experience & certifications
+- Skills with categories
+- Projects with technologies
+- Miniatures & themes
+- Contact information
+
+### Real API Mode (Production)
+
+Set `VITE_USE_MOCK_DATA=false` to connect to the public-api service.
+
+**Available Endpoints:**
+
+- `GET /profile` - User profile
+- `GET /experience` - Work experience
+- `GET /certifications` - Certifications
+- `GET /skills` - Skills list
+- `GET /projects` - All projects
+- `GET /projects/:id` - Project details
+- `GET /miniatures` - All miniatures
+- `GET /miniatures/:id` - Miniature details
+- `GET /miniatures/themes` - Miniature themes with grouped items
 
 API service configuration is in `src/services/api.js`.
 
+## Theme System
+
+The application supports light and dark themes with automatic persistence:
+
+- **Theme Toggle**: Available in the header
+- **Persistence**: Theme preference saved to localStorage
+- **System Default**: Respects OS dark mode preference
+- **No Flash**: Theme applied before page render
+- **Composable**: `useTheme.js` for theme management
+
+Themes are managed using Naive UI's built-in theme system with custom CSS variables.
+
 ## Styling
 
-The application uses Naive UI components for the user interface.
+The application uses:
+
+- **Naive UI components** for the user interface
+- **Global styles** in `src/assets/styles.css` for layout and theming
+- **Scoped styles** in components for component-specific styling
+- **CSS variables** for consistent theming
+
+## Component Architecture
+
+### Home Page Sections
+
+All home page sections are in `src/components/home/`:
+
+- Load data using composables and API service
+- Use `useErrorHandler` for error handling with retry
+- Display loading states with spinners
+- Use fade-up transitions for smooth appearance
+
+### Shared Components
+
+Reusable components in `src/components/shared/`:
+
+- BackToTop button with scroll detection
+
+### Error Handling
+
+- Custom error handler composable (`useErrorHandler`)
+- Retry functionality for failed API calls
+- User-friendly error messages
+- Dedicated error pages (404, 403)
 
 ## License
 

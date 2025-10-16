@@ -44,15 +44,6 @@ export const mockApi = {
     return { data: project }
   },
 
-  async getProjectBySlug(slug) {
-    await delay()
-    const project = projectsData.find((p) => p.slug === slug)
-    if (!project) {
-      throw new Error(`Project with slug ${slug} not found`)
-    }
-    return { data: project }
-  },
-
   async getMiniatures() {
     await delay()
     return { data: miniaturesData }

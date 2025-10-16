@@ -57,14 +57,14 @@
                 <n-text strong class="resume-cert-name">{{ cert.name }}</n-text>
                 <n-text depth="3" class="resume-cert-issuer">{{ cert.issuer }}</n-text>
                 <n-text depth="3" class="resume-cert-date">
-                  Issued: {{ formatDate(cert.issue_date) }}
+                  Issued: {{ formatDate(cert.issueDate) }}
                 </n-text>
                 <n-button
-                  v-if="cert.credential_url"
+                  v-if="cert.credentialUrl"
                   text
                   type="primary"
                   tag="a"
-                  :href="cert.credential_url"
+                  :href="cert.credentialUrl"
                   target="_blank"
                 >
                   View Credential →
@@ -132,8 +132,8 @@ onMounted(() => {
 })
 
 const formatDateRange = (exp) => {
-  const endDate = exp.is_current ? 'Present' : exp.end_date
-  return `${exp.start_date} - ${endDate}`
+  const endDate = exp.isCurrent ? 'Present' : exp.endDate
+  return `${exp.startDate} - ${endDate}`
 }
 
 const formatDate = (date) => {

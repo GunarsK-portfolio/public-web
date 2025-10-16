@@ -9,7 +9,7 @@
         <n-avatar
           round
           :size="150"
-          :src="profile.avatar_url"
+          :src="profile.avatarUrl"
           fallback-src="https://via.placeholder.com/150"
         />
 

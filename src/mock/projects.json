@@ -2,42 +2,20 @@
   {
     "id": 1,
     "title": "Portfolio Microservices Platform",
-    "slug": "portfolio-microservices",
     "description": "A full-stack portfolio application demonstrating microservices architecture, message queues, and modern DevOps practices.",
-    "long_description": "This portfolio project showcases a complete microservices architecture with separate services for authentication, public API, admin API, and frontend applications. The system uses RabbitMQ for asynchronous communication, PostgreSQL for persistent storage, Redis for caching, and MinIO for object storage. Infrastructure is containerized with Docker and orchestrated using Docker Compose with Traefik as a reverse proxy.",
+    "longDescription": "This portfolio project showcases a complete microservices architecture with separate services for authentication, public API, admin API, and frontend applications. The system uses RabbitMQ for asynchronous communication, PostgreSQL for persistent storage, Redis for caching, and MinIO for object storage. Infrastructure is containerized with Docker and orchestrated using Docker Compose with Traefik as a reverse proxy.",
     "category": "Full Stack",
-    "type": "personal",
-    "status": "active",
     "featured": true,
-    "github_url": "https://github.com/yourusername/portfolio",
-    "live_url": "https://yourportfolio.com",
-    "demo_url": null,
-    "image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+    "githubUrl": "https://github.com/yourusername/portfolio",
+    "liveUrl": "https://yourportfolio.com",
+    "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
     "technologies": [
-      {
-        "name": "Vue 3",
-        "type": "info"
-      },
-      {
-        "name": "Go",
-        "type": "success"
-      },
-      {
-        "name": "RabbitMQ",
-        "type": "warning"
-      },
-      {
-        "name": "Docker",
-        "type": "error"
-      },
-      {
-        "name": "PostgreSQL",
-        "type": "info"
-      },
-      {
-        "name": "AWS",
-        "type": "success"
-      }
+      { "name": "Vue 3", "type": "info" },
+      { "name": "Go", "type": "success" },
+      { "name": "RabbitMQ", "type": "warning" },
+      { "name": "Docker", "type": "error" },
+      { "name": "PostgreSQL", "type": "info" },
+      { "name": "AWS", "type": "success" }
     ],
     "features": [
       "Microservices architecture with independent services",
@@ -63,51 +41,29 @@
       "Container orchestration with Docker Compose",
       "Reverse proxy configuration with Traefik"
     ],
-    "start_date": "2024-08",
-    "end_date": null,
-    "is_ongoing": true,
-    "team_size": 1,
+    "startDate": "2024-08",
+    "endDate": null,
+    "isOngoing": true,
+    "teamSize": 1,
     "role": "Full Stack Developer"
   },
   {
     "id": 2,
     "title": "E-Commerce Platform with Payment Integration",
-    "slug": "ecommerce-platform",
     "description": "Modern e-commerce platform with Stripe payment integration, real-time inventory management, and admin dashboard.",
-    "long_description": "A comprehensive e-commerce solution built with React and Node.js, featuring product catalog management, shopping cart functionality, secure payment processing through Stripe, order tracking, and a full-featured admin dashboard for inventory and order management.",
+    "longDescription": "A comprehensive e-commerce solution built with React and Node.js, featuring product catalog management, shopping cart functionality, secure payment processing through Stripe, order tracking, and a full-featured admin dashboard for inventory and order management.",
     "category": "Web Application",
-    "type": "freelance",
-    "status": "completed",
     "featured": true,
-    "github_url": "https://github.com/yourusername/ecommerce-platform",
-    "live_url": null,
-    "demo_url": "https://ecommerce-demo.netlify.app",
-    "image_url": "https://images.unsplash.com/photo-1557821552-17105176677c?w=800",
+    "githubUrl": "https://github.com/yourusername/ecommerce-platform",
+    "liveUrl": null,
+    "imageUrl": "https://images.unsplash.com/photo-1557821552-17105176677c?w=800",
     "technologies": [
-      {
-        "name": "React",
-        "type": "info"
-      },
-      {
-        "name": "Node.js",
-        "type": "success"
-      },
-      {
-        "name": "Express",
-        "type": "success"
-      },
-      {
-        "name": "MongoDB",
-        "type": "warning"
-      },
-      {
-        "name": "Stripe",
-        "type": "default"
-      },
-      {
-        "name": "Redux",
-        "type": "info"
-      }
+      { "name": "React", "type": "info" },
+      { "name": "Node.js", "type": "success" },
+      { "name": "Express", "type": "success" },
+      { "name": "MongoDB", "type": "warning" },
+      { "name": "Stripe", "type": "default" },
+      { "name": "Redux", "type": "info" }
     ],
     "features": [
       "Product catalog with search and filtering",
@@ -131,47 +87,28 @@
       "MongoDB aggregation pipelines",
       "Webhook security and validation"
     ],
-    "start_date": "2024-03",
-    "end_date": "2024-07",
-    "is_ongoing": false,
-    "team_size": 2,
+    "startDate": "2024-03",
+    "endDate": "2024-07",
+    "isOngoing": false,
+    "teamSize": 2,
     "role": "Lead Developer"
   },
   {
     "id": 3,
     "title": "Real-Time Chat Application",
-    "slug": "realtime-chat",
     "description": "WebSocket-based chat application with rooms, direct messaging, file sharing, and typing indicators.",
-    "long_description": "A feature-rich real-time chat application built with Socket.io, supporting multiple chat rooms, direct messages, file uploads, emoji reactions, and presence indicators. The backend uses Redis for managing active connections and message caching.",
+    "longDescription": "A feature-rich real-time chat application built with Socket.io, supporting multiple chat rooms, direct messages, file uploads, emoji reactions, and presence indicators. The backend uses Redis for managing active connections and message caching.",
     "category": "Real-Time Application",
-    "type": "personal",
-    "status": "completed",
     "featured": false,
-    "github_url": "https://github.com/yourusername/realtime-chat",
-    "live_url": "https://chat-app.example.com",
-    "demo_url": null,
-    "image_url": "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800",
+    "githubUrl": "https://github.com/yourusername/realtime-chat",
+    "liveUrl": "https://chat-app.example.com",
+    "imageUrl": "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800",
     "technologies": [
-      {
-        "name": "Vue 3",
-        "type": "info"
-      },
-      {
-        "name": "Socket.io",
-        "type": "success"
-      },
-      {
-        "name": "Node.js",
-        "type": "success"
-      },
-      {
-        "name": "Redis",
-        "type": "warning"
-      },
-      {
-        "name": "PostgreSQL",
-        "type": "info"
-      }
+      { "name": "Vue 3", "type": "info" },
+      { "name": "Socket.io", "type": "success" },
+      { "name": "Node.js", "type": "success" },
+      { "name": "Redis", "type": "warning" },
+      { "name": "PostgreSQL", "type": "info" }
     ],
     "features": [
       "Real-time messaging with WebSocket",
@@ -195,51 +132,29 @@
       "Optimizing real-time performance",
       "Connection management at scale"
     ],
-    "start_date": "2023-11",
-    "end_date": "2024-02",
-    "is_ongoing": false,
-    "team_size": 1,
+    "startDate": "2023-11",
+    "endDate": "2024-02",
+    "isOngoing": false,
+    "teamSize": 1,
     "role": "Full Stack Developer"
   },
   {
     "id": 4,
     "title": "Task Management SaaS Platform",
-    "slug": "task-management-saas",
     "description": "Multi-tenant task management platform with team collaboration, kanban boards, and time tracking.",
-    "long_description": "A comprehensive SaaS platform for task and project management, featuring kanban boards, gantt charts, time tracking, team collaboration tools, and detailed analytics. Built with a multi-tenant architecture supporting multiple organizations with role-based access control.",
+    "longDescription": "A comprehensive SaaS platform for task and project management, featuring kanban boards, gantt charts, time tracking, team collaboration tools, and detailed analytics. Built with a multi-tenant architecture supporting multiple organizations with role-based access control.",
     "category": "SaaS",
-    "type": "startup",
-    "status": "active",
     "featured": true,
-    "github_url": null,
-    "live_url": "https://taskmanager.example.com",
-    "demo_url": "https://demo.taskmanager.example.com",
-    "image_url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
+    "githubUrl": null,
+    "liveUrl": "https://taskmanager.example.com",
+    "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
     "technologies": [
-      {
-        "name": "React",
-        "type": "info"
-      },
-      {
-        "name": "TypeScript",
-        "type": "info"
-      },
-      {
-        "name": "Go",
-        "type": "success"
-      },
-      {
-        "name": "PostgreSQL",
-        "type": "info"
-      },
-      {
-        "name": "Kubernetes",
-        "type": "warning"
-      },
-      {
-        "name": "AWS",
-        "type": "success"
-      }
+      { "name": "React", "type": "info" },
+      { "name": "TypeScript", "type": "info" },
+      { "name": "Go", "type": "success" },
+      { "name": "PostgreSQL", "type": "info" },
+      { "name": "Kubernetes", "type": "warning" },
+      { "name": "AWS", "type": "success" }
     ],
     "features": [
       "Kanban boards with drag-and-drop",
@@ -265,43 +180,27 @@
       "Kubernetes deployment and scaling",
       "Building complex authorization systems"
     ],
-    "start_date": "2023-06",
-    "end_date": null,
-    "is_ongoing": true,
-    "team_size": 5,
+    "startDate": "2023-06",
+    "endDate": null,
+    "isOngoing": true,
+    "teamSize": 5,
     "role": "Senior Backend Developer"
   },
   {
     "id": 5,
     "title": "Previous Work Experience",
-    "slug": "previous-work",
     "description": "Highlights and learnings from closed-source enterprise projects in medical imaging, real-time systems, and web applications.",
-    "long_description": "A collection of professional work experience from various companies, including enterprise-level applications in FinTech, IoT, and E-Commerce. Due to NDAs, specific details and code cannot be shared, but technical approaches, challenges, and learnings are documented.",
+    "longDescription": "A collection of professional work experience from various companies, including enterprise-level applications in FinTech, IoT, and E-Commerce. Due to NDAs, specific details and code cannot be shared, but technical approaches, challenges, and learnings are documented.",
     "category": "Professional Experience",
-    "type": "professional",
-    "status": "reference",
     "featured": true,
-    "github_url": null,
-    "live_url": null,
-    "demo_url": null,
-    "image_url": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
+    "githubUrl": null,
+    "liveUrl": null,
+    "imageUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
     "technologies": [
-      {
-        "name": "React",
-        "type": "default"
-      },
-      {
-        "name": "C++",
-        "type": "default"
-      },
-      {
-        "name": "Python",
-        "type": "default"
-      },
-      {
-        "name": "Real-time Systems",
-        "type": "default"
-      }
+      { "name": "React", "type": "default" },
+      { "name": "C++", "type": "default" },
+      { "name": "Python", "type": "default" },
+      { "name": "Real-time Systems", "type": "default" }
     ],
     "features": [
       "Enterprise financial management systems",
@@ -312,11 +211,11 @@
     ],
     "challenges": [],
     "learnings": [],
-    "start_date": "2018-06",
-    "end_date": "2024-09",
-    "is_ongoing": false,
-    "team_size": null,
+    "startDate": "2018-06",
+    "endDate": "2024-09",
+    "isOngoing": false,
+    "teamSize": null,
     "role": "Various Senior Positions",
-    "link_to": "/previous-work"
+    "linkTo": "/previous-work"
   }
 ]

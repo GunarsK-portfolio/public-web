@@ -18,21 +18,21 @@
                   <h3 class="project-title">{{ project.title }}</h3>
                   <n-space :size="8">
                     <n-button
-                      v-if="project.github_url"
+                      v-if="project.githubUrl"
                       text
                       type="primary"
                       tag="a"
-                      :href="project.github_url"
+                      :href="project.githubUrl"
                       target="_blank"
                     >
                       GitHub
                     </n-button>
                     <n-button
-                      v-if="project.live_url"
+                      v-if="project.liveUrl"
                       text
                       type="success"
                       tag="a"
-                      :href="project.live_url"
+                      :href="project.liveUrl"
                       target="_blank"
                     >
                       Live Demo
@@ -53,7 +53,7 @@
                   </n-tag>
                 </n-space>
 
-                <n-button v-if="project.link_to" @click="$router.push(project.link_to)">
+                <n-button v-if="project.linkTo" @click="$router.push(project.linkTo)">
                   Read More →
                 </n-button>
                 <n-button v-else type="primary" @click="$router.push(`/projects/${project.id}`)">

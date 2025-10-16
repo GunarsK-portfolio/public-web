@@ -3,18 +3,5 @@
   "name": "Alex Johnson",
   "title": "Full Stack Developer",
   "tagline": "Building scalable web applications with modern technologies",
-  "bio": "Passionate software engineer with 6+ years of experience building enterprise applications. Specializing in microservices architecture, cloud infrastructure, and modern web technologies. When I'm not coding, I enjoy painting miniatures and contributing to open source projects.",
-  "email": "alex.johnson@example.com",
-  "phone": "+1 (555) 123-4567",
-  "location": "San Francisco, CA",
-  "avatar_url": "/profile-photo.jpg",
-  "social_links": {
-    "github": "https://github.com/alexjohnson",
-    "linkedin": "https://linkedin.com/in/alexjohnson",
-    "twitter": "https://twitter.com/alexjohnson",
-    "portfolio": "https://alexjohnson.dev"
-  },
-  "resume_url": "/resume.pdf",
-  "availability": "Open to opportunities",
-  "years_of_experience": 6
+  "avatarUrl": "/profile-photo.jpg"
 }

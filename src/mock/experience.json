@@ -3,91 +3,27 @@
     "id": 1,
     "position": "Senior Full Stack Developer",
     "company": "TechCorp Solutions",
-    "location": "San Francisco, CA",
-    "start_date": "2022-01",
-    "end_date": null,
-    "is_current": true,
-    "description": "Leading development of microservices-based platforms handling millions of users. Architecting scalable solutions using Go, Vue.js, and AWS infrastructure.",
-    "responsibilities": [
-      "Designed and implemented microservices architecture serving 2M+ daily active users",
-      "Led team of 5 developers in building real-time analytics dashboard",
-      "Reduced API response times by 70% through optimization and caching strategies",
-      "Implemented CI/CD pipelines reducing deployment time from 2 hours to 15 minutes"
-    ],
-    "technologies": [
-      "Go",
-      "Vue 3",
-      "PostgreSQL",
-      "Redis",
-      "Docker",
-      "Kubernetes",
-      "AWS",
-      "RabbitMQ"
-    ],
-    "achievements": [
-      "Promoted to Senior Developer after 1 year",
-      "Received 'Outstanding Performance' award Q4 2023",
-      "Mentored 3 junior developers"
-    ]
+    "startDate": "2022-01",
+    "endDate": null,
+    "isCurrent": true,
+    "description": "Leading development of microservices-based platforms handling millions of users. Architecting scalable solutions using Go, Vue.js, and AWS infrastructure."
   },
   {
     "id": 2,
     "position": "Full Stack Developer",
     "company": "StartupHub Inc",
-    "location": "Remote",
-    "start_date": "2020-03",
-    "end_date": "2021-12",
-    "is_current": false,
-    "description": "Developed and maintained customer-facing web applications for B2B SaaS platform. Collaborated with product team to deliver features used by Fortune 500 companies.",
-    "responsibilities": [
-      "Built responsive React applications with TypeScript and Redux",
-      "Developed RESTful APIs using Node.js and Express",
-      "Integrated third-party services (Stripe, SendGrid, Auth0)",
-      "Participated in code reviews and agile ceremonies"
-    ],
-    "technologies": [
-      "React",
-      "Node.js",
-      "TypeScript",
-      "MongoDB",
-      "Express",
-      "Docker",
-      "AWS Lambda"
-    ],
-    "achievements": [
-      "Shipped 15+ major features on schedule",
-      "Improved application performance by 40%",
-      "Contributed to 20% increase in customer retention"
-    ]
+    "startDate": "2020-03",
+    "endDate": "2021-12",
+    "isCurrent": false,
+    "description": "Developed and maintained customer-facing web applications for B2B SaaS platform. Collaborated with product team to deliver features used by Fortune 500 companies."
   },
   {
     "id": 3,
     "position": "Backend Developer",
     "company": "DataFlow Systems",
-    "location": "Austin, TX",
-    "start_date": "2018-06",
-    "end_date": "2020-02",
-    "is_current": false,
-    "description": "Built backend services for data processing pipelines handling large-scale analytics workloads. Worked on ETL systems processing terabytes of data daily.",
-    "responsibilities": [
-      "Developed Python-based ETL pipelines using Apache Airflow",
-      "Optimized database queries and indexes for high-throughput systems",
-      "Implemented data validation and quality checks",
-      "Created monitoring dashboards using Grafana and Prometheus"
-    ],
-    "technologies": [
-      "Python",
-      "Django",
-      "PostgreSQL",
-      "Apache Airflow",
-      "Redis",
-      "Docker",
-      "AWS S3"
-    ],
-    "achievements": [
-      "Reduced data processing time by 60%",
-      "Implemented automated data quality checks catching 95% of issues",
-      "Designed disaster recovery procedures"
-    ]
+    "startDate": "2018-06",
+    "endDate": "2020-02",
+    "isCurrent": false,
+    "description": "Built backend services for data processing pipelines handling large-scale analytics workloads. Worked on ETL systems processing terabytes of data daily."
   }
 ]

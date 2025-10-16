@@ -90,7 +90,7 @@
                 <n-card v-if="miniature.timeSpent" title="Project Stats">
                   <n-descriptions :column="1" bordered>
                     <n-descriptions-item label="Time Spent">
-                      {{ miniature.timeSpent }}
+                      {{ miniature.timeSpent }} hours
                     </n-descriptions-item>
                     <n-descriptions-item v-if="miniature.difficulty" label="Difficulty">
                       {{ miniature.difficulty }}
@@ -99,10 +99,6 @@
                       {{ miniature.theme }}
                     </n-descriptions-item>
                   </n-descriptions>
-                </n-card>
-
-                <n-card v-if="miniature.notes" title="Notes">
-                  <n-text>{{ miniature.notes }}</n-text>
                 </n-card>
               </n-space>
             </n-grid-item>

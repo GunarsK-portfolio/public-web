@@ -18,9 +18,9 @@
             <template #extra>
               <n-space>
                 <n-button
-                  v-if="project.github_url"
+                  v-if="project.githubUrl"
                   tag="a"
-                  :href="project.github_url"
+                  :href="project.githubUrl"
                   target="_blank"
                 >
                   <template #icon>
@@ -29,10 +29,10 @@
                   View on GitHub
                 </n-button>
                 <n-button
-                  v-if="project.live_url"
+                  v-if="project.liveUrl"
                   type="primary"
                   tag="a"
-                  :href="project.live_url"
+                  :href="project.liveUrl"
                   target="_blank"
                 >
                   Live Demo
@@ -42,26 +42,26 @@
           </n-page-header>
 
           <n-image
-            v-if="project.image_url"
-            :src="project.image_url"
+            v-if="project.imageUrl"
+            :src="project.imageUrl"
             :alt="project.title"
             class="project-image"
           />
 
           <n-card title="Overview">
             <n-space vertical :size="16">
-              <n-text>{{ project.long_description || project.description }}</n-text>
+              <n-text>{{ project.longDescription || project.description }}</n-text>
 
-              <n-divider v-if="project.start_date" />
+              <n-divider v-if="project.startDate" />
 
-              <n-space v-if="project.start_date">
+              <n-space v-if="project.startDate">
                 <n-text depth="3">
                   <n-text strong>Timeline:</n-text>
-                  {{ formatDate(project.start_date) }} -
-                  {{ project.is_ongoing ? 'Present' : formatDate(project.end_date) }}
+                  {{ formatDate(project.startDate) }} -
+                  {{ project.isOngoing ? 'Present' : formatDate(project.endDate) }}
                 </n-text>
-                <n-text v-if="project.team_size" depth="3">
-                  <n-text strong>Team Size:</n-text> {{ project.team_size }}
+                <n-text v-if="project.teamSize" depth="3">
+                  <n-text strong>Team Size:</n-text> {{ project.teamSize }}
                 </n-text>
                 <n-text v-if="project.role" depth="3">
                   <n-text strong>Role:</n-text> {{ project.role }}

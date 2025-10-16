@@ -3,66 +3,42 @@
     "id": 1,
     "name": "AWS Certified Solutions Architect - Associate",
     "issuer": "Amazon Web Services",
-    "issue_date": "2023-08-15",
-    "expiry_date": "2026-08-15",
-    "credential_id": "AWS-ASA-12345",
-    "credential_url": "https://www.credly.com/badges/aws-solutions-architect",
-    "description": "Validates expertise in designing distributed systems on AWS",
-    "skills": ["AWS", "Cloud Architecture", "System Design", "High Availability"]
+    "issueDate": "2023-08-15",
+    "credentialUrl": "https://www.credly.com/badges/aws-solutions-architect"
   },
   {
     "id": 2,
     "name": "Certified Kubernetes Administrator (CKA)",
     "issuer": "Cloud Native Computing Foundation",
-    "issue_date": "2023-03-20",
-    "expiry_date": "2026-03-20",
-    "credential_id": "CKA-54321",
-    "credential_url": "https://www.credly.com/badges/cka-certification",
-    "description": "Demonstrates expertise in Kubernetes cluster administration and orchestration",
-    "skills": ["Kubernetes", "Container Orchestration", "DevOps", "Cloud Native"]
+    "issueDate": "2023-03-20",
+    "credentialUrl": "https://www.credly.com/badges/cka-certification"
   },
   {
     "id": 3,
     "name": "MongoDB Certified Developer Associate",
     "issuer": "MongoDB University",
-    "issue_date": "2022-11-10",
-    "expiry_date": null,
-    "credential_id": "MONGO-DEV-98765",
-    "credential_url": "https://university.mongodb.com/certification",
-    "description": "Professional certification for MongoDB database development",
-    "skills": ["MongoDB", "NoSQL", "Database Design", "Aggregation Framework"]
+    "issueDate": "2022-11-10",
+    "credentialUrl": "https://university.mongodb.com/certification"
   },
   {
     "id": 4,
     "name": "Professional Scrum Master I (PSM I)",
     "issuer": "Scrum.org",
-    "issue_date": "2022-05-18",
-    "expiry_date": null,
-    "credential_id": "PSM1-24680",
-    "credential_url": "https://www.scrum.org/certificates/psm1",
-    "description": "Demonstrates fundamental understanding of Scrum framework and agile practices",
-    "skills": ["Scrum", "Agile Methodologies", "Team Leadership", "Project Management"]
+    "issueDate": "2022-05-18",
+    "credentialUrl": "https://www.scrum.org/certificates/psm1"
   },
   {
     "id": 5,
     "name": "Go Programming Language Certification",
     "issuer": "Go Institute",
-    "issue_date": "2021-09-25",
-    "expiry_date": null,
-    "credential_id": "GO-CERT-13579",
-    "credential_url": "https://go-training.com/certifications",
-    "description": "Advanced proficiency in Go programming language",
-    "skills": ["Go", "Concurrency", "Microservices", "System Programming"]
+    "issueDate": "2021-09-25",
+    "credentialUrl": "https://go-training.com/certifications"
   },
   {
     "id": 6,
     "name": "Vue.js 3 Certified Developer",
     "issuer": "Vue School",
-    "issue_date": "2021-06-30",
-    "expiry_date": null,
-    "credential_id": "VUE3-86420",
-    "credential_url": "https://vueschool.io/certificates",
-    "description": "Expert-level proficiency in Vue.js 3 framework and ecosystem",
-    "skills": ["Vue.js", "Composition API", "State Management", "Frontend Development"]
+    "issueDate": "2021-06-30",
+    "credentialUrl": "https://vueschool.io/certificates"
   }
 ]

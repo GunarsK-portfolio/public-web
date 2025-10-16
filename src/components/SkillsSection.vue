@@ -30,25 +30,41 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { NSpace, NDivider, NTag, NSpin } from 'naive-ui'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { getCategoryTagType, getCategoryOrder } from '../constants/skills'
 
 const { handleError } = useErrorHandler()
 
-const skillCategories = ref([])
+const skills = ref([])
 const loading = ref(true)
+
+// Group skills by category and sort by category order
+const skillCategories = computed(() => {
+  const categories = {}
+
+  skills.value.forEach((skill) => {
+    if (!categories[skill.type]) {
+      categories[skill.type] = {
+        name: skill.type,
+        type: getCategoryTagType(skill.type),
+        order: getCategoryOrder(skill.type),
+        skills: [],
+      }
+    }
+    categories[skill.type].skills.push(skill.skill)
+  })
+
+  // Sort categories by their order property
+  return Object.values(categories).sort((a, b) => a.order - b.order)
+})
 
 const loadSkills = async () => {
   try {
     const response = await api.getSkills()
-    // Transform API data to component format
-    skillCategories.value = response.data.map((category) => ({
-      name: category.name,
-      type: category.type,
-      skills: category.skills.map((skill) => skill.name),
-    }))
+    skills.value = response.data
   } catch (error) {
     handleError(error, { retryFn: loadSkills })
   } finally {

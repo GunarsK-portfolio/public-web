@@ -81,7 +81,7 @@ import {
   darkTheme,
 } from 'naive-ui'
 import { MoonOutline, SunnyOutline, MenuOutline } from '@vicons/ionicons5'
-import BackToTop from './components/BackToTop.vue'
+import BackToTop from './components/shared/BackToTop.vue'
 
 const isDark = ref(false)
 const drawerVisible = ref(false)

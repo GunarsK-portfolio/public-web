@@ -94,8 +94,8 @@ import {
   NGridItem,
 } from 'naive-ui'
 import { DownloadOutline } from '@vicons/ionicons5'
-import api from '../services/api'
-import { useErrorHandler } from '../composables/useErrorHandler'
+import api from '../../services/api'
+import { useErrorHandler } from '../../composables/useErrorHandler'
 
 const { handleError } = useErrorHandler()
 

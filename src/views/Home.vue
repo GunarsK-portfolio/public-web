@@ -10,10 +10,10 @@
 </template>
 
 <script setup>
-import HeroSection from '../components/HeroSection.vue'
-import ResumeSection from '../components/ResumeSection.vue'
-import SkillsSection from '../components/SkillsSection.vue'
-import ProjectsSection from '../components/ProjectsSection.vue'
-import MiniaturesPreview from '../components/MiniaturesPreview.vue'
-import ContactSection from '../components/ContactSection.vue'
+import HeroSection from '../components/home/HeroSection.vue'
+import ResumeSection from '../components/home/ResumeSection.vue'
+import SkillsSection from '../components/home/SkillsSection.vue'
+import ProjectsSection from '../components/home/ProjectsSection.vue'
+import MiniaturesPreview from '../components/home/MiniaturesPreview.vue'
+import ContactSection from '../components/shared/ContactSection.vue'
 </script>

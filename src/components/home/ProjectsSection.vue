@@ -68,9 +68,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
-import api from '../services/api'
-import { useErrorHandler } from '../composables/useErrorHandler'
-import { getCategoryTagType } from '../constants/skills'
+import api from '../../services/api'
+import { useErrorHandler } from '../../composables/useErrorHandler'
+import { getCategoryTagType } from '../../constants/skills'
 
 const { handleError } = useErrorHandler()
 const projects = ref([])

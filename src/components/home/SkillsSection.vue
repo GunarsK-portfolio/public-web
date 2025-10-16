@@ -32,9 +32,9 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { NSpace, NDivider, NTag, NSpin } from 'naive-ui'
-import api from '../services/api'
-import { useErrorHandler } from '../composables/useErrorHandler'
-import { getCategoryTagType, getCategoryOrder } from '../constants/skills'
+import api from '../../services/api'
+import { useErrorHandler } from '../../composables/useErrorHandler'
+import { getCategoryTagType, getCategoryOrder } from '../../constants/skills'
 
 const { handleError } = useErrorHandler()
 

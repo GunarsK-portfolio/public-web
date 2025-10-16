@@ -36,7 +36,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { NSpace, NAvatar, NText, NButton, NSpin } from 'naive-ui'
-import api from '../services/api'
+import api from '../../services/api'
 
 const profile = ref({})
 const loading = ref(true)

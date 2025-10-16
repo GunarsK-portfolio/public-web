@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "AWS Certified Solutions Architect - Associate",
+    "issuer": "Amazon Web Services",
+    "issueDate": "2023-08-15",
+    "credentialUrl": "https://www.credly.com/badges/aws-solutions-architect"
+  },
+  {
+    "id": 2,
+    "name": "Certified Kubernetes Administrator (CKA)",
+    "issuer": "Cloud Native Computing Foundation",
+    "issueDate": "2023-03-20",
+    "credentialUrl": "https://www.credly.com/badges/cka-certification"
+  },
+  {
+    "id": 3,
+    "name": "MongoDB Certified Developer Associate",
+    "issuer": "MongoDB University",
+    "issueDate": "2022-11-10",
+    "credentialUrl": "https://university.mongodb.com/certification"
+  },
+  {
+    "id": 4,
+    "name": "Professional Scrum Master I (PSM I)",
+    "issuer": "Scrum.org",
+    "issueDate": "2022-05-18",
+    "credentialUrl": "https://www.scrum.org/certificates/psm1"
+  },
+  {
+    "id": 5,
+    "name": "Go Programming Language Certification",
+    "issuer": "Go Institute",
+    "issueDate": "2021-09-25",
+    "credentialUrl": "https://go-training.com/certifications"
+  },
+  {
+    "id": 6,
+    "name": "Vue.js 3 Certified Developer",
+    "issuer": "Vue School",
+    "issueDate": "2021-06-30",
+    "credentialUrl": "https://vueschool.io/certificates"
+  }
+]

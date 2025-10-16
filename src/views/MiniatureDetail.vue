@@ -1,67 +1,173 @@
 <template>
-  <n-space vertical :size="24">
-    <n-button text @click="$router.back()"> ← Back </n-button>
+  <n-space vertical size="large" class="section-wrapper">
+    <n-button text @click="$router.back()">
+      <template #icon>
+        <n-icon><ArrowBackOutline /></n-icon>
+      </template>
+      Back to Gallery
+    </n-button>
 
     <n-space v-if="loading" justify="center">
       <n-spin size="large" />
     </n-space>
 
-    <n-space v-else-if="project" vertical :size="24">
-      <div>
-        <h1 style="font-size: 36px; font-weight: bold; margin-bottom: 8px">{{ project.title }}</h1>
-        <p v-if="project.completed_date" style="font-size: 14px; opacity: 0.7; margin-bottom: 16px">
-          Completed: {{ project.completed_date }}
-        </p>
-        <p style="font-size: 16px; margin-bottom: 32px">{{ project.description }}</p>
-      </div>
+    <transition-group name="fade-up" tag="div">
+      <div v-if="!loading" class="minaiture-wrapper">
+        <n-space v-if="miniature" vertical size="large" class="miniature-detail">
+          <n-page-header :title="miniature.name" :subtitle="miniature.subtitle">
+            <template #extra>
+              <n-space>
+                <n-tag v-if="miniature.scale" :bordered="false">{{ miniature.scale }}</n-tag>
+                <n-tag v-if="miniature.manufacturer" :bordered="false" type="info">
+                  {{ miniature.manufacturer }}
+                </n-tag>
+                <n-tag v-if="miniature.completedDate" :bordered="false" type="success">
+                  Completed {{ miniature.completedDate }}
+                </n-tag>
+              </n-space>
+            </template>
+          </n-page-header>
 
-      <n-grid
-        v-if="project.images && project.images.length"
-        :cols="2"
-        :x-gap="16"
-        :y-gap="16"
-        responsive="screen"
-      >
-        <n-grid-item v-for="image in project.images" :key="image.id">
-          <n-card>
-            <template #cover>
-              <img
-                :src="image.url"
-                :alt="image.title || project.title"
-                style="width: 100%; object-fit: cover"
-              />
-            </template>
-            <template v-if="image.title || image.description">
-              <h3 v-if="image.title" style="font-size: 18px; font-weight: bold; margin-bottom: 4px">
-                {{ image.title }}
-              </h3>
-              <p v-if="image.description">{{ image.description }}</p>
-            </template>
-          </n-card>
-        </n-grid-item>
-      </n-grid>
-    </n-space>
+          <n-grid :x-gap="24" :y-gap="24" :cols="1" :l="2">
+            <n-grid-item>
+              <n-card title="Gallery">
+                <n-image-group>
+                  <n-space vertical size="large">
+                    <n-image
+                      v-for="(image, index) in miniature.images"
+                      :key="index"
+                      :src="image.url"
+                      :alt="image.caption"
+                      object-fit="cover"
+                      class="miniature-image"
+                    />
+                  </n-space>
+                </n-image-group>
+              </n-card>
+            </n-grid-item>
+
+            <n-grid-item>
+              <n-space vertical size="large">
+                <n-card title="Description">
+                  <n-text>{{ miniature.description }}</n-text>
+                </n-card>
+
+                <n-card v-if="miniature.techniques?.length" title="Painting Techniques">
+                  <n-space>
+                    <n-tag
+                      v-for="technique in miniature.techniques"
+                      :key="technique"
+                      :bordered="false"
+                      type="warning"
+                    >
+                      {{ technique }}
+                    </n-tag>
+                  </n-space>
+                </n-card>
+
+                <n-card v-if="miniature.paints?.length" title="Paints Used">
+                  <n-list bordered>
+                    <n-list-item v-for="paint in miniature.paints" :key="paint.name">
+                      <template #prefix>
+                        <div
+                          :style="{
+                            width: '24px',
+                            height: '24px',
+                            borderRadius: '4px',
+                            backgroundColor: paint.color,
+                            border: '1px solid #ccc',
+                          }"
+                        ></div>
+                      </template>
+                      <n-space vertical size="small">
+                        <n-text strong>{{ paint.name }}</n-text>
+                        <n-text depth="3" style="font-size: 12px">{{ paint.manufacturer }}</n-text>
+                      </n-space>
+                    </n-list-item>
+                  </n-list>
+                </n-card>
+
+                <n-card v-if="miniature.timeSpent" title="Project Stats">
+                  <n-descriptions :column="1" bordered>
+                    <n-descriptions-item label="Time Spent">
+                      {{ miniature.timeSpent }} hours
+                    </n-descriptions-item>
+                    <n-descriptions-item v-if="miniature.difficulty" label="Difficulty">
+                      {{ miniature.difficulty }}
+                    </n-descriptions-item>
+                    <n-descriptions-item v-if="miniature.theme" label="Theme">
+                      {{ miniature.theme }}
+                    </n-descriptions-item>
+                  </n-descriptions>
+                </n-card>
+              </n-space>
+            </n-grid-item>
+          </n-grid>
+        </n-space>
+      </div>
+    </transition-group>
   </n-space>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { NSpace, NSpin, NButton, NGrid, NGridItem, NCard } from 'naive-ui'
+import {
+  NSpin,
+  NSpace,
+  NPageHeader,
+  NButton,
+  NIcon,
+  NTag,
+  NGrid,
+  NGridItem,
+  NCard,
+  NImageGroup,
+  NImage,
+  NText,
+  NList,
+  NListItem,
+  NDescriptions,
+  NDescriptionsItem,
+} from 'naive-ui'
+import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
 
 const route = useRoute()
-const project = ref(null)
-const loading = ref(true)
+const { handleError } = useErrorHandler()
+const loading = ref(false)
+const miniature = ref(null)
 
-onMounted(async () => {
+const loadMiniature = async () => {
+  loading.value = true
   try {
-    const response = await api.getMiniatureById(route.params.id)
-    project.value = response.data
+    const id = route.params.id
+    const response = await api.getMiniatureById(id)
+    miniature.value = response.data
   } catch (error) {
-    console.error('Failed to load project:', error)
+    handleError(error, { retryFn: loadMiniature })
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadMiniature()
 })
 </script>
+
+<style scoped>
+.miniature-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Images */
+.miniature-image {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+</style>

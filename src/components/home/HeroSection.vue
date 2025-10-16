@@ -37,6 +37,9 @@
 import { ref, onMounted } from 'vue'
 import { NSpace, NAvatar, NText, NButton, NSpin } from 'naive-ui'
 import api from '../../services/api'
+import { useErrorHandler } from '../../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
 
 const profile = ref({})
 const loading = ref(true)
@@ -45,8 +48,8 @@ const loadProfile = async () => {
   try {
     const response = await api.getProfile()
     profile.value = response.data
-  } catch (error) {
-    console.error('Failed to load profile:', error)
+  } catch (err) {
+    handleError(err, { retryFn: loadProfile })
   } finally {
     loading.value = false
   }

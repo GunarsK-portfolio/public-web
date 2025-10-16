@@ -5,6 +5,7 @@ import certificationsData from './certifications.json'
 import miniaturesData from './miniatures.json'
 import skillsData from './skills.json'
 import projectsData from './projects.json'
+import themesData from './themes.json'
 
 // Simulate network delay for realistic behavior
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -56,6 +57,11 @@ export const mockApi = {
       throw new Error(`Miniature with id ${id} not found`)
     }
     return { data: miniature }
+  },
+
+  async getMiniatureThemes() {
+    await delay()
+    return { data: themesData }
   },
 }
 

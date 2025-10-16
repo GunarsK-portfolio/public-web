@@ -13,7 +13,7 @@
       <ProjectsSection />
     </section>
     <section class="home-section">
-      <MiniaturesPreview />
+      <MiniaturesSection />
     </section>
     <section class="home-section home-section-alt">
       <ContactSection />
@@ -26,7 +26,7 @@ import HeroSection from '../components/home/HeroSection.vue'
 import ResumeSection from '../components/home/ResumeSection.vue'
 import SkillsSection from '../components/home/SkillsSection.vue'
 import ProjectsSection from '../components/home/ProjectsSection.vue'
-import MiniaturesPreview from '../components/home/MiniaturesPreview.vue'
+import MiniaturesSection from '../components/home/MiniaturesSection.vue'
 import ContactSection from '../components/home/ContactSection.vue'
 </script>
 

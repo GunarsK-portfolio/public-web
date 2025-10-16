@@ -16,14 +16,16 @@
     <transition-group name="fade-up" tag="div">
       <div v-if="!loading" class="miniatures-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" cols="1 512:2 768:3">
-          <n-grid-item v-for="theme in featuredThemes" :key="theme.name">
+          <n-grid-item v-for="theme in themes" :key="theme.id">
             <n-card hoverable class="miniature-card" @click="$router.push('/gallery')">
               <template #cover>
                 <img :src="theme.coverImage" :alt="theme.name" class="miniature-cover" />
               </template>
               <n-space vertical :size="8" align="center">
                 <n-text strong class="miniature-name">{{ theme.name }}</n-text>
-                <n-text depth="3" class="miniature-count">{{ theme.count }} miniatures</n-text>
+                <n-text depth="3" class="miniature-count">
+                  {{ theme.miniatures.length }} miniatures
+                </n-text>
               </n-space>
             </n-card>
           </n-grid-item>
@@ -42,39 +44,27 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { NSpace, NDivider, NText, NSpin, NGridItem, NCard, NButton, NGrid } from 'naive-ui'
+import api from '../../services/api'
+import { useErrorHandler } from '../../composables/useErrorHandler'
+
+const { handleError } = useErrorHandler()
 
 const loading = ref(true)
-const featuredThemes = ref([
-  {
-    name: 'D&D Miniatures',
-    slug: 'dnd',
-    coverImage: 'https://via.placeholder.com/300x200/4A5568/FFFFFF?text=D%26D',
-    count: 12,
-  },
-  {
-    name: 'Stormlight Archive',
-    slug: 'stormlight',
-    coverImage: 'https://via.placeholder.com/300x200/3B82F6/FFFFFF?text=Stormlight',
-    count: 8,
-  },
-  {
-    name: 'Bloodborne',
-    slug: 'bloodborne',
-    coverImage: 'https://via.placeholder.com/300x200/EF4444/FFFFFF?text=Bloodborne',
-    count: 5,
-  },
-])
+const themes = ref([])
 
-onMounted(async () => {
+const loadThemes = async () => {
   try {
-    // TODO: Fetch actual theme data from API
-    // const response = await api.getMiniatureThemes()
-    // featuredThemes.value = response.data
-    loading.value = false
-  } catch (error) {
-    console.error('Failed to load miniature themes:', error)
+    const response = await api.getMiniatureThemes()
+    themes.value = response.data
+  } catch (err) {
+    handleError(err, { retryFn: loadThemes })
+  } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadThemes()
 })
 </script>
 

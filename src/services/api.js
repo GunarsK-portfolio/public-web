@@ -28,13 +28,13 @@ export default env.useMockData
       getProjectById(id) {
         return api.get(`/projects/${id}`)
       },
-      getProjectBySlug(slug) {
-        return api.get(`/projects/slug/${slug}`)
-      },
       getMiniatures() {
         return api.get('/miniatures')
       },
       getMiniatureById(id) {
         return api.get(`/miniatures/${id}`)
+      },
+      getMiniatureThemes() {
+        return api.get('/miniatures/themes')
       },
     }

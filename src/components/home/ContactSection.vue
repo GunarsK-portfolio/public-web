@@ -45,9 +45,11 @@
 
     <n-divider>OR</n-divider>
 
-    <n-button type="primary" size="large" @click="$router.push('/contact')">
-      Send Me a Message →
-    </n-button>
+    <n-space justify="center">
+      <n-button type="primary" size="large" @click="$router.push('/contact')">
+        Send Me a Message →
+      </n-button>
+    </n-space>
   </n-space>
 </template>
 

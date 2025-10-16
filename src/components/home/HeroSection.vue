@@ -68,10 +68,10 @@ onMounted(() => {
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertical centering */
-  align-items: center; /* horizontal centering */
+  justify-content: center;
+  align-items: center;
   min-height: calc(100vh - 64px);
-  padding: 0 20px 80px;
+  padding: 40px 20px;
   text-align: center;
 }
 

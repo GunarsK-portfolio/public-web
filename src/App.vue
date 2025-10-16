@@ -82,25 +82,36 @@ import {
 } from 'naive-ui'
 import { MoonOutline, SunnyOutline, MenuOutline } from '@vicons/ionicons5'
 import BackToTop from './components/shared/BackToTop.vue'
+import { THEMES, getStoredTheme, setStoredTheme, createThemeConfig } from './composables/useTheme'
 
-const isDark = ref(false)
-const drawerVisible = ref(false)
+// Map theme codes to Naive UI themes
+const THEME_CONFIG = createThemeConfig({
+  [THEMES.DARK]: darkTheme,
+})
 
-const currentTheme = computed(() => (isDark.value ? darkTheme : null))
+// Initialize theme code from localStorage
+const currentThemeCode = ref(getStoredTheme())
 
-const toggleTheme = () => {
-  isDark.value = !isDark.value
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+// Computed properties
+const currentTheme = computed(() => THEME_CONFIG[currentThemeCode.value] || null)
+const isDark = computed(() => currentThemeCode.value === THEMES.DARK)
+
+const setTheme = (themeCode) => {
+  if (setStoredTheme(themeCode)) {
+    currentThemeCode.value = themeCode
+  }
 }
 
+const toggleTheme = () => {
+  // Toggle between light and dark
+  const newTheme = currentThemeCode.value === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK
+  setTheme(newTheme)
+}
+
+const drawerVisible = ref(false)
+
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme === 'dark') {
-    isDark.value = true
-  } else if (savedTheme === null) {
-    // Check system preference
-    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
-  }
+  // Theme is already set
 })
 
 const menuOptions = [
@@ -133,9 +144,10 @@ const menuOptions = [
   top: 0;
   z-index: 100;
   width: 100%;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   background-color: var(--n-color);
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--n-divider-color);
 }
 
 /* Header inner wrapper */

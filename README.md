@@ -27,8 +27,8 @@ Public-facing portfolio website built with Vue.js.
 
 ## Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- Node.js 22+ (LTS)
+- npm 11+
 
 ## Project Structure
 

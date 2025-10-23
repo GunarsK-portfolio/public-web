@@ -1,5 +1,7 @@
 # Public Web
 
+![CI](https://github.com/GunarsK-portfolio/public-web/workflows/CI/badge.svg)
+
 Public-facing portfolio website built with Vue.js.
 
 ## Features
@@ -25,8 +27,8 @@ Public-facing portfolio website built with Vue.js.
 
 ## Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- Node.js 22+ (LTS)
+- npm 11+
 
 ## Project Structure
 
@@ -90,10 +92,30 @@ npm run dev
 
 ## Available Commands
 
+Using Task:
+
+```bash
+task dev            # Start development server
+task build          # Build for production
+task preview        # Preview production build
+task install        # Install dependencies
+task lint           # Run ESLint
+task lint-fix       # Run ESLint and auto-fix issues
+task format         # Format code with Prettier
+task format-check   # Check code formatting
+task audit          # Run npm security audit
+task clean          # Clean build artifacts
+task docker-build   # Build Docker image
+task ci             # Run all CI checks locally
+```
+
+Using npm directly:
+
 ```bash
 npm run dev       # Start development server
 npm run build     # Build for production
 npm run preview   # Preview production build
+npm run lint      # Run ESLint
 ```
 
 ## Environment Variables

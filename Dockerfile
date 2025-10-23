@@ -3,8 +3,8 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Update Alpine packages to fix vulnerabilities
-RUN apk update && apk upgrade --no-cache
+# Update Alpine packages and explicitly upgrade pcre2 to fix CVE-2025-58050
+RUN apk update && apk add --upgrade pcre2 --no-cache
 
 # Copy package files
 COPY package.json ./

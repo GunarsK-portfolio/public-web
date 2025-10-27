@@ -1,14 +1,6 @@
 <template>
   <n-space id="resume" vertical :size="32" class="hero-section-wrapper">
-    <n-space justify="space-between" align="center">
-      <h2 class="hero-title">Resume</h2>
-      <n-button type="primary" @click="downloadResume">
-        <template #icon>
-          <n-icon><DownloadOutline /></n-icon>
-        </template>
-        Download PDF
-      </n-button>
-    </n-space>
+    <h2 class="hero-title">Resume</h2>
 
     <n-divider />
 
@@ -84,7 +76,6 @@ import {
   NSpace,
   NSpin,
   NButton,
-  NIcon,
   NDivider,
   NTimeline,
   NTimelineItem,
@@ -93,7 +84,6 @@ import {
   NGrid,
   NGridItem,
 } from 'naive-ui'
-import { DownloadOutline } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
 
@@ -141,10 +131,6 @@ const formatDate = (date) => {
     year: 'numeric',
     month: 'short',
   })
-}
-
-const downloadResume = () => {
-  window.open('/resume.pdf', '_blank')
 }
 </script>
 

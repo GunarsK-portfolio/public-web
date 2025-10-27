@@ -42,8 +42,8 @@
           </n-page-header>
 
           <n-image
-            v-if="project.imageUrl"
-            :src="project.imageUrl"
+            v-if="project.imageFile?.url"
+            :src="project.imageFile.url"
             :alt="project.title"
             class="project-image"
           />

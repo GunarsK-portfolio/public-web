@@ -9,7 +9,7 @@
         <n-avatar
           round
           :size="150"
-          :src="profile.avatarUrl"
+          :src="profile.avatarFile?.url"
           fallback-src="https://via.placeholder.com/150"
         />
 
@@ -23,7 +23,20 @@
         </n-text>
 
         <n-space :size="16" wrap class="profile-buttons">
-          <n-button type="primary" size="large" @click="scrollTo('resume')"> Resume </n-button>
+          <n-button
+            v-if="profile.resumeFile?.url"
+            type="primary"
+            size="large"
+            tag="a"
+            :href="profile.resumeFile.url"
+            target="_blank"
+          >
+            <template #icon>
+              <n-icon><DownloadOutline /></n-icon>
+            </template>
+            Download Resume
+          </n-button>
+          <n-button size="large" @click="scrollTo('resume')"> Experience </n-button>
           <n-button size="large" @click="scrollTo('skills')"> Skills </n-button>
           <n-button size="large" @click="scrollTo('projects')"> Projects </n-button>
           <n-button size="large" @click="scrollTo('miniatures')"> Miniatures </n-button>
@@ -35,7 +48,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { NSpace, NAvatar, NText, NButton, NSpin } from 'naive-ui'
+import { NSpace, NAvatar, NText, NButton, NIcon, NSpin } from 'naive-ui'
+import { DownloadOutline } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
 

@@ -1,0 +1,22 @@
+language: en-US
+early_access: false
+reviews:
+  profile: assertive
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  docstring:
+    enabled: false
+  tools:
+    eslint:
+      enabled: true
+    biome:
+      enabled: true
+chat:
+  auto_reply: true
+tone_instructions: "PUBLIC WEBSITE: Prioritize performance, SEO, accessibility (WCAG 2.1 AA), and mobile UX. Focus on Core Web Vitals, semantic HTML, and Vue 3 best practices."

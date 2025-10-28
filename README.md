@@ -32,7 +32,7 @@ Public-facing portfolio website built with Vue.js.
 
 ## Project Structure
 
-```
+```text
 public-web/
 ├── src/
 │   ├── assets/           # Global styles
@@ -69,7 +69,7 @@ docker-compose up -d
 npm install
 ```
 
-2. Create `.env` file:
+1. Create `.env` file:
 
 ```env
 # API Configuration
@@ -82,13 +82,13 @@ VITE_CERT_FILE=localhost.crt
 VITE_KEY_FILE=localhost.key
 ```
 
-3. Run development server:
+1. Run development server:
 
 ```bash
 npm run dev
 ```
 
-4. Access at: `http://localhost:8080`
+1. Access at: `http://localhost:8080`
 
 ## Available Commands
 
@@ -132,17 +132,18 @@ npm run lint      # Run ESLint
 
 ## Environment Variables
 
-| Variable             | Description                                | Default                                  |
-| -------------------- | ------------------------------------------ | ---------------------------------------- |
-| `VITE_API_URL`       | Public API base URL                        | `https://localhost/api/v1`               |
-| `VITE_USE_MOCK_DATA` | Use mock data instead of real API          | `true`                                   |
-| `VITE_CERT_DIR`      | Certificate directory for HTTPS dev server | `../infrastructure/docker/traefik/certs` |
-| `VITE_CERT_FILE`     | Certificate filename                       | `localhost.crt`                          |
-| `VITE_KEY_FILE`      | Private key filename                       | `localhost.key`                          |
+| Variable             | Description | Default       |
+| -------------------- | ----------- | ------------- |
+| `VITE_API_URL`       | API URL     | localhost     |
+| `VITE_USE_MOCK_DATA` | Mock data   | true          |
+| `VITE_CERT_DIR`      | Cert dir    | certs/        |
+| `VITE_CERT_FILE`     | Cert file   | localhost.crt |
+| `VITE_KEY_FILE`      | Key file    | localhost.key |
 
 ## Development Server
 
-The development server runs on port 8080 and supports HTTPS if certificates are available in `../infrastructure/docker/traefik/certs/`.
+The development server runs on port 8080 and supports HTTPS if
+certificates are available in `../infrastructure/docker/traefik/certs/`.
 
 ## Building for Production
 

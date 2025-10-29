@@ -32,7 +32,7 @@ Public-facing portfolio website built with Vue.js.
 
 ## Project Structure
 
-```
+```text
 public-web/
 ├── src/
 │   ├── assets/           # Global styles
@@ -69,7 +69,7 @@ docker-compose up -d
 npm install
 ```
 
-2. Create `.env` file:
+1. Create `.env` file:
 
 ```env
 # API Configuration
@@ -82,31 +82,43 @@ VITE_CERT_FILE=localhost.crt
 VITE_KEY_FILE=localhost.key
 ```
 
-3. Run development server:
+1. Run development server:
 
 ```bash
 npm run dev
 ```
 
-4. Access at: `http://localhost:8080`
+1. Access at: `http://localhost:8080`
 
 ## Available Commands
 
 Using Task:
 
 ```bash
-task dev            # Start development server
-task build          # Build for production
-task preview        # Preview production build
-task install        # Install dependencies
-task lint           # Run ESLint
-task lint-fix       # Run ESLint and auto-fix issues
-task format         # Format code with Prettier
-task format-check   # Check code formatting
-task audit          # Run npm security audit
-task clean          # Clean build artifacts
-task docker-build   # Build Docker image
-task ci             # Run all CI checks locally
+# Development
+task dev:start           # Start development server
+task install             # Install dependencies
+
+# Build
+task build               # Build for production
+task preview             # Preview production build
+task clean               # Clean build artifacts
+
+# Code quality
+task lint                # Run ESLint
+task lint:fix            # Run ESLint and auto-fix issues
+task format              # Format code with Prettier
+task format:check        # Check code formatting
+
+# Security
+task security:audit      # Run npm security audit (high/critical only)
+
+# Docker
+task docker:build        # Build Docker image
+task docker:run          # Run in Docker container
+
+# CI/CD
+task ci:all              # Run all CI checks
 ```
 
 Using npm directly:
@@ -120,17 +132,18 @@ npm run lint      # Run ESLint
 
 ## Environment Variables
 
-| Variable             | Description                                | Default                                  |
-| -------------------- | ------------------------------------------ | ---------------------------------------- |
-| `VITE_API_URL`       | Public API base URL                        | `https://localhost/api/v1`               |
-| `VITE_USE_MOCK_DATA` | Use mock data instead of real API          | `true`                                   |
-| `VITE_CERT_DIR`      | Certificate directory for HTTPS dev server | `../infrastructure/docker/traefik/certs` |
-| `VITE_CERT_FILE`     | Certificate filename                       | `localhost.crt`                          |
-| `VITE_KEY_FILE`      | Private key filename                       | `localhost.key`                          |
+| Variable             | Description | Default       |
+| -------------------- | ----------- | ------------- |
+| `VITE_API_URL`       | API URL     | localhost     |
+| `VITE_USE_MOCK_DATA` | Mock data   | true          |
+| `VITE_CERT_DIR`      | Cert dir    | certs/        |
+| `VITE_CERT_FILE`     | Cert file   | localhost.crt |
+| `VITE_KEY_FILE`      | Key file    | localhost.key |
 
 ## Development Server
 
-The development server runs on port 8080 and supports HTTPS if certificates are available in `../infrastructure/docker/traefik/certs/`.
+The development server runs on port 8080 and supports HTTPS if
+certificates are available in `../infrastructure/docker/traefik/certs/`.
 
 ## Building for Production
 

@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { env } from '../config/env'
+import { API_TIMEOUTS } from '../config/api'
 import mockApi from '../mock'
 
 const api = axios.create({
   baseURL: env.apiUrl,
+  timeout: API_TIMEOUTS.DEFAULT,
 })
 
 // Export either mock API or real API based on configuration

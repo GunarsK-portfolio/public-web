@@ -36,7 +36,7 @@
                     <n-image
                       v-for="(image, index) in miniature.images"
                       :key="index"
-                      :src="image.url"
+                      :src="addSourceToFileUrl(image.url)"
                       :alt="image.caption"
                       object-fit="cover"
                       class="miniature-image"
@@ -133,6 +133,7 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const route = useRoute()
 const { handleError } = useErrorHandler()

@@ -43,7 +43,7 @@
 
           <n-image
             v-if="project.imageFile?.url"
-            :src="project.imageFile.url"
+            :src="addSourceToFileUrl(project.imageFile.url)"
             :alt="project.title"
             class="project-image"
           />
@@ -148,6 +148,7 @@ import {
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
 import { getCategoryTagType } from '../constants/skills'
+import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const route = useRoute()
 const { handleError } = useErrorHandler()

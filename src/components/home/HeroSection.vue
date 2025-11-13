@@ -9,7 +9,7 @@
         <n-avatar
           round
           :size="150"
-          :src="profile.avatarFile?.url"
+          :src="addSourceToFileUrl(profile.avatarFile?.url)"
           fallback-src="https://via.placeholder.com/150"
         />
 
@@ -28,7 +28,7 @@
             type="primary"
             size="large"
             tag="a"
-            :href="profile.resumeFile.url"
+            :href="addSourceToFileUrl(profile.resumeFile.url)"
             target="_blank"
           >
             <template #icon>
@@ -52,6 +52,7 @@ import { NSpace, NAvatar, NText, NButton, NIcon, NSpin } from 'naive-ui'
 import { DownloadOutline } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { addSourceToFileUrl } from '../../utils/fileUrl'
 
 const { handleError } = useErrorHandler()
 

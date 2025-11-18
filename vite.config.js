@@ -15,6 +15,10 @@ const certExists = fs.existsSync(keyPath) && fs.existsSync(certPath)
 
 export default defineConfig({
   plugins: [vue()],
+  build: {
+    // Disable source maps in production to prevent source code exposure
+    sourcemap: false,
+  },
   server: {
     port: 8080,
     host: true,

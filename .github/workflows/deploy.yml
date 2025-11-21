@@ -58,7 +58,6 @@ jobs:
           docker build \
             --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
             .
 
       - name: Run Trivy vulnerability scanner
@@ -82,7 +81,6 @@ jobs:
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Get Service ARN
         id: service-arn

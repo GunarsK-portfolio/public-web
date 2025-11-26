@@ -1,63 +1,65 @@
 <template>
   <n-config-provider :theme="currentTheme">
     <n-notification-provider>
-      <n-message-provider>
-        <n-global-style />
-        <n-layout class="app-layout">
-          <n-layout-header bordered class="app-header">
-            <div class="header-inner">
-              <router-link to="/" class="header-logo"> Portfolio </router-link>
+      <n-dialog-provider>
+        <n-message-provider>
+          <n-global-style />
+          <n-layout class="app-layout">
+            <n-layout-header bordered class="app-header">
+              <div class="header-inner">
+                <router-link to="/" class="header-logo"> Portfolio </router-link>
 
-              <!-- Desktop Menu -->
-              <n-menu mode="horizontal" :options="menuOptions" class="header-menu" />
+                <!-- Desktop Menu -->
+                <n-menu mode="horizontal" :options="menuOptions" class="header-menu" />
 
-              <!-- Mobile Drawer Button -->
-              <n-button circle class="mobile-menu-btn" @click="drawerVisible = true">
-                <template #icon>
-                  <n-icon size="20">
-                    <MenuOutline />
-                  </n-icon>
-                </template>
-              </n-button>
+                <!-- Mobile Drawer Button -->
+                <n-button circle class="mobile-menu-btn" @click="drawerVisible = true">
+                  <template #icon>
+                    <n-icon size="20">
+                      <MenuOutline />
+                    </n-icon>
+                  </template>
+                </n-button>
 
-              <n-button circle class="theme-toggle" @click="toggleTheme">
-                <template #icon>
-                  <n-icon size="20">
-                    <MoonOutline v-if="isDark" />
-                    <SunnyOutline v-else />
-                  </n-icon>
-                </template>
-              </n-button>
-            </div>
-          </n-layout-header>
+                <n-button circle class="theme-toggle" @click="toggleTheme">
+                  <template #icon>
+                    <n-icon size="20">
+                      <MoonOutline v-if="isDark" />
+                      <SunnyOutline v-else />
+                    </n-icon>
+                  </template>
+                </n-button>
+              </div>
+            </n-layout-header>
 
-          <!-- Mobile Drawer -->
-          <n-drawer
-            v-model:show="drawerVisible"
-            placement="left"
-            size="240px"
-            :mask-closable="true"
-            show-footer="false"
-          >
-            <n-menu
-              mode="vertical"
-              :options="menuOptions"
-              style="margin-top: 24px"
-              @click="drawerVisible = false"
-            />
-          </n-drawer>
+            <!-- Mobile Drawer -->
+            <n-drawer
+              v-model:show="drawerVisible"
+              placement="left"
+              size="240px"
+              :mask-closable="true"
+              show-footer="false"
+            >
+              <n-menu
+                mode="vertical"
+                :options="menuOptions"
+                style="margin-top: 24px"
+                @click="drawerVisible = false"
+              />
+            </n-drawer>
 
-          <n-layout-content class="app-content">
-            <router-view />
-          </n-layout-content>
+            <n-layout-content class="app-content">
+              <router-view />
+            </n-layout-content>
 
-          <n-layout-footer bordered class="app-footer">
-            <p>© 2025 Portfolio - Built with Vue.js & Naive UI</p>
-          </n-layout-footer>
-        </n-layout>
+            <n-layout-footer bordered class="app-footer">
+              <p>© 2025 Portfolio - Built with Vue.js & Naive UI</p>
+            </n-layout-footer>
+          </n-layout>
 
-        <BackToTop />
-      </n-message-provider>
+          <BackToTop />
+        </n-message-provider>
+      </n-dialog-provider>
     </n-notification-provider>
   </n-config-provider>
 </template>
@@ -68,6 +70,7 @@ import { RouterLink } from 'vue-router'
 import {
   NConfigProvider,
   NNotificationProvider,
+  NDialogProvider,
   NMessageProvider,
   NGlobalStyle,
   NLayout,

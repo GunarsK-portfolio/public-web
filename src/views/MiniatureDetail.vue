@@ -39,7 +39,7 @@
                       :src="addSourceToFileUrl(image.url)"
                       :alt="image.caption"
                       object-fit="cover"
-                      class="miniature-image"
+                      class="image-cover"
                     />
                   </n-space>
                 </n-image-group>
@@ -70,18 +70,13 @@
                     <n-list-item v-for="paint in miniature.paints" :key="paint.name">
                       <template #prefix>
                         <div
-                          :style="{
-                            width: '24px',
-                            height: '24px',
-                            borderRadius: '4px',
-                            backgroundColor: paint.color,
-                            border: '1px solid #ccc',
-                          }"
+                          class="color-swatch"
+                          :style="{ backgroundColor: paint.colorHex }"
                         ></div>
                       </template>
                       <n-space vertical size="small">
                         <n-text strong>{{ paint.name }}</n-text>
-                        <n-text depth="3" style="font-size: 12px">{{ paint.manufacturer }}</n-text>
+                        <n-text depth="3" class="text-small">{{ paint.manufacturer }}</n-text>
                       </n-space>
                     </n-list-item>
                   </n-list>
@@ -96,7 +91,7 @@
                       {{ miniature.difficulty }}
                     </n-descriptions-item>
                     <n-descriptions-item v-if="miniature.theme" label="Theme">
-                      {{ miniature.theme }}
+                      {{ miniature.theme?.name }}
                     </n-descriptions-item>
                   </n-descriptions>
                 </n-card>
@@ -133,25 +128,22 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { createItemLoader } from '../utils/crudHelpers'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const route = useRoute()
 const { handleError } = useErrorHandler()
-const loading = ref(false)
+const loading = ref(true)
 const miniature = ref(null)
 
-const loadMiniature = async () => {
-  loading.value = true
-  try {
-    const id = route.params.id
-    const response = await api.getMiniatureById(id)
-    miniature.value = response.data
-  } catch (error) {
-    handleError(error, { retryFn: loadMiniature })
-  } finally {
-    loading.value = false
-  }
-}
+const loadMiniature = createItemLoader({
+  loading,
+  data: miniature,
+  service: api.getMiniatureById,
+  entityName: 'miniature',
+  handleError,
+  getId: () => route.params.id,
+})
 
 onMounted(() => {
   loadMiniature()
@@ -163,12 +155,5 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px;
-}
-
-/* Images */
-.miniature-image {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
 }
 </style>

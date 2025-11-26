@@ -55,22 +55,20 @@ import { NSpace, NDivider, NText, NCard, NButton, NIcon, NSpin } from 'naive-ui'
 import { MailOutline, LogoGithub, LogoLinkedin } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 
 const { handleError } = useErrorHandler()
 
 const profile = ref({})
 const loading = ref(true)
 
-const loadProfile = async () => {
-  try {
-    const response = await api.getProfile()
-    profile.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadProfile })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProfile = createDataLoader({
+  loading,
+  data: profile,
+  service: api.getProfile,
+  entityName: 'profile',
+  handleError,
+})
 
 onMounted(() => {
   loadProfile()
@@ -84,13 +82,5 @@ onMounted(() => {
 
 .contact-cards {
   width: 100%;
-}
-
-.contact-buttons n-button {
-  transition: transform 0.2s ease;
-}
-
-.contact-buttons n-button:hover {
-  transform: translateY(-2px);
 }
 </style>

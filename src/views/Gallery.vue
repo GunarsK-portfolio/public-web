@@ -22,10 +22,12 @@
             :key="theme.id"
             :title="theme.name"
             hoverable
-            class="theme-card"
+            class="card-hoverable-subtle theme-card"
           >
             <template #header-extra>
-              <n-tag :bordered="false" type="info">{{ theme.miniatures.length }} miniatures</n-tag>
+              <n-tag :bordered="false" type="info"
+                >{{ theme.miniatures?.length || 0 }} miniatures</n-tag
+              >
             </template>
 
             <n-text depth="3" class="theme-description">
@@ -36,17 +38,17 @@
               <n-grid-item v-for="mini in theme.miniatures" :key="mini.id">
                 <n-card
                   hoverable
-                  class="miniature-card"
+                  class="card-hoverable"
                   @click="$router.push(`/miniatures/${mini.id}`)"
                 >
                   <n-image
-                    :src="mini.coverImage"
+                    :src="theme.coverImageFile?.url"
                     :alt="mini.name"
                     object-fit="cover"
-                    class="miniature-image"
+                    class="image-cover-md"
                     preview-disabled
                   />
-                  <n-space vertical size="small" class="miniature-info">
+                  <n-space vertical size="small" class="mt-md">
                     <n-text strong>{{ mini.name }}</n-text>
                     <n-space>
                       <n-tag v-if="mini.scale" size="small" :bordered="false">
@@ -85,21 +87,19 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { createDataLoader } from '../utils/crudHelpers'
 
 const { handleError } = useErrorHandler()
 const loading = ref(true)
 const themes = ref([])
 
-const loadThemes = async () => {
-  try {
-    const response = await api.getMiniatureThemes()
-    themes.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadThemes })
-  } finally {
-    loading.value = false
-  }
-}
+const loadThemes = createDataLoader({
+  loading,
+  data: themes,
+  service: api.getMiniatureThemes,
+  entityName: 'miniature themes',
+  handleError,
+})
 
 onMounted(() => {
   loadThemes()
@@ -107,47 +107,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.back-button {
-  margin-bottom: 24px;
-}
-
 .theme-card {
-  cursor: default;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
   margin-bottom: 32px;
-}
-
-.theme-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .theme-description {
   margin-bottom: 16px;
-}
-
-.miniature-card {
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.miniature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.miniature-image {
-  width: 100%;
-  height: 200px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.miniature-info {
-  margin-top: 12px;
 }
 </style>

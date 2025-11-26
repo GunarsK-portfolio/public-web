@@ -34,6 +34,7 @@ import { ref, onMounted, computed } from 'vue'
 import { NSpace, NDivider, NTag, NSpin } from 'naive-ui'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 import { getCategoryTagType, getCategoryOrder } from '../../constants/skills'
 
 const { handleError } = useErrorHandler()
@@ -61,16 +62,13 @@ const skillCategories = computed(() => {
   return Object.values(categories).sort((a, b) => a.order - b.order)
 })
 
-const loadSkills = async () => {
-  try {
-    const response = await api.getSkills()
-    skills.value = response.data
-  } catch (error) {
-    handleError(error, { retryFn: loadSkills })
-  } finally {
-    loading.value = false
-  }
-}
+const loadSkills = createDataLoader({
+  loading,
+  data: skills,
+  service: api.getSkills,
+  entityName: 'skills',
+  handleError,
+})
 
 onMounted(() => {
   loadSkills()

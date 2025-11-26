@@ -45,7 +45,7 @@
             v-if="project.imageFile?.url"
             :src="addSourceToFileUrl(project.imageFile.url)"
             :alt="project.title"
-            class="project-image"
+            class="image-cover-lg"
           />
 
           <n-card title="Overview">
@@ -147,6 +147,7 @@ import {
 } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 
@@ -163,17 +164,14 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
 }
 
-const loadProject = async () => {
-  try {
-    const id = route.params.id
-    const response = await api.getProjectById(id)
-    project.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadProject })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProject = createItemLoader({
+  loading,
+  data: project,
+  service: api.getProjectById,
+  entityName: 'project',
+  handleError,
+  getId: () => route.params.id,
+})
 
 onMounted(() => {
   loadProject()
@@ -186,12 +184,5 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.project-image {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
 }
 </style>

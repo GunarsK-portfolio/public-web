@@ -12,7 +12,7 @@
       <div v-if="!loading" class="projects-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" :cols="1">
           <n-grid-item v-for="project in featuredProjects" :key="project.id">
-            <n-card hoverable class="project-card">
+            <n-card hoverable class="card-hoverable">
               <n-space vertical :size="16">
                 <n-space justify="space-between" align="center">
                   <h3 class="project-title">{{ project.title }}</h3>
@@ -70,6 +70,7 @@ import { ref, computed, onMounted } from 'vue'
 import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 import { getCategoryTagType } from '../../constants/skills'
 
 const { handleError } = useErrorHandler()
@@ -80,16 +81,13 @@ const featuredProjects = computed(() => projects.value.filter((p) => p.featured)
 
 const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
-const loadProjects = async () => {
-  try {
-    const response = await api.getProjects()
-    projects.value = response.data
-  } catch (error) {
-    handleError(error, { retryFn: loadProjects })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProjects = createDataLoader({
+  loading,
+  data: projects,
+  service: api.getProjects,
+  entityName: 'projects',
+  handleError,
+})
 
 onMounted(() => {
   loadProjects()
@@ -97,18 +95,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.project-card {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
 .project-title {
   font-size: 24px;
   font-weight: 600;
@@ -124,12 +110,7 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
-  .projects-title {
-    font-size: 28px;
-  }
-
   .project-title {
     font-size: 20px;
   }

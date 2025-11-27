@@ -237,3 +237,29 @@
     font-size: 24px;
   }
 }
+
+/* ============================================
+   Accessibility - Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up-enter-active,
+  .fade-up-leave-active {
+    transition: opacity 0.2s ease;
+  }
+
+  .fade-up-enter-from,
+  .fade-up-leave-to {
+    transform: none;
+  }
+
+  .card-hoverable,
+  .card-hoverable-subtle {
+    transition: none;
+  }
+
+  .card-hoverable:hover,
+  .card-hoverable-subtle:hover {
+    transform: none;
+  }
+}

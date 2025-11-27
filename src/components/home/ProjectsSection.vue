@@ -4,8 +4,8 @@
 
     <n-divider />
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading projects" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -24,6 +24,7 @@
                       tag="a"
                       :href="project.githubUrl"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       GitHub
                     </n-button>
@@ -34,6 +35,7 @@
                       tag="a"
                       :href="project.liveUrl"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Live Demo
                     </n-button>
@@ -54,7 +56,7 @@
                 </n-space>
 
                 <n-button type="primary" @click="$router.push(`/projects/${project.id}`)">
-                  View Details →
+                  View Details
                 </n-button>
               </n-space>
             </n-card>

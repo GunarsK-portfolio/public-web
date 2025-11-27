@@ -7,8 +7,8 @@
     <!-- Work Experience -->
     <h3 class="section-title">Work Experience</h3>
 
-    <n-space v-if="loadingExperience" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loadingExperience" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading work experience" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -36,8 +36,8 @@
     <!-- Certifications -->
     <h3 class="section-title">Certifications</h3>
 
-    <n-space v-if="loadingCertifications" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loadingCertifications" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading certifications" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -58,8 +58,9 @@
                   tag="a"
                   :href="cert.credentialUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  View Credential →
+                  View Credential
                 </n-button>
               </n-space>
             </n-card>

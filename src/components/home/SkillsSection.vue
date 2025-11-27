@@ -4,8 +4,8 @@
 
     <n-divider />
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading skills" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">

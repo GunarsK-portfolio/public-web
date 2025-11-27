@@ -8,8 +8,8 @@
       I'm always interested in hearing about new opportunities and interesting projects.
     </n-text>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading contact information" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -23,13 +23,27 @@
           </n-card>
 
           <n-space justify="center" :size="16" class="contact-buttons">
-            <n-button circle size="large" tag="a" :href="profile.github" target="_blank">
+            <n-button
+              circle
+              size="large"
+              tag="a"
+              :href="profile.github"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <template #icon>
                 <n-icon size="24"><LogoGithub /></n-icon>
               </template>
             </n-button>
 
-            <n-button circle size="large" tag="a" :href="profile.linkedin" target="_blank">
+            <n-button
+              circle
+              size="large"
+              tag="a"
+              :href="profile.linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <template #icon>
                 <n-icon size="24"><LogoLinkedin /></n-icon>
               </template>

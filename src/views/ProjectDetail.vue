@@ -7,8 +7,8 @@
       Back to Home
     </n-button>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading project details" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -22,6 +22,7 @@
                   tag="a"
                   :href="project.githubUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <template #icon>
                     <n-icon><LogoGithub /></n-icon>
@@ -34,6 +35,7 @@
                   tag="a"
                   :href="project.liveUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Live Demo
                 </n-button>

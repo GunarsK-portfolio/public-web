@@ -9,8 +9,8 @@
       Each project is a study in patience, technique, and bringing tiny characters to life.
     </n-text>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading miniatures" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -35,7 +35,7 @@
 
     <n-space justify="center" class="miniatures-button">
       <n-button type="primary" size="large" @click="$router.push('/gallery')">
-        View Full Gallery →
+        View Full Gallery
       </n-button>
     </n-space>
   </n-space>

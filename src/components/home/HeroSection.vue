@@ -1,7 +1,7 @@
 <template>
   <div class="profile-wrapper">
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading profile" />
     </n-space>
 
     <Transition name="fade-up">
@@ -10,7 +10,7 @@
           round
           :size="150"
           :src="addSourceToFileUrl(profile.avatarFile?.url)"
-          fallback-src="https://via.placeholder.com/150"
+          fallback-src="/avatar-placeholder.svg"
         />
 
         <n-space vertical align="center" :size="12">
@@ -30,6 +30,7 @@
             tag="a"
             :href="addSourceToFileUrl(profile.resumeFile.url)"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <template #icon>
               <n-icon><DownloadOutline /></n-icon>

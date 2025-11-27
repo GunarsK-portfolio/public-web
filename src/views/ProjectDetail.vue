@@ -53,9 +53,9 @@
             />
           </div>
 
-          <n-card title="Overview">
+          <n-card v-if="project.longDescription" title="Overview">
             <n-space vertical :size="16">
-              <n-text>{{ project.longDescription || project.description }}</n-text>
+              <div class="markdown-content" v-html="renderedDescription"></div>
 
               <n-divider v-if="project.startDate" />
 
@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
@@ -155,12 +155,19 @@ import { useErrorHandler } from '../composables/useErrorHandler'
 import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
+import { renderMarkdown } from '../utils/markdown'
 
 const route = useRoute()
 const router = useRouter()
 const { handleError } = useErrorHandler()
 const project = ref(null)
 const loading = ref(true)
+
+// Render markdown long description
+const renderedDescription = computed(() => {
+  if (!project.value?.longDescription) return ''
+  return renderMarkdown(project.value.longDescription)
+})
 
 // Safe navigation - go to home if no history
 const goBack = () => {
@@ -205,5 +212,76 @@ onMounted(() => {
   aspect-ratio: 3 / 1;
   overflow: hidden;
   border-radius: 8px;
+}
+
+.markdown-content {
+  line-height: 1.7;
+}
+
+.markdown-content :deep(h1),
+.markdown-content :deep(h2),
+.markdown-content :deep(h3),
+.markdown-content :deep(h4) {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.markdown-content :deep(h1) {
+  font-size: 1.5em;
+}
+
+.markdown-content :deep(h2) {
+  font-size: 1.3em;
+}
+
+.markdown-content :deep(h3) {
+  font-size: 1.15em;
+}
+
+.markdown-content :deep(p) {
+  margin-bottom: 1em;
+}
+
+.markdown-content :deep(ul),
+.markdown-content :deep(ol) {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.markdown-content :deep(li) {
+  margin-bottom: 0.25em;
+}
+
+.markdown-content :deep(code) {
+  background-color: rgba(128, 128, 128, 0.15);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.markdown-content :deep(pre) {
+  background-color: rgba(128, 128, 128, 0.1);
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+.markdown-content :deep(pre code) {
+  background: none;
+  padding: 0;
+}
+
+.markdown-content :deep(a) {
+  color: var(--n-text-color);
+  text-decoration: underline;
+}
+
+.markdown-content :deep(blockquote) {
+  border-left: 4px solid rgba(128, 128, 128, 0.3);
+  padding-left: 1em;
+  margin: 1em 0;
+  color: var(--n-text-color-3);
 }
 </style>

@@ -60,4 +60,9 @@ const router = createRouter({
   routes,
 })
 
+router.afterEach((to) => {
+  const title = to.meta.title
+  document.title = title ? `${title} | Portfolio` : 'Portfolio'
+})
+
 export default router

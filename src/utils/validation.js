@@ -35,8 +35,10 @@ export const url = (options = {}) => {
   return {
     validator: (_rule, value) => {
       if (!value) return true
+      const trimmedValue = value.trim()
+      if (!trimmedValue) return true
       try {
-        const urlObj = new URL(value)
+        const urlObj = new URL(trimmedValue)
         if (!protocols.includes(urlObj.protocol)) {
           return new Error(`URL must use one of the following protocols: ${protocols.join(', ')}`)
         }

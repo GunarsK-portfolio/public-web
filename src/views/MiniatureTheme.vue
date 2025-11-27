@@ -175,4 +175,14 @@ onMounted(() => {
     font-size: 1rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .miniature-image {
+    transition: none;
+  }
+
+  .miniature-card:hover .miniature-image {
+    transform: none;
+  }
+}
 </style>

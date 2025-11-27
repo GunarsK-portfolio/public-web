@@ -262,7 +262,10 @@ watch(
   width: 24px;
   height: 24px;
   border-radius: 4px;
-  border: 1px solid var(--border-color);
+  border: 2px solid rgba(128, 128, 128, 0.6);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {

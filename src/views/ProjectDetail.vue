@@ -4,7 +4,7 @@
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
-      Back to Home
+      Back
     </n-button>
 
     <n-space v-if="loading" justify="center" role="status" aria-live="polite">

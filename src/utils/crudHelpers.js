@@ -46,7 +46,10 @@ export function createDataLoader(options) {
         try {
           data.value = transform(result)
         } catch (transformError) {
-          logger.error(`Failed to transform ${entityName} data`, { error: transformError.message })
+          logger.error(`Failed to transform ${entityName} data`, {
+            error: transformError.message,
+            stack: transformError.stack,
+          })
           data.value = result // Fallback to untransformed data
         }
       } else {
@@ -114,7 +117,10 @@ export function createItemLoader(options) {
         try {
           data.value = transform(result)
         } catch (transformError) {
-          logger.error(`Failed to transform ${entityName} data`, { error: transformError.message })
+          logger.error(`Failed to transform ${entityName} data`, {
+            error: transformError.message,
+            stack: transformError.stack,
+          })
           data.value = result
         }
       } else {

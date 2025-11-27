@@ -4,7 +4,7 @@
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
-      Back to Home
+      Back
     </n-button>
 
     <n-page-header title="Miniature Painting" subtitle="My painting projects organized by theme">

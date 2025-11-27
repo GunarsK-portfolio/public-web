@@ -4,7 +4,7 @@
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
-      Back to Home
+      Back
     </n-button>
 
     <n-page-header title="Contact Me" subtitle="Let's connect and discuss opportunities">

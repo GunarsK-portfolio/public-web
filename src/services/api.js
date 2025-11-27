@@ -30,13 +30,13 @@ export default env.useMockData
       getProjectById(id) {
         return api.get(`/projects/${id}`)
       },
-      getMiniatures() {
-        return api.get('/miniatures')
-      },
-      getMiniatureById(id) {
-        return api.get(`/miniatures/${id}`)
-      },
       getMiniatureThemes() {
         return api.get('/miniatures/themes')
+      },
+      getMiniatureThemeById(id) {
+        return api.get(`/miniatures/themes/${id}`)
+      },
+      getMiniatureById(id) {
+        return api.get(`/miniatures/projects/${id}`)
       },
     }

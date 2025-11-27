@@ -8,8 +8,8 @@
       I'm always interested in hearing about new opportunities and interesting projects.
     </n-text>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading contact information" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -23,13 +23,27 @@
           </n-card>
 
           <n-space justify="center" :size="16" class="contact-buttons">
-            <n-button circle size="large" tag="a" :href="profile.github" target="_blank">
+            <n-button
+              circle
+              size="large"
+              tag="a"
+              :href="profile.github"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <template #icon>
                 <n-icon size="24"><LogoGithub /></n-icon>
               </template>
             </n-button>
 
-            <n-button circle size="large" tag="a" :href="profile.linkedin" target="_blank">
+            <n-button
+              circle
+              size="large"
+              tag="a"
+              :href="profile.linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <template #icon>
                 <n-icon size="24"><LogoLinkedin /></n-icon>
               </template>
@@ -55,22 +69,20 @@ import { NSpace, NDivider, NText, NCard, NButton, NIcon, NSpin } from 'naive-ui'
 import { MailOutline, LogoGithub, LogoLinkedin } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 
 const { handleError } = useErrorHandler()
 
 const profile = ref({})
 const loading = ref(true)
 
-const loadProfile = async () => {
-  try {
-    const response = await api.getProfile()
-    profile.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadProfile })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProfile = createDataLoader({
+  loading,
+  data: profile,
+  service: api.getProfile,
+  entityName: 'profile',
+  handleError,
+})
 
 onMounted(() => {
   loadProfile()
@@ -84,13 +96,5 @@ onMounted(() => {
 
 .contact-cards {
   width: 100%;
-}
-
-.contact-buttons n-button {
-  transition: transform 0.2s ease;
-}
-
-.contact-buttons n-button:hover {
-  transform: translateY(-2px);
 }
 </style>

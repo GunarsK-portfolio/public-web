@@ -1,14 +1,14 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="$router.back()">
+    <n-button text @click="goBack">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
-      Back to Home
+      Back
     </n-button>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading project details" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -22,6 +22,7 @@
                   tag="a"
                   :href="project.githubUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <template #icon>
                     <n-icon><LogoGithub /></n-icon>
@@ -34,6 +35,7 @@
                   tag="a"
                   :href="project.liveUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Live Demo
                 </n-button>
@@ -41,12 +43,15 @@
             </template>
           </n-page-header>
 
-          <n-image
-            v-if="project.imageFile?.url"
-            :src="addSourceToFileUrl(project.imageFile.url)"
-            :alt="project.title"
-            class="project-image"
-          />
+          <div v-if="project.imageFile?.url" class="project-image-wrapper">
+            <n-image
+              :src="addSourceToFileUrl(project.imageFile.url)"
+              :alt="project.title"
+              class="image-cover-lg"
+              width="1200"
+              height="400"
+            />
+          </div>
 
           <n-card title="Overview">
             <n-space vertical :size="16">
@@ -123,7 +128,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
   NPageHeader,
@@ -147,13 +152,24 @@ import {
 } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const route = useRoute()
+const router = useRouter()
 const { handleError } = useErrorHandler()
 const project = ref(null)
 const loading = ref(true)
+
+// Safe navigation - go to home if no history
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
 
 const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
@@ -163,17 +179,14 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
 }
 
-const loadProject = async () => {
-  try {
-    const id = route.params.id
-    const response = await api.getProjectById(id)
-    project.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadProject })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProject = createItemLoader({
+  loading,
+  data: project,
+  service: api.getProjectById,
+  entityName: 'project',
+  handleError,
+  getId: () => route.params.id,
+})
 
 onMounted(() => {
   loadProject()
@@ -188,10 +201,9 @@ onMounted(() => {
   align-items: center;
 }
 
-.project-image {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
+.project-image-wrapper {
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
   border-radius: 8px;
 }
 </style>

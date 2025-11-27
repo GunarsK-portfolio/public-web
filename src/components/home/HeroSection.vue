@@ -1,7 +1,7 @@
 <template>
   <div class="profile-wrapper">
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading profile" />
     </n-space>
 
     <Transition name="fade-up">
@@ -10,7 +10,7 @@
           round
           :size="150"
           :src="addSourceToFileUrl(profile.avatarFile?.url)"
-          fallback-src="https://via.placeholder.com/150"
+          fallback-src="/avatar-placeholder.svg"
         />
 
         <n-space vertical align="center" :size="12">
@@ -30,6 +30,7 @@
             tag="a"
             :href="addSourceToFileUrl(profile.resumeFile.url)"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <template #icon>
               <n-icon><DownloadOutline /></n-icon>
@@ -52,6 +53,7 @@ import { NSpace, NAvatar, NText, NButton, NIcon, NSpin } from 'naive-ui'
 import { DownloadOutline } from '@vicons/ionicons5'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 import { addSourceToFileUrl } from '../../utils/fileUrl'
 
 const { handleError } = useErrorHandler()
@@ -59,16 +61,13 @@ const { handleError } = useErrorHandler()
 const profile = ref({})
 const loading = ref(true)
 
-const loadProfile = async () => {
-  try {
-    const response = await api.getProfile()
-    profile.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadProfile })
-  } finally {
-    loading.value = false
-  }
-}
+const loadProfile = createDataLoader({
+  loading,
+  data: profile,
+  service: api.getProfile,
+  entityName: 'profile',
+  handleError,
+})
 
 const scrollTo = (sectionId) => {
   const element = document.getElementById(sectionId)
@@ -116,15 +115,6 @@ onMounted(() => {
 .profile-buttons {
   justify-content: center;
   flex-wrap: wrap;
-}
-
-.profile-buttons n-button {
-  margin: 4px;
-  transition: transform 0.2s ease;
-}
-
-.profile-buttons n-button:hover {
-  transform: translateY(-2px);
 }
 
 /* Responsive adjustments */

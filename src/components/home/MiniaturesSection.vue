@@ -9,23 +9,35 @@
       Each project is a study in patience, technique, and bringing tiny characters to life.
     </n-text>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading miniatures" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
       <div v-if="!loading" class="miniatures-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" cols="1 512:2 768:3">
-          <n-grid-item v-for="theme in themes" :key="theme.id">
-            <n-card hoverable class="miniature-card" @click="$router.push('/gallery')">
+          <n-grid-item v-for="(theme, index) in themes" :key="theme.id">
+            <n-card
+              hoverable
+              class="card-hoverable"
+              tabindex="0"
+              role="article"
+              :aria-label="`View ${theme.name} miniatures`"
+              @click="$router.push(`/miniatures/themes/${theme.id}`)"
+              @keydown.enter="$router.push(`/miniatures/themes/${theme.id}`)"
+            >
               <template #cover>
-                <img :src="theme.coverImage" :alt="theme.name" class="miniature-cover" />
+                <img
+                  :src="theme.coverImageFile?.url"
+                  :alt="theme.name"
+                  class="image-card-cover"
+                  :loading="index === 0 ? 'eager' : 'lazy'"
+                  width="400"
+                  height="200"
+                />
               </template>
               <n-space vertical :size="8" align="center">
                 <n-text strong class="miniature-name">{{ theme.name }}</n-text>
-                <n-text depth="3" class="miniature-count">
-                  {{ theme.miniatures.length }} miniatures
-                </n-text>
               </n-space>
             </n-card>
           </n-grid-item>
@@ -34,9 +46,9 @@
     </transition-group>
 
     <n-space justify="center" class="miniatures-button">
-      <n-button type="primary" size="large" @click="$router.push('/gallery')">
-        View Full Gallery →
-      </n-button>
+      <router-link v-slot="{ navigate }" to="/miniatures" custom>
+        <n-button type="primary" size="large" tag="a" @click="navigate"> View All Themes </n-button>
+      </router-link>
     </n-space>
   </n-space>
 </template>
@@ -46,22 +58,20 @@ import { ref, onMounted } from 'vue'
 import { NSpace, NDivider, NText, NSpin, NGridItem, NCard, NButton, NGrid } from 'naive-ui'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 
 const { handleError } = useErrorHandler()
 
 const loading = ref(true)
 const themes = ref([])
 
-const loadThemes = async () => {
-  try {
-    const response = await api.getMiniatureThemes()
-    themes.value = response.data
-  } catch (err) {
-    handleError(err, { retryFn: loadThemes })
-  } finally {
-    loading.value = false
-  }
-}
+const loadThemes = createDataLoader({
+  loading,
+  data: themes,
+  service: api.getMiniatureThemes,
+  entityName: 'miniature themes',
+  handleError,
+})
 
 onMounted(() => {
   loadThemes()
@@ -75,50 +85,17 @@ onMounted(() => {
   text-align: center;
 }
 
-.miniature-card {
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.miniature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.miniature-cover {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 4px 4px 0 0;
-}
-
 .miniature-name {
   font-size: 18px;
-}
-
-.miniature-count {
-  font-size: 14px;
-  opacity: 0.7;
 }
 
 .miniatures-button {
   margin-top: 16px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
-  .miniatures-title {
-    font-size: 28px;
-  }
-
   .miniatures-description {
     font-size: 14px;
-  }
-
-  .miniature-cover {
-    height: 180px;
   }
 }
 </style>

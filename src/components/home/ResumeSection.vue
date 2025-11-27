@@ -7,8 +7,8 @@
     <!-- Work Experience -->
     <h3 class="section-title">Work Experience</h3>
 
-    <n-space v-if="loadingExperience" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loadingExperience" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading work experience" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -20,7 +20,7 @@
             :title="exp.position"
             :time="formatDateRange(exp)"
           >
-            <n-card size="small" class="resume-card">
+            <n-card size="small" class="card-hoverable-subtle resume-card">
               <n-space vertical :size="8">
                 <n-text strong class="resume-company">{{ exp.company }}</n-text>
                 <n-text class="resume-description">{{ exp.description }}</n-text>
@@ -36,15 +36,15 @@
     <!-- Certifications -->
     <h3 class="section-title">Certifications</h3>
 
-    <n-space v-if="loadingCertifications" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loadingCertifications" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading certifications" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
       <div v-if="!loadingCertifications" key="certifications-content">
         <n-grid cols="1 512:2 768:3" :x-gap="16" :y-gap="16">
           <n-grid-item v-for="cert in certifications" :key="cert.id">
-            <n-card size="small" hoverable class="resume-card">
+            <n-card size="small" hoverable class="card-hoverable resume-card">
               <n-space vertical :size="8">
                 <n-text strong class="resume-cert-name">{{ cert.name }}</n-text>
                 <n-text depth="3" class="resume-cert-issuer">{{ cert.issuer }}</n-text>
@@ -58,8 +58,9 @@
                   tag="a"
                   :href="cert.credentialUrl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  View Credential →
+                  View Credential
                 </n-button>
               </n-space>
             </n-card>
@@ -86,6 +87,7 @@ import {
 } from 'naive-ui'
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
+import { createDataLoader } from '../../utils/crudHelpers'
 
 const { handleError } = useErrorHandler()
 
@@ -94,27 +96,21 @@ const certifications = ref([])
 const loadingExperience = ref(true)
 const loadingCertifications = ref(true)
 
-const loadExperience = async () => {
-  try {
-    const response = await api.getExperience()
-    experience.value = response.data
-  } catch (error) {
-    handleError(error, { retryFn: loadExperience })
-  } finally {
-    loadingExperience.value = false
-  }
-}
+const loadExperience = createDataLoader({
+  loading: loadingExperience,
+  data: experience,
+  service: api.getExperience,
+  entityName: 'experience',
+  handleError,
+})
 
-const loadCertifications = async () => {
-  try {
-    const response = await api.getCertifications()
-    certifications.value = response.data
-  } catch (error) {
-    handleError(error, { retryFn: loadCertifications })
-  } finally {
-    loadingCertifications.value = false
-  }
-}
+const loadCertifications = createDataLoader({
+  loading: loadingCertifications,
+  data: certifications,
+  service: api.getCertifications,
+  entityName: 'certifications',
+  handleError,
+})
 
 onMounted(() => {
   loadExperience()
@@ -135,25 +131,12 @@ const formatDate = (date) => {
 </script>
 
 <style scoped>
-.section-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 24px 0;
-}
-
 .resume-card {
   padding: 16px;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-.resume-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.resume-company {
+.resume-company,
+.resume-cert-name {
   font-size: 16px;
 }
 
@@ -161,19 +144,9 @@ const formatDate = (date) => {
   font-size: 14px;
 }
 
-.resume-cert-name {
-  font-size: 16px;
-}
-
 .resume-cert-issuer,
 .resume-cert-date {
   font-size: 14px;
   opacity: 0.8;
-}
-
-.resume-button {
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
 }
 </style>

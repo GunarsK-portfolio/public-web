@@ -1,3 +1,7 @@
+/* ============================================
+   Animations
+   ============================================ */
+
 /* Fade-up animation for cards */
 .fade-up-enter-active,
 .fade-up-leave-active {
@@ -9,12 +13,15 @@
   transform: translateY(20px);
 }
 
-/* Section wrappers */
+/* ============================================
+   Layout - Section Wrappers
+   ============================================ */
+
 .hero-section-wrapper {
   padding: 80px 20px;
   max-width: 900px;
   margin: 0 auto;
-  margin-bottom: 40px; /* Add spacing between sections */
+  margin-bottom: 40px;
 }
 
 .section-wrapper {
@@ -23,7 +30,10 @@
   margin: 0 auto;
 }
 
-/* Text styling */
+/* ============================================
+   Typography
+   ============================================ */
+
 .hero-title {
   font-size: 36px;
   font-weight: 700;
@@ -31,7 +41,169 @@
   text-align: center;
 }
 
-/* Mobile responsive improvements */
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 24px 0;
+}
+
+.section-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.text-description {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ============================================
+   Cards - Hover Effects
+   ============================================ */
+
+.card-hoverable {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-hoverable:focus-visible,
+.card-hoverable-subtle:focus-visible {
+  outline: 2px solid var(--n-primary-color, #2080f0);
+  outline-offset: 2px;
+}
+
+/* Card without pointer cursor (for container cards) */
+.card-hoverable-subtle {
+  cursor: default;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-hoverable-subtle:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   Images
+   ============================================ */
+
+.image-cover {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.image-cover-sm {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.image-cover-md {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.image-cover-lg {
+  width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Cover image with top border radius only (for card covers) */
+.image-card-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px 4px 0 0;
+}
+
+/* ============================================
+   Color Swatch (for paint colors)
+   ============================================ */
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid rgba(128, 128, 128, 0.6);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-group-center {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================
+   Spacing Utilities
+   ============================================ */
+
+.mt-sm {
+  margin-top: 8px;
+}
+
+.mt-md {
+  margin-top: 12px;
+}
+
+.mt-lg {
+  margin-top: 16px;
+}
+
+.mb-sm {
+  margin-bottom: 8px;
+}
+
+.mb-md {
+  margin-bottom: 12px;
+}
+
+.mb-lg {
+  margin-bottom: 16px;
+}
+
+/* ============================================
+   Mobile Responsive
+   ============================================ */
+
 @media (max-width: 768px) {
   .hero-section-wrapper {
     padding: 60px 16px;
@@ -45,6 +217,18 @@
   .hero-title {
     font-size: 28px;
     margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .text-description {
+    font-size: 14px;
+  }
+
+  .image-card-cover {
+    height: 180px;
   }
 }
 
@@ -60,5 +244,31 @@
 
   .hero-title {
     font-size: 24px;
+  }
+}
+
+/* ============================================
+   Accessibility - Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up-enter-active,
+  .fade-up-leave-active {
+    transition: opacity 0.2s ease;
+  }
+
+  .fade-up-enter-from,
+  .fade-up-leave-to {
+    transform: none;
+  }
+
+  .card-hoverable,
+  .card-hoverable-subtle {
+    transition: none;
+  }
+
+  .card-hoverable:hover,
+  .card-hoverable-subtle:hover {
+    transform: none;
   }
 }

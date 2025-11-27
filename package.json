@@ -13,6 +13,8 @@
   "dependencies": {
     "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.13.2",
+    "dompurify": "^3.3.0",
+    "marked": "^17.0.1",
     "naive-ui": "^2.43.1",
     "pino": "^9.14.0",
     "vue": "^3.5.22",

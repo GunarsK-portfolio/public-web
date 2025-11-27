@@ -74,24 +74,9 @@
               <n-text class="description-text">{{ miniature.description }}</n-text>
             </n-card>
 
-            <n-card v-if="miniature.techniques?.length" title="Painting Techniques" class="mt-lg">
-              <n-space>
-                <n-tag
-                  v-for="technique in miniature.techniques"
-                  :key="technique"
-                  :bordered="false"
-                  type="warning"
-                >
-                  {{ technique }}
-                </n-tag>
-              </n-space>
-            </n-card>
-          </n-grid-item>
-
-          <n-grid-item>
-            <n-card v-if="miniature.paints?.length" title="Paints Used">
+            <n-card v-if="paints.length" title="Paints Used" class="mt-lg">
               <n-list bordered>
-                <n-list-item v-for="paint in miniature.paints" :key="paint.name">
+                <n-list-item v-for="paint in paints" :key="paint.id">
                   <template #prefix>
                     <div class="color-swatch" :style="{ backgroundColor: paint.colorHex }"></div>
                   </template>
@@ -102,8 +87,27 @@
                 </n-list-item>
               </n-list>
             </n-card>
+          </n-grid-item>
 
-            <n-card v-if="miniature.timeSpent || miniature.difficulty" title="Stats">
+          <n-grid-item>
+            <n-card v-if="techniques.length" title="Painting Techniques">
+              <n-space>
+                <n-tag
+                  v-for="technique in techniques"
+                  :key="technique.id"
+                  :bordered="false"
+                  type="warning"
+                >
+                  {{ technique.name }}
+                </n-tag>
+              </n-space>
+            </n-card>
+
+            <n-card
+              v-if="miniature.timeSpent || miniature.difficulty"
+              title="Stats"
+              :class="{ 'mt-lg': techniques.length }"
+            >
               <n-descriptions :column="1" bordered>
                 <n-descriptions-item v-if="miniature.timeSpent" label="Time Spent">
                   {{ miniature.timeSpent }} hours
@@ -124,7 +128,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NSpin,
@@ -162,6 +166,18 @@ const router = useRouter()
 const loading = ref(true)
 const miniature = ref(null)
 const error = ref(null)
+
+// Extract techniques from junction table structure
+const techniques = computed(() => {
+  if (!miniature.value?.techniques) return []
+  return miniature.value.techniques.map((t) => t.technique).filter(Boolean)
+})
+
+// Extract paints from junction table structure
+const paints = computed(() => {
+  if (!miniature.value?.paints) return []
+  return miniature.value.paints.map((p) => p.paint).filter(Boolean)
+})
 
 // Safe navigation - go to miniatures list if no history
 const goBack = () => {

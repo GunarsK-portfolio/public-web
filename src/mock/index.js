@@ -45,9 +45,20 @@ export const mockApi = {
     return { data: project }
   },
 
-  async getMiniatures() {
+  async getMiniatureThemes() {
     await delay()
-    return { data: miniaturesData }
+    return { data: themesData }
+  },
+
+  async getMiniatureThemeById(id) {
+    await delay()
+    const theme = themesData.find((t) => t.id === parseInt(id))
+    if (!theme) {
+      throw new Error(`Miniature theme with id ${id} not found`)
+    }
+    // Include miniatures belonging to this theme
+    theme.miniatures = miniaturesData.filter((m) => m.themeId === theme.id)
+    return { data: theme }
   },
 
   async getMiniatureById(id) {
@@ -57,11 +68,6 @@ export const mockApi = {
       throw new Error(`Miniature with id ${id} not found`)
     }
     return { data: miniature }
-  },
-
-  async getMiniatureThemes() {
-    await delay()
-    return { data: themesData }
   },
 }
 

@@ -17,15 +17,16 @@
       <div v-if="!loading" class="miniatures-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" cols="1 512:2 768:3">
           <n-grid-item v-for="theme in themes" :key="theme.id">
-            <n-card hoverable class="card-hoverable" @click="$router.push('/gallery')">
+            <n-card
+              hoverable
+              class="card-hoverable"
+              @click="$router.push(`/miniatures/themes/${theme.id}`)"
+            >
               <template #cover>
                 <img :src="theme.coverImageFile?.url" :alt="theme.name" class="image-card-cover" />
               </template>
               <n-space vertical :size="8" align="center">
                 <n-text strong class="miniature-name">{{ theme.name }}</n-text>
-                <n-text depth="3" class="miniature-count">
-                  {{ theme.miniatures?.length || 0 }} miniatures
-                </n-text>
               </n-space>
             </n-card>
           </n-grid-item>
@@ -34,8 +35,8 @@
     </transition-group>
 
     <n-space justify="center" class="miniatures-button">
-      <n-button type="primary" size="large" @click="$router.push('/gallery')">
-        View Full Gallery
+      <n-button type="primary" size="large" @click="$router.push('/miniatures')">
+        View All Themes
       </n-button>
     </n-space>
   </n-space>
@@ -75,11 +76,6 @@ onMounted(() => {
 
 .miniature-name {
   font-size: 18px;
-}
-
-.miniature-count {
-  font-size: 14px;
-  opacity: 0.7;
 }
 
 .miniatures-button {

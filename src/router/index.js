@@ -8,14 +8,19 @@ const routes = [
     component: Home,
   },
   {
-    path: '/gallery',
-    name: 'Gallery',
-    component: () => import('../views/Gallery.vue'),
+    path: '/miniatures',
+    name: 'Miniatures',
+    component: () => import('../views/Miniatures.vue'),
   },
   {
-    path: '/miniatures/:id',
-    name: 'MiniatureDetail',
-    component: () => import('../views/MiniatureDetail.vue'),
+    path: '/miniatures/themes/:id',
+    name: 'MiniatureTheme',
+    component: () => import('../views/MiniatureTheme.vue'),
+  },
+  {
+    path: '/miniatures/projects/:id',
+    name: 'MiniatureProject',
+    component: () => import('../views/MiniatureProject.vue'),
   },
   {
     path: '/contact',

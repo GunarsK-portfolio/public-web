@@ -123,8 +123,8 @@ const menuOptions = [
     key: 'home',
   },
   {
-    label: () => h(RouterLink, { to: '/gallery' }, { default: () => 'Gallery' }),
-    key: 'gallery',
+    label: () => h(RouterLink, { to: '/miniatures' }, { default: () => 'Miniatures' }),
+    key: 'miniatures',
   },
   {
     label: () => h(RouterLink, { to: '/contact' }, { default: () => 'Contact' }),

@@ -38,7 +38,7 @@
               placement="left"
               size="240px"
               :mask-closable="true"
-              show-footer="false"
+              :show-footer="false"
             >
               <n-menu
                 mode="vertical"

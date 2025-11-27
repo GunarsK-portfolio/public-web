@@ -16,12 +16,12 @@
     <transition-group name="fade-up" tag="div">
       <div v-if="!loading" class="miniatures-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" cols="1 512:2 768:3">
-          <n-grid-item v-for="theme in themes" :key="theme.id">
+          <n-grid-item v-for="(theme, index) in themes" :key="theme.id">
             <n-card
               hoverable
               class="card-hoverable"
               tabindex="0"
-              role="link"
+              role="article"
               :aria-label="`View ${theme.name} miniatures`"
               @click="$router.push(`/miniatures/themes/${theme.id}`)"
               @keydown.enter="$router.push(`/miniatures/themes/${theme.id}`)"
@@ -31,7 +31,9 @@
                   :src="theme.coverImageFile?.url"
                   :alt="theme.name"
                   class="image-card-cover"
-                  loading="lazy"
+                  :loading="index === 0 ? 'eager' : 'lazy'"
+                  width="400"
+                  height="200"
                 />
               </template>
               <n-space vertical :size="8" align="center">
@@ -44,9 +46,9 @@
     </transition-group>
 
     <n-space justify="center" class="miniatures-button">
-      <n-button type="primary" size="large" @click="$router.push('/miniatures')">
-        View All Themes
-      </n-button>
+      <router-link v-slot="{ navigate }" to="/miniatures" custom>
+        <n-button type="primary" size="large" tag="a" @click="navigate"> View All Themes </n-button>
+      </router-link>
     </n-space>
   </n-space>
 </template>

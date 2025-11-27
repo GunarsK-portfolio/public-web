@@ -1,6 +1,6 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="$router.back()">
+    <n-button text @click="goBack">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
@@ -11,8 +11,19 @@
       <n-spin size="large" aria-label="Loading miniature details" />
     </n-space>
 
+    <n-result
+      v-else-if="!loading && error"
+      status="error"
+      title="Failed to Load"
+      :description="error"
+    >
+      <template #footer>
+        <n-button @click="loadMiniature">Try Again</n-button>
+      </template>
+    </n-result>
+
     <transition-group name="fade-up" tag="div">
-      <div v-if="!loading && miniature" class="miniature-wrapper">
+      <div v-if="!loading && !error && miniature" class="miniature-wrapper">
         <div class="miniature-header">
           <h1 class="hero-title miniature-title">{{ miniature.name }}</h1>
           <p v-if="miniature.subtitle" class="miniature-subtitle">{{ miniature.subtitle }}</p>
@@ -36,12 +47,12 @@
               prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
               next-slide-style="transform: translateX(50%) translateZ(-800px);"
               class="image-carousel"
-              centered-slides="true"
+              :centered-slides="true"
               :show-dots="true"
             >
               <n-carousel-item
                 v-for="(image, index) in miniature.images"
-                :key="image.url || index"
+                :key="image.id || `image-${index}`"
                 :style="{ width: '60%' }"
               >
                 <n-image
@@ -60,7 +71,7 @@
         <n-grid :x-gap="24" :y-gap="24" cols="1 768:2" class="details-grid">
           <n-grid-item>
             <n-card v-if="miniature.description" title="About">
-              <n-text>{{ miniature.description }}</n-text>
+              <n-text class="description-text">{{ miniature.description }}</n-text>
             </n-card>
 
             <n-card v-if="miniature.techniques?.length" title="Painting Techniques" class="mt-lg">
@@ -114,7 +125,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   NSpin,
   NSpace,
@@ -134,11 +145,10 @@ import {
   NDivider,
   NCarousel,
   NCarouselItem,
+  NResult,
 } from 'naive-ui'
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
-import { useErrorHandler } from '../composables/useErrorHandler'
-import { createItemLoader } from '../utils/crudHelpers'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const formatDate = (dateString) => {
@@ -148,18 +158,36 @@ const formatDate = (dateString) => {
 }
 
 const route = useRoute()
-const { handleError } = useErrorHandler()
+const router = useRouter()
 const loading = ref(true)
 const miniature = ref(null)
+const error = ref(null)
 
-const loadMiniature = createItemLoader({
-  loading,
-  data: miniature,
-  service: api.getMiniatureById,
-  entityName: 'miniature',
-  handleError,
-  getId: () => route.params.id,
-})
+// Safe navigation - go to miniatures list if no history
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/miniatures')
+  }
+}
+
+// Custom loader with inline error display
+const loadMiniature = async () => {
+  loading.value = true
+  error.value = null
+  try {
+    const id = route.params.id
+    const response = await api.getMiniatureById(id)
+    miniature.value = response.data
+  } catch (err) {
+    // Show inline error instead of redirecting
+    error.value = err.response?.status === 404 ? 'Miniature not found' : 'Failed to load miniature'
+    miniature.value = null
+  } finally {
+    loading.value = false
+  }
+}
 
 watch(
   () => route.params.id,
@@ -197,6 +225,11 @@ watch(
 
 .image-carousel {
   height: 400px;
+  aspect-ratio: 16 / 9;
+}
+
+.description-text {
+  white-space: pre-line;
 }
 
 .carousel-img {

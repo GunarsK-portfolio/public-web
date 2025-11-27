@@ -23,7 +23,17 @@ import { logger } from './logger'
  * })
  */
 export function createDataLoader(options) {
+  if (!options) {
+    throw new Error('createDataLoader: options object is required')
+  }
+
   const { loading, data, service, entityName, handleError, transform } = options
+
+  if (!loading || !data || !service || !entityName || !handleError) {
+    throw new Error(
+      'createDataLoader: required options missing (loading, data, service, entityName, handleError)'
+    )
+  }
 
   const loader = async () => {
     loading.value = true
@@ -80,7 +90,17 @@ export function createDataLoader(options) {
  * })
  */
 export function createItemLoader(options) {
+  if (!options) {
+    throw new Error('createItemLoader: options object is required')
+  }
+
   const { loading, data, service, entityName, handleError, getId, transform } = options
+
+  if (!loading || !data || !service || !entityName || !handleError || !getId) {
+    throw new Error(
+      'createItemLoader: required options missing (loading, data, service, entityName, handleError, getId)'
+    )
+  }
 
   const loader = async () => {
     loading.value = true

@@ -1,6 +1,6 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="$router.back()">
+    <n-button text @click="goBack">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
@@ -10,8 +10,8 @@
     <n-page-header title="Miniature Painting" subtitle="My painting projects organized by theme">
     </n-page-header>
 
-    <n-space v-if="loading" justify="center">
-      <n-spin size="large" />
+    <n-space v-if="loading" justify="center" role="status" aria-live="polite">
+      <n-spin size="large" aria-label="Loading miniature themes" />
     </n-space>
 
     <transition-group name="fade-up" tag="div">
@@ -21,10 +21,21 @@
             <n-card
               hoverable
               class="card-hoverable theme-card"
+              tabindex="0"
+              role="link"
+              :aria-label="`View ${theme.name} miniatures`"
               @click="$router.push(`/miniatures/themes/${theme.id}`)"
+              @keydown.enter="$router.push(`/miniatures/themes/${theme.id}`)"
             >
               <template #cover>
-                <img :src="theme.coverImageFile?.url" :alt="theme.name" class="image-card-cover" />
+                <img
+                  :src="theme.coverImageFile?.url"
+                  :alt="theme.name"
+                  class="image-card-cover"
+                  loading="lazy"
+                  width="400"
+                  height="200"
+                />
               </template>
               <n-space vertical :size="8" align="center">
                 <n-text strong class="theme-name">{{ theme.name }}</n-text>
@@ -42,6 +53,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   NSpace,
   NSpin,
@@ -58,9 +70,19 @@ import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
 import { createDataLoader } from '../utils/crudHelpers'
 
+const router = useRouter()
 const { handleError } = useErrorHandler()
 const loading = ref(true)
 const themes = ref([])
+
+// Safe navigation - go to home if no history
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
 
 const loadThemes = createDataLoader({
   loading,

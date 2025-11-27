@@ -56,9 +56,13 @@ export const mockApi = {
     if (!theme) {
       throw new Error(`Miniature theme with id ${id} not found`)
     }
-    // Include miniatures belonging to this theme
-    theme.miniatures = miniaturesData.filter((m) => m.themeId === theme.id)
-    return { data: theme }
+    // Return a copy to avoid mutating shared mock data
+    return {
+      data: {
+        ...theme,
+        miniatures: miniaturesData.filter((m) => m.themeId === theme.id),
+      },
+    }
   },
 
   async getMiniatureById(id) {

@@ -1,6 +1,6 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="$router.back()">
+    <n-button text @click="goBack">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
@@ -43,12 +43,15 @@
             </template>
           </n-page-header>
 
-          <n-image
-            v-if="project.imageFile?.url"
-            :src="addSourceToFileUrl(project.imageFile.url)"
-            :alt="project.title"
-            class="image-cover-lg"
-          />
+          <div v-if="project.imageFile?.url" class="project-image-wrapper">
+            <n-image
+              :src="addSourceToFileUrl(project.imageFile.url)"
+              :alt="project.title"
+              class="image-cover-lg"
+              width="1200"
+              height="400"
+            />
+          </div>
 
           <n-card title="Overview">
             <n-space vertical :size="16">
@@ -125,7 +128,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
   NPageHeader,
@@ -154,9 +157,19 @@ import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 
 const route = useRoute()
+const router = useRouter()
 const { handleError } = useErrorHandler()
 const project = ref(null)
 const loading = ref(true)
+
+// Safe navigation - go to home if no history
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
 
 const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
@@ -186,5 +199,11 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.project-image-wrapper {
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
+  border-radius: 8px;
 }
 </style>

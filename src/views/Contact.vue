@@ -1,6 +1,6 @@
 <template>
   <n-space vertical size="large" class="section-wrapper">
-    <n-button text @click="router.back()">
+    <n-button text @click="goBack">
       <template #icon>
         <n-icon><ArrowBackOutline /></n-icon>
       </template>
@@ -102,6 +102,7 @@
                       tag="a"
                       :href="profile.github"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <template #icon>
                         <n-icon size="20"><LogoGithub /></n-icon>
@@ -114,6 +115,7 @@
                       tag="a"
                       :href="profile.linkedin"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <template #icon>
                         <n-icon size="20"><LogoLinkedin /></n-icon>
@@ -172,6 +174,15 @@ import { logger } from '../utils/logger'
 const { router, message } = useViewServices()
 const { handleError } = useErrorHandler()
 
+// Safe navigation - go to home if no history
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
+
 const formRef = ref(null)
 const loading = ref(true)
 const sending = ref(false)
@@ -223,6 +234,7 @@ function handleReset() {
     subject: '',
     message: '',
   }
+  message.info('Form cleared')
 }
 
 const loadProfile = createDataLoader({

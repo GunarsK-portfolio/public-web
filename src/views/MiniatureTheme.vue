@@ -28,11 +28,22 @@
             <n-card
               hoverable
               class="card-hoverable miniature-card"
+              tabindex="0"
+              role="link"
+              :aria-label="`View ${mini.name} details`"
               @click="$router.push(`/miniatures/projects/${mini.id}`)"
+              @keydown.enter="$router.push(`/miniatures/projects/${mini.id}`)"
             >
               <template #cover>
                 <div class="image-wrapper">
-                  <img :src="mini.images?.[0]?.url" :alt="mini.name" class="miniature-image" />
+                  <img
+                    :src="mini.images?.[0]?.url"
+                    :alt="mini.name"
+                    class="miniature-image"
+                    loading="lazy"
+                    width="300"
+                    height="300"
+                  />
                 </div>
               </template>
               <div class="card-content">

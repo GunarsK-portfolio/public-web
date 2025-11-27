@@ -36,11 +36,12 @@
               prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
               next-slide-style="transform: translateX(50%) translateZ(-800px);"
               class="image-carousel"
-              :show-dots="false"
+              centered-slides="true"
+              :show-dots="true"
             >
               <n-carousel-item
                 v-for="(image, index) in miniature.images"
-                :key="index"
+                :key="image.url || index"
                 :style="{ width: '60%' }"
               >
                 <n-image
@@ -112,7 +113,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   NSpin,
@@ -160,9 +161,13 @@ const loadMiniature = createItemLoader({
   getId: () => route.params.id,
 })
 
-onMounted(() => {
-  loadMiniature()
-})
+watch(
+  () => route.params.id,
+  () => {
+    loadMiniature()
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>

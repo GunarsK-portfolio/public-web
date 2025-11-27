@@ -20,10 +20,19 @@
             <n-card
               hoverable
               class="card-hoverable"
+              tabindex="0"
+              role="link"
+              :aria-label="`View ${theme.name} miniatures`"
               @click="$router.push(`/miniatures/themes/${theme.id}`)"
+              @keydown.enter="$router.push(`/miniatures/themes/${theme.id}`)"
             >
               <template #cover>
-                <img :src="theme.coverImageFile?.url" :alt="theme.name" class="image-card-cover" />
+                <img
+                  :src="theme.coverImageFile?.url"
+                  :alt="theme.name"
+                  class="image-card-cover"
+                  loading="lazy"
+                />
               </template>
               <n-space vertical :size="8" align="center">
                 <n-text strong class="miniature-name">{{ theme.name }}</n-text>

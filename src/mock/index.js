@@ -11,7 +11,8 @@ import themesData from './themes.json'
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const mockMessageApi = {
-  async sendContactMessage() {
+  // eslint-disable-next-line no-unused-vars
+  async sendContactMessage(data) {
     await delay()
     return { data: { message: 'Message sent successfully' } }
   },

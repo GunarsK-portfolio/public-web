@@ -199,6 +199,9 @@ export function createSubmitHandler(options) {
   return async () => {
     if (formRef && !(await validateForm(formRef))) return
 
+    // Prevent duplicate submissions
+    if (submitting.value) return
+
     submitting.value = true
     try {
       const payload = transformPayload ? transformPayload(form.value) : form.value

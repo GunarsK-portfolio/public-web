@@ -55,6 +55,7 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: http://localhost:8082/api/v1
+          VITE_MESSAGE_API_URL: http://localhost:8086/message/v1
           VITE_USE_MOCK_DATA: false
 
       - name: Upload build artifact

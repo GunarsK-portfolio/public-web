@@ -165,11 +165,11 @@ import {
   LogoLinkedin,
 } from '@vicons/ionicons5'
 import api from '../services/api'
+import contactApi from '../services/contactApi'
 import { useViewServices } from '../composables/useViewServices'
 import { useErrorHandler } from '../composables/useErrorHandler'
-import { createDataLoader } from '../utils/crudHelpers'
+import { createDataLoader, createSubmitHandler } from '../utils/crudHelpers'
 import { required, email, minLength, validateForm } from '../utils/validation'
-import { logger } from '../utils/logger'
 
 const { router, message } = useViewServices()
 const { handleError } = useErrorHandler()
@@ -202,40 +202,32 @@ const rules = {
   message: [required('Message'), minLength(10)],
 }
 
-async function handleSubmit() {
-  if (!(await validateForm(formRef))) return
-
-  sending.value = true
-  try {
-    // TODO: Replace with actual API call when contact endpoint is implemented
-    // await api.sendContactMessage(formData.value)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    logger.info('Contact form submitted', { subject: formData.value.subject })
-    message.success('Message sent successfully! I will get back to you soon.')
-    handleReset()
-  } catch (error) {
-    logger.error('Failed to send contact message', {
-      error: error.message,
-      status: error.response?.status,
-    })
-    message.error('Failed to send message. Please try again.')
-  } finally {
-    sending.value = false
-  }
-}
-
-function handleReset() {
+function resetForm() {
   formData.value = {
     name: '',
     email: '',
     subject: '',
     message: '',
   }
+}
+
+function handleReset() {
+  resetForm()
   message.info('Form cleared')
 }
+
+const handleSubmit = createSubmitHandler({
+  formRef,
+  submitting: sending,
+  form: formData,
+  service: contactApi.sendContactMessage,
+  entityName: 'contact message',
+  message,
+  resetForm,
+  validateForm,
+  successMessage: 'Message sent successfully! I will get back to you soon.',
+  errorMessage: 'Failed to send message. Please try again.',
+})
 
 const loadProfile = createDataLoader({
   loading,

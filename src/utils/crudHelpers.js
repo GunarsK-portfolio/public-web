@@ -137,3 +137,92 @@ export function createItemLoader(options) {
 
   return loader
 }
+
+/**
+ * Creates a submit handler for one-time form submissions (e.g., contact forms)
+ * Simplified version for public website (no edit mode, no modal)
+ *
+ * @param {Object} options - Configuration options
+ * @param {import('vue').Ref} options.formRef - Form ref for validation
+ * @param {import('vue').Ref} options.submitting - Submitting state ref
+ * @param {import('vue').Ref} options.form - Form data ref
+ * @param {Function} options.service - Service method to call
+ * @param {string} options.entityName - Entity name for logging
+ * @param {Function} options.message - Naive UI message instance
+ * @param {Function} options.resetForm - Form reset function
+ * @param {Function} options.validateForm - Form validation function
+ * @param {string} [options.successMessage] - Custom success message
+ * @param {string} [options.errorMessage] - Custom error message
+ * @param {Function} [options.transformPayload] - Optional payload transformation
+ * @param {Function} [options.onSuccess] - Optional callback after successful submit
+ * @returns {Function} Async submit handler function
+ *
+ * @example
+ * const handleSubmit = createSubmitHandler({
+ *   formRef,
+ *   submitting: sending,
+ *   form: formData,
+ *   service: contactApi.sendContactMessage,
+ *   entityName: 'contact message',
+ *   message,
+ *   resetForm: handleReset,
+ *   validateForm,
+ *   successMessage: 'Message sent successfully!',
+ * })
+ */
+export function createSubmitHandler(options) {
+  if (!options) {
+    throw new Error('createSubmitHandler: options object is required')
+  }
+
+  const {
+    formRef,
+    submitting,
+    form,
+    service,
+    entityName,
+    message,
+    resetForm,
+    validateForm,
+    successMessage,
+    errorMessage,
+    transformPayload,
+    onSuccess,
+  } = options
+
+  if (!submitting || !form || !service || !entityName || !message || !resetForm || !validateForm) {
+    throw new Error(
+      'createSubmitHandler: required options missing (submitting, form, service, entityName, message, resetForm, validateForm)'
+    )
+  }
+
+  return async () => {
+    if (formRef && !(await validateForm(formRef))) return
+
+    submitting.value = true
+    try {
+      const payload = transformPayload ? transformPayload(form.value) : form.value
+      await service(payload)
+
+      logger.info(`${entityName} submitted successfully`)
+      message.success(successMessage || `${entityName} sent successfully!`)
+      resetForm()
+
+      if (onSuccess) {
+        try {
+          await onSuccess()
+        } catch (callbackError) {
+          logger.error(`${entityName} success callback failed`, { error: callbackError.message })
+        }
+      }
+    } catch (error) {
+      logger.error(`Failed to submit ${entityName}`, {
+        error: error.message,
+        status: error.response?.status,
+      })
+      message.error(errorMessage || `Failed to send ${entityName}. Please try again.`)
+    } finally {
+      submitting.value = false
+    }
+  }
+}

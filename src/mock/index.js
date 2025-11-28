@@ -10,6 +10,13 @@ import themesData from './themes.json'
 // Simulate network delay for realistic behavior
 const delay = (ms = 300) => new Promise((resolve) => setTimeout(resolve, ms))
 
+export const mockMessageApi = {
+  async sendContactMessage() {
+    await delay()
+    return { data: { message: 'Message sent successfully' } }
+  },
+}
+
 export const mockApi = {
   async getProfile() {
     await delay()

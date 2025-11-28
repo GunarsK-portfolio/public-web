@@ -7,6 +7,7 @@ function validateEnv() {
 
   const required = {
     VITE_API_URL: import.meta.env.VITE_API_URL,
+    VITE_MESSAGE_API_URL: import.meta.env.VITE_MESSAGE_API_URL,
   }
 
   const missing = []
@@ -27,5 +28,6 @@ validateEnv()
 
 export const env = {
   apiUrl: import.meta.env.VITE_API_URL,
+  messageApiUrl: import.meta.env.VITE_MESSAGE_API_URL,
   useMockData: import.meta.env.VITE_USE_MOCK_DATA === 'true',
 }

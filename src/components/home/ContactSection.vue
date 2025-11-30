@@ -22,8 +22,14 @@
             </n-space>
           </n-card>
 
-          <n-space justify="center" :size="16" class="contact-buttons">
+          <n-space
+            v-if="profile.github || profile.linkedin"
+            justify="center"
+            :size="16"
+            class="contact-buttons"
+          >
             <n-button
+              v-if="profile.github"
               circle
               size="large"
               tag="a"
@@ -37,6 +43,7 @@
             </n-button>
 
             <n-button
+              v-if="profile.linkedin"
               circle
               size="large"
               tag="a"

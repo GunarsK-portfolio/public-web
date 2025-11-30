@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
@@ -155,7 +155,7 @@ import { useErrorHandler } from '../composables/useErrorHandler'
 import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
-import { renderMarkdown, initMermaidDiagrams } from '../utils/markdown'
+import { renderMarkdown, initMermaidDiagrams, refreshMermaidTheme } from '../utils/markdown'
 import { formatDate } from '../utils/date'
 
 const route = useRoute()
@@ -174,6 +174,12 @@ const renderedDescription = computed(() => {
 watch(renderedDescription, async () => {
   await nextTick()
   initMermaidDiagrams()
+})
+
+// Watch for theme changes and re-render mermaid diagrams
+const currentThemeCode = inject('currentThemeCode')
+watch(currentThemeCode, () => {
+  refreshMermaidTheme()
 })
 
 // Safe navigation - go to home if no history

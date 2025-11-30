@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { h, ref, computed, onMounted } from 'vue'
+import { h, ref, computed, onMounted, provide } from 'vue'
 import { RouterLink } from 'vue-router'
 import {
   NConfigProvider,
@@ -94,6 +94,9 @@ const THEME_CONFIG = createThemeConfig({
 
 // Initialize theme code from localStorage
 const currentThemeCode = ref(getStoredTheme())
+
+// Provide theme for child components to watch
+provide('currentThemeCode', currentThemeCode)
 
 // Computed properties
 const currentTheme = computed(() => THEME_CONFIG[currentThemeCode.value] || null)

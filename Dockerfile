@@ -27,7 +27,7 @@ ENV VITE_USE_MOCK_DATA=$VITE_USE_MOCK_DATA
 RUN npm run build
 
 # Production stage
-FROM nginx:1.29-alpine3.23
+FROM nginx:1.29-alpine3.22
 
 RUN apk upgrade --no-cache
 

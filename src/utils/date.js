@@ -6,7 +6,15 @@
 export const formatDate = (dateString) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+  if (isNaN(date.getTime())) {
+    console.error(`Invalid date string: ${dateString}`)
+    return ''
+  }
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  })
 }
 
 /**
@@ -17,7 +25,12 @@ export const formatDate = (dateString) => {
  * @returns {string} Formatted date range (e.g., "Aug 2015 - Present")
  */
 export const formatDateRange = (startDate, endDate, isOngoing = false) => {
+  if (!startDate) {
+    console.error('formatDateRange: startDate is required')
+    return ''
+  }
   const start = formatDate(startDate)
+  if (!start) return ''
   const end = isOngoing ? 'Present' : formatDate(endDate)
   return `${start} - ${end}`
 }

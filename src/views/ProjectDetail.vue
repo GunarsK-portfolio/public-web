@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch, nextTick, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
@@ -155,7 +155,7 @@ import { useErrorHandler } from '../composables/useErrorHandler'
 import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
-import { renderMarkdown } from '../utils/markdown'
+import { renderMarkdown, initMermaidDiagrams, refreshMermaidTheme } from '../utils/markdown'
 import { formatDate } from '../utils/date'
 
 const route = useRoute()
@@ -168,6 +168,18 @@ const loading = ref(true)
 const renderedDescription = computed(() => {
   if (!project.value?.longDescription) return ''
   return renderMarkdown(project.value.longDescription)
+})
+
+// Initialize mermaid diagrams after content renders
+watch(renderedDescription, async () => {
+  await nextTick()
+  initMermaidDiagrams()
+})
+
+// Watch for theme changes and re-render mermaid diagrams
+const currentThemeCode = inject('currentThemeCode')
+watch(currentThemeCode, () => {
+  refreshMermaidTheme()
 })
 
 // Safe navigation - go to home if no history
@@ -278,5 +290,22 @@ onMounted(() => {
   padding-left: 1em;
   margin: 1em 0;
   color: var(--n-text-color-3);
+}
+
+.markdown-content :deep(.mermaid-container) {
+  margin: 1.5em 0;
+  overflow-x: auto;
+}
+
+.markdown-content :deep(.mermaid) {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+}
+
+.markdown-content :deep(.mermaid svg) {
+  max-width: 100%;
+  height: auto;
 }
 </style>

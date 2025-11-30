@@ -74,18 +74,29 @@
               <n-text class="description-text">{{ miniature.description }}</n-text>
             </n-card>
 
-            <n-card v-if="paints.length" title="Paints Used" class="mt-lg">
-              <n-list bordered>
-                <n-list-item v-for="paint in paints" :key="paint.id">
-                  <template #prefix>
-                    <div class="color-swatch" :style="{ backgroundColor: paint.colorHex }"></div>
+            <n-card v-if="sortedPaints.length" title="Paints Used" class="mt-lg">
+              <div class="paint-swatches">
+                <n-tooltip
+                  v-for="paint in sortedPaints"
+                  :key="paint.id"
+                  trigger="hover"
+                  placement="top"
+                >
+                  <template #trigger>
+                    <div
+                      class="color-swatch-compact"
+                      :style="{ backgroundColor: paint.colorHex || '#808080' }"
+                      tabindex="0"
+                      role="button"
+                      :aria-label="`${paint.name} by ${paint.manufacturer}`"
+                    ></div>
                   </template>
-                  <n-space vertical size="small">
-                    <n-text strong>{{ paint.name }}</n-text>
-                    <n-text depth="3" class="text-small">{{ paint.manufacturer }}</n-text>
-                  </n-space>
-                </n-list-item>
-              </n-list>
+                  <div>
+                    <div class="paint-tooltip-name">{{ paint.name }}</div>
+                    <div class="paint-tooltip-manufacturer">{{ paint.manufacturer }}</div>
+                  </div>
+                </n-tooltip>
+              </div>
             </n-card>
           </n-grid-item>
 
@@ -142,14 +153,13 @@ import {
   NImageGroup,
   NImage,
   NText,
-  NList,
-  NListItem,
   NDescriptions,
   NDescriptionsItem,
   NDivider,
   NCarousel,
   NCarouselItem,
   NResult,
+  NTooltip,
 } from 'naive-ui'
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
@@ -172,6 +182,83 @@ const techniques = computed(() => {
 const paints = computed(() => {
   if (!miniature.value?.paints) return []
   return miniature.value.paints.map((p) => p.paint).filter(Boolean)
+})
+
+// Convert hex to HSL (supports both 3-char and 6-char hex)
+const hexToHsl = (hex) => {
+  if (!hex) return { h: 0, s: 0, l: 50 }
+
+  let normalized = hex.replace(/^#/, '')
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split('')
+      .map((c) => c + c)
+      .join('')
+  }
+  const m = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(normalized)
+  if (!m) return { h: 0, s: 0, l: 50 }
+
+  let r = parseInt(m[1], 16) / 255
+  let g = parseInt(m[2], 16) / 255
+  let b = parseInt(m[3], 16) / 255
+
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const l = (max + min) / 2
+
+  let h = 0
+  let s = 0
+
+  if (max !== min) {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
+    }
+
+    h *= 60
+  }
+
+  return { h, s: s * 100, l: l * 100 }
+}
+
+// Normalize hue so 0° and 360° behave the same
+const normalizeHue = (h) => (h + 360) % 360
+
+// Sorted paints with pre-computed HSL for performance
+const sortedPaints = computed(() => {
+  const paintsWithHsl = paints.value.map((paint) => ({
+    paint,
+    hsl: hexToHsl(paint.colorHex),
+  }))
+  paintsWithHsl.forEach((p) => {
+    p.hsl.h = normalizeHue(p.hsl.h)
+  })
+
+  return paintsWithHsl
+    .sort((a, b) => {
+      const A = a.hsl
+      const B = b.hsl
+
+      // Primary: hue
+      if (A.h !== B.h) return A.h - B.h
+
+      // Secondary: saturation
+      if (A.s !== B.s) return A.s - B.s
+
+      // Tertiary: lightness
+      return A.l - B.l
+    })
+    .map((p) => p.paint)
 })
 
 // Safe navigation - go to miniatures list if no history
@@ -269,19 +356,47 @@ watch(
   margin-top: 24px;
 }
 
-.color-swatch {
-  width: 24px;
-  height: 24px;
+.paint-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.color-swatch-compact {
+  width: 28px;
+  height: 28px;
   border-radius: 4px;
-  border: 2px solid rgba(128, 128, 128, 0.6);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--n-border-color);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.color-swatch-compact:hover,
+.color-swatch-compact:focus {
+  transform: scale(1.15);
+  z-index: 1;
+  position: relative;
+  outline: 2px solid var(--n-primary-color);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
   .image-carousel {
     height: 280px;
   }
+}
+</style>
+
+<style>
+/* Tooltip content styles (not scoped - renders in portal) */
+.paint-tooltip-name {
+  font-weight: 600;
+}
+
+.paint-tooltip-manufacturer {
+  font-size: 0.85em;
+  opacity: 0.8;
 }
 </style>

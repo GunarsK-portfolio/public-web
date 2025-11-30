@@ -18,7 +18,7 @@
             v-for="exp in experience"
             :key="exp.id"
             :title="exp.position"
-            :time="formatDateRange(exp)"
+            :time="formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)"
           >
             <n-card size="small" class="card-hoverable-subtle resume-card">
               <n-space vertical :size="8">
@@ -88,6 +88,7 @@ import {
 import api from '../../services/api'
 import { useErrorHandler } from '../../composables/useErrorHandler'
 import { createDataLoader } from '../../utils/crudHelpers'
+import { formatDate, formatDateRange } from '../../utils/date'
 
 const { handleError } = useErrorHandler()
 
@@ -116,18 +117,6 @@ onMounted(() => {
   loadExperience()
   loadCertifications()
 })
-
-const formatDateRange = (exp) => {
-  const endDate = exp.isCurrent ? 'Present' : exp.endDate
-  return `${exp.startDate} - ${endDate}`
-}
-
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-  })
-}
 </script>
 
 <style scoped>
@@ -142,6 +131,7 @@ const formatDate = (date) => {
 
 .resume-description {
   font-size: 14px;
+  white-space: pre-line;
 }
 
 .resume-cert-issuer,

@@ -86,11 +86,14 @@
                     <div
                       class="color-swatch-compact"
                       :style="{ backgroundColor: paint.colorHex || '#808080' }"
+                      tabindex="0"
+                      role="button"
+                      :aria-label="`${paint.name} by ${paint.manufacturer}`"
                     ></div>
                   </template>
-                  <div class="paint-tooltip">
-                    <n-text strong>{{ paint.name }}</n-text>
-                    <n-text depth="3" class="text-small">{{ paint.manufacturer }}</n-text>
+                  <div>
+                    <div class="paint-tooltip-name">{{ paint.name }}</div>
+                    <div class="paint-tooltip-manufacturer">{{ paint.manufacturer }}</div>
                   </div>
                 </n-tooltip>
               </div>
@@ -181,11 +184,18 @@ const paints = computed(() => {
   return miniature.value.paints.map((p) => p.paint).filter(Boolean)
 })
 
-// Convert hex to HSL
+// Convert hex to HSL (supports both 3-char and 6-char hex)
 const hexToHsl = (hex) => {
   if (!hex) return { h: 0, s: 0, l: 50 }
 
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  let normalized = hex.replace(/^#/, '')
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split('')
+      .map((c) => c + c)
+      .join('')
+  }
+  const m = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(normalized)
   if (!m) return { h: 0, s: 0, l: 50 }
 
   let r = parseInt(m[1], 16) / 255
@@ -224,24 +234,31 @@ const hexToHsl = (hex) => {
 // Normalize hue so 0° and 360° behave the same
 const normalizeHue = (h) => (h + 360) % 360
 
-// Final best sorting
+// Sorted paints with pre-computed HSL for performance
 const sortedPaints = computed(() => {
-  return [...paints.value].sort((a, b) => {
-    const A = hexToHsl(a.colorHex)
-    const B = hexToHsl(b.colorHex)
-
-    A.h = normalizeHue(A.h)
-    B.h = normalizeHue(B.h)
-
-    // Primary: hue
-    if (A.h !== B.h) return A.h - B.h
-
-    // Secondary: saturation
-    if (A.s !== B.s) return A.s - B.s
-
-    // Tertiary: lightness
-    return A.l - B.l
+  const paintsWithHsl = paints.value.map((paint) => ({
+    paint,
+    hsl: hexToHsl(paint.colorHex),
+  }))
+  paintsWithHsl.forEach((p) => {
+    p.hsl.h = normalizeHue(p.hsl.h)
   })
+
+  return paintsWithHsl
+    .sort((a, b) => {
+      const A = a.hsl
+      const B = b.hsl
+
+      // Primary: hue
+      if (A.h !== B.h) return A.h - B.h
+
+      // Secondary: saturation
+      if (A.s !== B.s) return A.s - B.s
+
+      // Tertiary: lightness
+      return A.l - B.l
+    })
+    .map((p) => p.paint)
 })
 
 // Safe navigation - go to miniatures list if no history
@@ -349,37 +366,37 @@ watch(
   width: 28px;
   height: 28px;
   border-radius: 4px;
-  border: 2px solid rgba(128, 128, 128, 0.4);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--n-border-color);
   cursor: pointer;
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
 }
 
-.color-swatch-compact:hover {
+.color-swatch-compact:hover,
+.color-swatch-compact:focus {
   transform: scale(1.15);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.3);
   z-index: 1;
-}
-
-.paint-tooltip {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.paint-tooltip .text-small {
-  font-size: 0.85em;
+  position: relative;
+  outline: 2px solid var(--n-primary-color);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
   .image-carousel {
     height: 280px;
   }
+}
+</style>
+
+<style>
+/* Tooltip content styles (not scoped - renders in portal) */
+.paint-tooltip-name {
+  font-weight: 600;
+}
+
+.paint-tooltip-manufacturer {
+  font-size: 0.85em;
+  opacity: 0.8;
 }
 </style>

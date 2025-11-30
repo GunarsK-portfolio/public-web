@@ -156,6 +156,7 @@ import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 import { renderMarkdown } from '../utils/markdown'
+import { formatDate } from '../utils/date'
 
 const route = useRoute()
 const router = useRouter()
@@ -179,12 +180,6 @@ const goBack = () => {
 }
 
 const getTagType = (categoryName) => getCategoryTagType(categoryName)
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-}
 
 const loadProject = createItemLoader({
   loading,

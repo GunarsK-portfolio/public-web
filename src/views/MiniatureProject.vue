@@ -154,12 +154,7 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { addSourceToFileUrl } from '../utils/fileUrl'
-
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-}
+import { formatDate } from '../utils/date'
 
 const route = useRoute()
 const router = useRouter()

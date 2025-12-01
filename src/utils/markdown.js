@@ -45,6 +45,7 @@ export function renderMarkdown(markdown) {
 
 // Lazy-loaded mermaid instance
 let mermaidInstance = null
+let iconsRegistered = false
 // Store original diagram sources for re-rendering
 const diagramSources = new Map()
 
@@ -56,9 +57,31 @@ function getMermaidTheme() {
 }
 
 /**
+ * Register icon packs for mermaid diagrams
+ */
+async function registerIcons() {
+  if (iconsRegistered || !mermaidInstance) return
+
+  try {
+    const logos = await import('@iconify-json/logos')
+    mermaidInstance.registerIconPacks([
+      {
+        name: logos.icons.prefix,
+        icons: logos.icons,
+      },
+    ])
+    iconsRegistered = true
+  } catch (error) {
+    console.warn('Failed to register mermaid icons:', error)
+  }
+}
+
+/**
  * Shared rendering logic for mermaid diagrams
  */
 async function renderDiagrams() {
+  await registerIcons()
+
   mermaidInstance.initialize({
     startOnLoad: false,
     theme: getMermaidTheme(),

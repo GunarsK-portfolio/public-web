@@ -1,6 +1,7 @@
 # Public Web
 
 ![CI](https://github.com/GunarsK-portfolio/public-web/workflows/CI/badge.svg)
+[![CodeRabbit](https://img.shields.io/coderabbit/prs/github/GunarsK-portfolio/public-web?label=CodeRabbit&color=2ea44f)](https://coderabbit.ai)
 
 Public-facing portfolio website built with Vue.js.
 
@@ -251,4 +252,4 @@ Reusable components in `src/components/shared/`:
 
 ## License
 
-MIT
+[MIT](LICENSE)

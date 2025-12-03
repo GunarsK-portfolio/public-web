@@ -6,6 +6,7 @@
       size="large"
       type="primary"
       class="back-to-top"
+      aria-label="Back to top"
       @click="scrollToTop"
     >
       <template #icon>

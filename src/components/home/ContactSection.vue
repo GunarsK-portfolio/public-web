@@ -36,6 +36,7 @@
               :href="profile.github"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub profile"
             >
               <template #icon>
                 <n-icon size="24"><LogoGithub /></n-icon>
@@ -50,6 +51,7 @@
               :href="profile.linkedin"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
             >
               <template #icon>
                 <n-icon size="24"><LogoLinkedin /></n-icon>

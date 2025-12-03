@@ -6,7 +6,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { title: 'Home' },
+    meta: { title: '' },
   },
   {
     path: '/miniatures',
@@ -62,7 +62,7 @@ const router = createRouter({
 
 router.afterEach((to) => {
   const title = to.meta.title
-  document.title = title ? `${title} | Portfolio` : 'Portfolio'
+  document.title = title ? `${title} | Gunārs Kunakovs` : 'Gunārs Kunakovs - Full-Stack Developer'
 })
 
 export default router

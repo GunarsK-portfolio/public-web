@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import {
   THEMES,
   getStoredTheme,
@@ -7,35 +7,8 @@ import {
   createThemeConfig,
 } from './useTheme'
 
+// Uses shared mocks from src/__tests__/setup.js (localStorage, matchMedia)
 describe('useTheme composable', () => {
-  let localStorageMock
-  let matchMediaMock
-
-  beforeEach(() => {
-    // Reset localStorage mock
-    localStorageMock = {
-      getItem: vi.fn(),
-      setItem: vi.fn(),
-    }
-    Object.defineProperty(window, 'localStorage', {
-      value: localStorageMock,
-      writable: true,
-    })
-
-    // Reset matchMedia mock
-    matchMediaMock = vi.fn().mockReturnValue({
-      matches: false,
-    })
-    Object.defineProperty(window, 'matchMedia', {
-      value: matchMediaMock,
-      writable: true,
-    })
-  })
-
-  afterEach(() => {
-    vi.clearAllMocks()
-  })
-
   // ========================================
   // THEMES constant
   // ========================================
@@ -53,32 +26,32 @@ describe('useTheme composable', () => {
 
   describe('getStoredTheme', () => {
     it('should return stored theme if valid', () => {
-      localStorageMock.getItem.mockReturnValue('dark')
+      window.localStorage.getItem.mockReturnValue('dark')
       expect(getStoredTheme()).toBe('dark')
-      expect(localStorageMock.getItem).toHaveBeenCalledWith('theme')
+      expect(window.localStorage.getItem).toHaveBeenCalledWith('theme')
     })
 
     it('should return stored light theme if valid', () => {
-      localStorageMock.getItem.mockReturnValue('light')
+      window.localStorage.getItem.mockReturnValue('light')
       expect(getStoredTheme()).toBe('light')
     })
 
     it('should ignore invalid stored theme and check system preference', () => {
-      localStorageMock.getItem.mockReturnValue('invalid-theme')
-      matchMediaMock.mockReturnValue({ matches: true })
+      window.localStorage.getItem.mockReturnValue('invalid-theme')
+      window.matchMedia.mockReturnValue({ matches: true })
       expect(getStoredTheme()).toBe('dark')
     })
 
     it('should return dark if system prefers dark and no stored theme', () => {
-      localStorageMock.getItem.mockReturnValue(null)
-      matchMediaMock.mockReturnValue({ matches: true })
+      window.localStorage.getItem.mockReturnValue(null)
+      window.matchMedia.mockReturnValue({ matches: true })
       expect(getStoredTheme()).toBe('dark')
-      expect(matchMediaMock).toHaveBeenCalledWith('(prefers-color-scheme: dark)')
+      expect(window.matchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)')
     })
 
     it('should return light as default when no preference', () => {
-      localStorageMock.getItem.mockReturnValue(null)
-      matchMediaMock.mockReturnValue({ matches: false })
+      window.localStorage.getItem.mockReturnValue(null)
+      window.matchMedia.mockReturnValue({ matches: false })
       expect(getStoredTheme()).toBe('light')
     })
   })
@@ -90,22 +63,22 @@ describe('useTheme composable', () => {
   describe('setStoredTheme', () => {
     it('should store valid theme and return true', () => {
       expect(setStoredTheme('dark')).toBe(true)
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'dark')
+      expect(window.localStorage.setItem).toHaveBeenCalledWith('theme', 'dark')
     })
 
     it('should store light theme and return true', () => {
       expect(setStoredTheme('light')).toBe(true)
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'light')
+      expect(window.localStorage.setItem).toHaveBeenCalledWith('theme', 'light')
     })
 
     it('should reject invalid theme and return false', () => {
       expect(setStoredTheme('invalid')).toBe(false)
-      expect(localStorageMock.setItem).not.toHaveBeenCalled()
+      expect(window.localStorage.setItem).not.toHaveBeenCalled()
     })
 
     it('should reject empty string and return false', () => {
       expect(setStoredTheme('')).toBe(false)
-      expect(localStorageMock.setItem).not.toHaveBeenCalled()
+      expect(window.localStorage.setItem).not.toHaveBeenCalled()
     })
   })
 

@@ -13,7 +13,12 @@
                 <n-menu mode="horizontal" :options="menuOptions" class="header-menu" />
 
                 <!-- Mobile Drawer Button -->
-                <n-button circle class="mobile-menu-btn" @click="drawerVisible = true">
+                <n-button
+                  circle
+                  class="mobile-menu-btn"
+                  aria-label="Open navigation menu"
+                  @click="drawerVisible = true"
+                >
                   <template #icon>
                     <n-icon size="20">
                       <MenuOutline />
@@ -21,7 +26,12 @@
                   </template>
                 </n-button>
 
-                <n-button circle class="theme-toggle" @click="toggleTheme">
+                <n-button
+                  circle
+                  class="theme-toggle"
+                  :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
+                  @click="toggleTheme"
+                >
                   <template #icon>
                     <n-icon size="20">
                       <MoonOutline v-if="isDark" />

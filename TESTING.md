@@ -93,9 +93,8 @@ expect(getStoredTheme()).toBe('dark')
 
 ### Utility Functions (`src/utils/`)
 
-- Validation rules (required, email, url, minLength, validateForm)
+- Validation rules (required, email, url, minLength, validateForm, normalizeString)
 - Date formatting and parsing
-- String normalization
 
 ### Composables (`src/composables/`)
 

@@ -6,12 +6,16 @@ import BackToTop from './BackToTop.vue'
 describe('BackToTop', () => {
   let scrollY = 0
   let scrollToMock
+  let matchMediaMock
+  const originalScrollTo = window.scrollTo
+  const originalScrollYDescriptor = Object.getOwnPropertyDescriptor(window, 'scrollY')
 
   const createScrollEvent = () => new window.Event('scroll')
 
   beforeEach(() => {
     scrollY = 0
     scrollToMock = vi.fn()
+    matchMediaMock = vi.fn().mockReturnValue({ matches: false })
 
     Object.defineProperty(window, 'scrollY', {
       get: () => scrollY,
@@ -19,10 +23,16 @@ describe('BackToTop', () => {
     })
 
     window.scrollTo = scrollToMock
+    vi.stubGlobal('matchMedia', matchMediaMock)
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    vi.unstubAllGlobals()
+    window.scrollTo = originalScrollTo
+    if (originalScrollYDescriptor) {
+      Object.defineProperty(window, 'scrollY', originalScrollYDescriptor)
+    }
   })
 
   const createWrapper = () =>
@@ -68,6 +78,16 @@ describe('BackToTop', () => {
       await nextTick()
       expect(wrapper.vm.showButton).toBe(false)
     })
+
+    it('hides button at exactly 300px', async () => {
+      const wrapper = createWrapper()
+
+      scrollY = 300
+      window.dispatchEvent(createScrollEvent())
+      await nextTick()
+
+      expect(wrapper.vm.showButton).toBe(false)
+    })
   })
 
   describe('scrollToTop function', () => {
@@ -78,6 +98,17 @@ describe('BackToTop', () => {
       expect(scrollToMock).toHaveBeenCalledWith({
         top: 0,
         behavior: 'smooth',
+      })
+    })
+
+    it('uses auto behavior when user prefers reduced motion', () => {
+      matchMediaMock.mockReturnValue({ matches: true })
+      const wrapper = createWrapper()
+      wrapper.vm.scrollToTop()
+
+      expect(scrollToMock).toHaveBeenCalledWith({
+        top: 0,
+        behavior: 'auto',
       })
     })
   })

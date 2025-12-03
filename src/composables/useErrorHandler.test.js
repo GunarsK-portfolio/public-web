@@ -137,6 +137,28 @@ describe('useErrorHandler', () => {
         })
       )
     })
+
+    it('handles 408 timeout errors with retry', () => {
+      const { handleError } = useErrorHandler()
+      const retryFn = vi.fn()
+      const error = { response: { status: 408 } }
+
+      handleError(error, { retryFn, retryKey: 'timeout-test' })
+
+      vi.runAllTimers()
+      expect(retryFn).toHaveBeenCalled()
+    })
+
+    it('passes retry function to network error handler', () => {
+      const { handleError } = useErrorHandler()
+      const retryFn = vi.fn()
+      const error = { message: 'Network Error' }
+
+      handleError(error, { retryFn, retryKey: 'network-test' })
+
+      vi.runAllTimers()
+      expect(retryFn).toHaveBeenCalled()
+    })
   })
 
   describe('handle404', () => {
@@ -223,6 +245,16 @@ describe('useErrorHandler', () => {
         })
       )
     })
+
+    it('triggers retry when retry function provided', () => {
+      const { handleTimeout } = useErrorHandler()
+      const retryFn = vi.fn()
+
+      handleTimeout(retryFn, 'timeout-key')
+
+      vi.runAllTimers()
+      expect(retryFn).toHaveBeenCalled()
+    })
   })
 
   describe('showSuccess', () => {
@@ -289,6 +321,18 @@ describe('useErrorHandler', () => {
         })
       )
     })
+
+    it('accepts custom duration', () => {
+      const { showInfo } = useErrorHandler()
+
+      showInfo('Title', 'Content', 5000)
+
+      expect(mockNotification.info).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: 5000,
+        })
+      )
+    })
   })
 
   describe('retry mechanism', () => {
@@ -307,24 +351,33 @@ describe('useErrorHandler', () => {
       expect(retryFn).toHaveBeenCalledTimes(1)
     })
 
-    it('shows error after max retries are exhausted', () => {
+    it('executes retries with exponential backoff before showing final error', () => {
       const { handleNetworkError } = useErrorHandler()
       const retryFn = vi.fn()
-      const retryKey = 'max-retry-test'
+      const retryKey = 'backoff-test'
 
-      // Simulate 3 retries (MAX_RETRIES)
-      handleNetworkError(retryFn, retryKey) // Attempt 1
-      handleNetworkError(retryFn, retryKey) // Attempt 2
-      handleNetworkError(retryFn, retryKey) // Attempt 3
+      // Each handleNetworkError call increments the counter immediately
+      // but schedules the retry via setTimeout with exponential delays [0, 2000, 5000]ms
 
-      // 4th attempt should show error since max retries reached
+      // Call 1: counter 0->1, schedules retry with 0ms delay
+      handleNetworkError(retryFn, retryKey)
+      // Call 2: counter 1->2, schedules retry with 2000ms delay
+      handleNetworkError(retryFn, retryKey)
+      // Call 3: counter 2->3, schedules retry with 5000ms delay
       handleNetworkError(retryFn, retryKey)
 
+      // Retries not executed yet - all scheduled as timers
+      expect(retryFn).not.toHaveBeenCalled()
+
+      // Call 4: counter is 3 (>= MAX_RETRIES), shows error, no retry scheduled
+      handleNetworkError(retryFn, retryKey)
       expect(mockNotification.error).toHaveBeenCalledWith(
-        expect.objectContaining({
-          title: 'Network Error',
-        })
+        expect.objectContaining({ title: 'Network Error' })
       )
+
+      // Now run all scheduled timers - should execute the 3 scheduled retries
+      vi.runAllTimers()
+      expect(retryFn).toHaveBeenCalledTimes(3)
     })
   })
 })

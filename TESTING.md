@@ -25,13 +25,15 @@ task test:coverage
 
 ## Test Files
 
-3 test files, 49 tests
+5 test files, 77 tests
 
-| File                 | Tests | Coverage                        |
-| -------------------- | ----- | ------------------------------- |
-| `validation.test.js` | 23    | required, email, url, minLength |
-| `useTheme.test.js`   | 16    | getStoredTheme, setStoredTheme  |
-| `date.test.js`       | 10    | formatDate, formatDateRange     |
+| File                      | Tests | Coverage                                        |
+| ------------------------- | ----- | ----------------------------------------------- |
+| `validation.test.js`      | 23    | required, email, url, minLength, validateForm   |
+| `useErrorHandler.test.js` | 21    | handleError, handle404/403/500, retry mechanism |
+| `useTheme.test.js`        | 16    | getStoredTheme, setStoredTheme, getThemeLabel   |
+| `date.test.js`            | 10    | formatDate, formatDateRange                     |
+| `BackToTop.test.js`       | 7     | scroll behavior, scrollToTop, lifecycle hooks   |
 
 ## Key Testing Patterns
 
@@ -91,24 +93,34 @@ expect(getStoredTheme()).toBe('dark')
 
 ### Utility Functions (`src/utils/`)
 
-- Validation rules (required, email, url, minLength)
+- Validation rules (required, email, url, minLength, validateForm)
 - Date formatting and parsing
+- String normalization
 
 ### Composables (`src/composables/`)
 
 - `useTheme` - Theme detection, storage, and configuration
+- `useErrorHandler` - Error handling, HTTP status codes, retry mechanism
+
+### Components (`src/components/`)
+
+- `BackToTop` - Scroll-to-top button with visibility toggle
 
 ## Test Structure
 
 ```text
 src/
 ├── __tests__/
-│   └── setup.js           # Global test setup
+│   └── setup.js               # Global test setup
 ├── utils/
 │   ├── validation.test.js
 │   └── date.test.js
-└── composables/
-    └── useTheme.test.js
+├── composables/
+│   ├── useTheme.test.js
+│   └── useErrorHandler.test.js
+└── components/
+    └── shared/
+        └── BackToTop.test.js
 ```
 
 ## Contributing Tests

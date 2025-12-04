@@ -23,6 +23,35 @@
     <meta name="author" content="Gunārs Kunakovs" />
     <meta name="robots" content="index, follow" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gunarsk.com/#website",
+            "url": "https://gunarsk.com/",
+            "name": "Gunārs Kunakovs",
+            "description": "Full-stack developer specializing in Go, Vue.js, and cloud technologies.",
+            "publisher": { "@id": "https://gunarsk.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://gunarsk.com/#person",
+            "name": "Gunārs Kunakovs",
+            "url": "https://gunarsk.com/",
+            "jobTitle": "Full-Stack Developer",
+            "knowsAbout": ["Go", "Vue.js", "Cloud Technologies", "Docker", "PostgreSQL"],
+            "sameAs": [
+              "https://github.com/GunarsK",
+              "https://www.linkedin.com/in/gunars-kunakovs/"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

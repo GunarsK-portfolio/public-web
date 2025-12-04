@@ -13,11 +13,49 @@
     <meta property="og:description" content="Full-stack developer specializing in Go, Vue.js, and cloud technologies." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://gunarsk.com" />
+    <meta property="og:image" content="https://gunarsk.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Gunārs Kunakovs - Full-Stack Developer" />
     <meta name="twitter:description" content="Full-stack developer specializing in Go, Vue.js, and cloud technologies." />
+    <meta name="twitter:image" content="https://gunarsk.com/og-image.png" />
+
+    <!-- Additional SEO -->
+    <meta name="author" content="Gunārs Kunakovs" />
+    <meta name="robots" content="index, follow" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gunarsk.com/#website",
+            "url": "https://gunarsk.com/",
+            "name": "Gunārs Kunakovs",
+            "description": "Full-stack developer specializing in Go, Vue.js, and cloud technologies.",
+            "publisher": { "@id": "https://gunarsk.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://gunarsk.com/#person",
+            "name": "Gunārs Kunakovs",
+            "url": "https://gunarsk.com/",
+            "jobTitle": "Full-Stack Developer",
+            "knowsAbout": ["Go", "Vue.js", "Cloud Technologies", "Docker", "PostgreSQL"],
+            "sameAs": [
+              "https://github.com/GunarsK",
+              "https://www.linkedin.com/in/gunars-kunakovs/"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

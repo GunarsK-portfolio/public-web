@@ -27,10 +27,10 @@ const routes = [
     meta: { title: 'Miniature Project' },
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
-    meta: { title: 'Contact' },
+    path: '/projects',
+    name: 'Projects',
+    component: () => import('../views/Projects.vue'),
+    meta: { title: 'Projects' },
   },
   {
     path: '/projects/:id',

@@ -136,6 +136,10 @@ const menuOptions = [
     key: 'home',
   },
   {
+    label: () => h(RouterLink, { to: '/projects' }, { default: () => 'Projects' }),
+    key: 'projects',
+  },
+  {
     label: () => h(RouterLink, { to: '/miniatures' }, { default: () => 'Miniatures' }),
     key: 'miniatures',
   },

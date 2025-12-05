@@ -33,6 +33,12 @@ const routes = [
     meta: { title: 'Contact' },
   },
   {
+    path: '/projects',
+    name: 'Projects',
+    component: () => import('../views/Projects.vue'),
+    meta: { title: 'Projects' },
+  },
+  {
     path: '/projects/:id',
     name: 'ProjectDetail',
     component: () => import('../views/ProjectDetail.vue'),

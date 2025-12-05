@@ -1,6 +1,6 @@
 <template>
-  <n-space id="projects" vertical :size="32" class="hero-section-wrapper">
-    <h2 class="hero-title">Featured Projects</h2>
+  <n-space vertical :size="32" class="projects-page">
+    <h1 class="page-title">All Projects</h1>
 
     <n-divider />
 
@@ -11,11 +11,14 @@
     <transition-group name="fade-up" tag="div">
       <div v-if="!loading" class="projects-grid-wrapper">
         <n-grid :x-gap="24" :y-gap="24" :cols="1">
-          <n-grid-item v-for="project in featuredProjects" :key="project.id">
+          <n-grid-item v-for="project in sortedProjects" :key="project.id">
             <n-card hoverable class="card-hoverable">
               <n-space vertical :size="16">
                 <n-space justify="space-between" align="center">
-                  <h3 class="project-title">{{ project.title }}</h3>
+                  <n-space align="center" :size="12">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <n-tag v-if="project.featured" type="warning" size="small">Featured</n-tag>
+                  </n-space>
                   <n-space :size="8">
                     <n-button
                       v-if="project.githubUrl"
@@ -65,12 +68,6 @@
             </n-card>
           </n-grid-item>
         </n-grid>
-
-        <n-space justify="center" class="view-all-wrapper">
-          <n-button type="primary" size="large" @click="$router.push({ name: 'Projects' })">
-            View All Projects
-          </n-button>
-        </n-space>
       </div>
     </transition-group>
   </n-space>
@@ -79,16 +76,27 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
-import api from '../../services/api'
-import { useErrorHandler } from '../../composables/useErrorHandler'
-import { createDataLoader } from '../../utils/crudHelpers'
-import { getCategoryTagType } from '../../constants/skills'
+import api from '../services/api'
+import { useErrorHandler } from '../composables/useErrorHandler'
+import { createDataLoader } from '../utils/crudHelpers'
+import { getCategoryTagType } from '../constants/skills'
 
 const { handleError } = useErrorHandler()
 const projects = ref([])
 const loading = ref(true)
 
-const featuredProjects = computed(() => projects.value.filter((p) => p.featured))
+const sortedProjects = computed(() => {
+  const featured = projects.value.filter((p) => p.featured)
+  const nonFeatured = projects.value.filter((p) => !p.featured)
+
+  const sortByDate = (a, b) => {
+    const dateA = a.startDate || ''
+    const dateB = b.startDate || ''
+    return dateB.localeCompare(dateA)
+  }
+
+  return [...featured.sort(sortByDate), ...nonFeatured.sort(sortByDate)]
+})
 
 const getTagType = (categoryName) => getCategoryTagType(categoryName)
 
@@ -106,6 +114,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.projects-page {
+  padding: 48px 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
 .project-title {
   font-size: 24px;
   font-weight: 600;
@@ -121,11 +139,15 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-.view-all-wrapper {
-  margin-top: 24px;
-}
-
 @media (max-width: 480px) {
+  .projects-page {
+    padding: 32px 16px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
   .project-title {
     font-size: 20px;
   }

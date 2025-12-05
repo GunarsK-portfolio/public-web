@@ -55,7 +55,10 @@
                   </n-tag>
                 </n-space>
 
-                <n-button type="primary" @click="$router.push(`/projects/${project.id}`)">
+                <n-button
+                  type="primary"
+                  @click="$router.push({ name: 'ProjectDetail', params: { id: project.id } })"
+                >
                   View Details
                 </n-button>
               </n-space>
@@ -63,8 +66,8 @@
           </n-grid-item>
         </n-grid>
 
-        <n-space justify="center" style="margin-top: 24px">
-          <n-button type="primary" size="large" @click="$router.push('/projects')">
+        <n-space justify="center" class="view-all-wrapper">
+          <n-button type="primary" size="large" @click="$router.push({ name: 'Projects' })">
             View All Projects
           </n-button>
         </n-space>
@@ -116,6 +119,10 @@ onMounted(() => {
 
 .project-tags {
   flex-wrap: wrap;
+}
+
+.view-all-wrapper {
+  margin-top: 24px;
 }
 
 @media (max-width: 480px) {

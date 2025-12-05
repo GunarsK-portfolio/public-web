@@ -58,7 +58,10 @@
                   </n-tag>
                 </n-space>
 
-                <n-button type="primary" @click="$router.push(`/projects/${project.id}`)">
+                <n-button
+                  type="primary"
+                  @click="$router.push({ name: 'ProjectDetail', params: { id: project.id } })"
+                >
                   View Details
                 </n-button>
               </n-space>

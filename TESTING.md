@@ -25,15 +25,18 @@ task test:coverage
 
 ## Test Files
 
-5 test files, 77 tests
+8 test files, 109 tests
 
-| File                      | Tests | Coverage                                        |
-| ------------------------- | ----- | ----------------------------------------------- |
-| `validation.test.js`      | 23    | required, email, url, minLength, validateForm   |
-| `useErrorHandler.test.js` | 21    | handleError, handle404/403/500, retry mechanism |
-| `useTheme.test.js`        | 16    | getStoredTheme, setStoredTheme, getThemeLabel   |
-| `date.test.js`            | 10    | formatDate, formatDateRange                     |
-| `BackToTop.test.js`       | 7     | scroll behavior, scrollToTop, lifecycle hooks   |
+| File                      | Tests | Coverage                                          |
+| ------------------------- | ----- | ------------------------------------------------- |
+| `useErrorHandler.test.js` | 26    | handleError, handle404/403/500, retry mechanism   |
+| `validation.test.js`      | 23    | required, email, url, minLength, validateForm     |
+| `useTheme.test.js`        | 16    | getStoredTheme, setStoredTheme, getThemeLabel     |
+| `Home.test.js`            | 11    | section structure, order, alternating backgrounds |
+| `date.test.js`            | 10    | formatDate, formatDateRange                       |
+| `HeroSection.test.js`     | 8     | loading state, profile data, scroll behavior      |
+| `BackToTop.test.js`       | 8     | scroll behavior, scrollToTop, lifecycle hooks     |
+| `useViewServices.test.js` | 7     | router, message, dialog services                  |
 
 ## Key Testing Patterns
 
@@ -100,24 +103,35 @@ expect(getStoredTheme()).toBe('dark')
 
 - `useTheme` - Theme detection, storage, and configuration
 - `useErrorHandler` - Error handling, HTTP status codes, retry mechanism
+- `useViewServices` - Router, message, and dialog service access
+
+### Views (`src/views/`)
+
+- `Home` - Main landing page with all sections
 
 ### Components (`src/components/`)
 
 - `BackToTop` - Scroll-to-top button with visibility toggle
+- `HeroSection` - Profile display with loading state and scroll navigation
 
 ## Test Structure
 
 ```text
 src/
 ├── __tests__/
-│   └── setup.js               # Global test setup
+│   └── setup.js                  # Global test setup
 ├── utils/
 │   ├── validation.test.js
 │   └── date.test.js
 ├── composables/
 │   ├── useTheme.test.js
-│   └── useErrorHandler.test.js
+│   ├── useErrorHandler.test.js
+│   └── useViewServices.test.js
+├── views/
+│   └── Home.test.js
 └── components/
+    ├── home/
+    │   └── HeroSection.test.js
     └── shared/
         └── BackToTop.test.js
 ```

@@ -55,6 +55,7 @@
 
           <n-card v-if="project.longDescription" title="Overview">
             <n-space vertical :size="16">
+              <!-- eslint-disable-next-line vue/no-v-html -- Content sanitized via DOMPurify -->
               <div class="markdown-content" v-html="renderedDescription"></div>
 
               <n-divider v-if="project.startDate" />

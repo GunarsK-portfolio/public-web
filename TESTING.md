@@ -25,18 +25,18 @@ task test:coverage
 
 ## Test Files
 
-8 test files, 109 tests
+8 test files, 104 tests
 
 | File                      | Tests | Coverage                                          |
 | ------------------------- | ----- | ------------------------------------------------- |
 | `useErrorHandler.test.js` | 26    | handleError, handle404/403/500, retry mechanism   |
 | `validation.test.js`      | 23    | required, email, url, minLength, validateForm     |
 | `useTheme.test.js`        | 16    | getStoredTheme, setStoredTheme, getThemeLabel     |
-| `Home.test.js`            | 11    | section structure, order, alternating backgrounds |
 | `date.test.js`            | 10    | formatDate, formatDateRange                       |
 | `HeroSection.test.js`     | 8     | loading state, profile data, scroll behavior      |
 | `BackToTop.test.js`       | 8     | scroll behavior, scrollToTop, lifecycle hooks     |
 | `useViewServices.test.js` | 7     | router, message, dialog services                  |
+| `Home.test.js`            | 6     | section structure, order, alternating backgrounds |
 
 ## Key Testing Patterns
 

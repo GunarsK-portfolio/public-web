@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useViewServices } from './useViewServices'
 
 // Mock dependencies
@@ -29,6 +29,10 @@ vi.mock('naive-ui', () => ({
 }))
 
 describe('useViewServices', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('returns router instance', () => {
     const { router } = useViewServices()
 

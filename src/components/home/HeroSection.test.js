@@ -24,17 +24,13 @@ vi.mock('../../composables/useErrorHandler', () => ({
   }),
 }))
 
-// Mock crud helpers
+// Mock crud helpers - minimal mock that sets loading state and delegates to service
 vi.mock('../../utils/crudHelpers', () => ({
   createDataLoader: vi.fn(({ loading, data, service }) => {
     return async () => {
-      loading.value = true
-      try {
-        const response = await service()
-        data.value = response.data
-      } finally {
-        loading.value = false
-      }
+      const response = await service()
+      data.value = response.data
+      loading.value = false
     }
   }),
 }))

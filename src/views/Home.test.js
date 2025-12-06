@@ -47,34 +47,16 @@ describe('Home', () => {
   })
 
   describe('section order', () => {
-    it('renders HeroSection first', () => {
+    it('renders sections in correct order', () => {
       const wrapper = createWrapper()
-      expect(wrapper.find('.hero-section-stub').exists()).toBe(true)
-    })
+      const sections = wrapper.findAll('.home-section')
 
-    it('renders ResumeSection second', () => {
-      const wrapper = createWrapper()
-      expect(wrapper.find('.resume-section-stub').exists()).toBe(true)
-    })
-
-    it('renders SkillsSection third', () => {
-      const wrapper = createWrapper()
-      expect(wrapper.find('.skills-section-stub').exists()).toBe(true)
-    })
-
-    it('renders ProjectsSection fourth', () => {
-      const wrapper = createWrapper()
-      expect(wrapper.find('.projects-section-stub').exists()).toBe(true)
-    })
-
-    it('renders MiniaturesSection fifth', () => {
-      const wrapper = createWrapper()
-      expect(wrapper.find('.miniatures-section-stub').exists()).toBe(true)
-    })
-
-    it('renders ContactSection last', () => {
-      const wrapper = createWrapper()
-      expect(wrapper.find('.contact-section-stub').exists()).toBe(true)
+      expect(sections[0].find('.hero-section-stub').exists()).toBe(true)
+      expect(sections[1].find('.resume-section-stub').exists()).toBe(true)
+      expect(sections[2].find('.skills-section-stub').exists()).toBe(true)
+      expect(sections[3].find('.projects-section-stub').exists()).toBe(true)
+      expect(sections[4].find('.miniatures-section-stub').exists()).toBe(true)
+      expect(sections[5].find('.contact-section-stub').exists()).toBe(true)
     })
   })
 

@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="currentTheme">
+  <n-config-provider :theme="currentTheme" :theme-overrides="currentThemeOverrides">
     <n-notification-provider>
       <n-dialog-provider>
         <n-message-provider>
@@ -96,11 +96,18 @@ import {
 import { MoonOutline, SunnyOutline, MenuOutline } from '@vicons/ionicons5'
 import BackToTop from './components/shared/BackToTop.vue'
 import { THEMES, getStoredTheme, setStoredTheme, createThemeConfig } from './composables/useTheme'
+import { lightOverrides, darkOverrides } from './themes/portfolio'
 
 // Map theme codes to Naive UI themes
 const THEME_CONFIG = createThemeConfig({
   [THEMES.DARK]: darkTheme,
 })
+
+// Map theme codes to theme overrides
+const THEME_OVERRIDES = {
+  [THEMES.LIGHT]: lightOverrides,
+  [THEMES.DARK]: darkOverrides,
+}
 
 // Initialize theme code from localStorage
 const currentThemeCode = ref(getStoredTheme())
@@ -110,6 +117,7 @@ provide('currentThemeCode', currentThemeCode)
 
 // Computed properties
 const currentTheme = computed(() => THEME_CONFIG[currentThemeCode.value] || null)
+const currentThemeOverrides = computed(() => THEME_OVERRIDES[currentThemeCode.value] || null)
 const isDark = computed(() => currentThemeCode.value === THEMES.DARK)
 
 const setTheme = (themeCode) => {

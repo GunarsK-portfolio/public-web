@@ -14,12 +14,21 @@ if (!API_URL) {
   process.exit(1)
 }
 
-async function fetchFromApi(endpoint) {
-  const response = await fetch(`${API_URL}${endpoint}`)
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status} ${response.statusText}`)
+async function fetchFromApi(endpoint, timeoutMs = 30000) {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
+
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      signal: controller.signal,
+    })
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status} ${response.statusText}`)
+    }
+    return response.json()
+  } finally {
+    clearTimeout(timeoutId)
   }
-  return response.json()
 }
 
 async function fetchData() {

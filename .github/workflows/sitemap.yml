@@ -125,5 +125,5 @@ jobs:
             ATTEMPT=$((ATTEMPT + 1))
             sleep 10
           done
-          echo "Timeout"
+          echo "Timeout after $MAX_ATTEMPTS attempts. Last status: $STATUS"
           exit 1

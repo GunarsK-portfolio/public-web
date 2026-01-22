@@ -28,21 +28,23 @@ export function useSeoMeta({ title, description, image, path, type = 'website' }
       const img = unref(image) || DEFAULT_IMAGE
       const p = unref(path)
       const canonical = p ? `${BASE_URL}${p}` : BASE_URL
+      const absoluteImg = img.startsWith('http') ? img : `${BASE_URL}${img}`
 
       return [
         { name: 'description', content: d },
         // Open Graph
         { property: 'og:title', content: t },
         { property: 'og:description', content: d },
-        { property: 'og:image', content: img.startsWith('http') ? img : `${BASE_URL}${img}` },
+        { property: 'og:image', content: absoluteImg },
         { property: 'og:url', content: canonical },
         { property: 'og:type', content: type },
         { property: 'og:site_name', content: SITE_NAME },
+        { property: 'og:locale', content: 'en_US' },
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: t },
         { name: 'twitter:description', content: d },
-        { name: 'twitter:image', content: img.startsWith('http') ? img : `${BASE_URL}${img}` },
+        { name: 'twitter:image', content: absoluteImg },
       ]
     }),
     link: computed(() => {

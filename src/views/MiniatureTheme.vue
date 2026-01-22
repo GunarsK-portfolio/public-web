@@ -87,6 +87,7 @@ import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
 import { useSeoMeta } from '../composables/useSeoMeta'
+import { addSourceToFileUrl } from '../utils/fileUrl'
 import { createItemLoader } from '../utils/crudHelpers'
 
 const route = useRoute()
@@ -97,7 +98,10 @@ const theme = ref(null)
 useSeoMeta({
   title: computed(() => theme.value?.name || 'Miniature Theme'),
   description: computed(() => theme.value?.description || ''),
-  image: computed(() => theme.value?.coverImageFile?.url || null),
+  image: computed(() => {
+    const img = theme.value?.coverImageFile?.url
+    return img ? addSourceToFileUrl(img) : null
+  }),
   path: computed(() => `/miniatures/themes/${route.params.id}`),
 })
 

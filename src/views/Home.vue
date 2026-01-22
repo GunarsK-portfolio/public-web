@@ -32,7 +32,6 @@ import { useSeoMeta } from '../composables/useSeoMeta'
 
 useSeoMeta({
   title: '',
-  description: 'Full-stack developer specializing in Go, Vue.js, and cloud technologies.',
   path: '/',
 })
 </script>

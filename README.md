@@ -16,7 +16,7 @@ Public-facing portfolio website built with Vue.js.
 - Mock data support for development
 - Error pages (404, 403)
 - Smooth scroll navigation
-- SEO optimization with dynamic meta tags
+- SEO with dynamic meta tags
 - Automatic sitemap generation
 
 ## Tech Stack

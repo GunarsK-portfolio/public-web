@@ -39,6 +39,7 @@ const themeVars = useThemeVars()
 useSeoMeta({
   title: '403 - Access Forbidden',
   description: "You don't have permission to access this resource.",
+  noindex: true,
 })
 </script>
 

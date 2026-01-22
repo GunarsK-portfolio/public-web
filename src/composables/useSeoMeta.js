@@ -15,8 +15,9 @@ const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`
  * @param {string|Ref<string>} [options.image] - OG image URL
  * @param {string|Ref<string>} [options.path] - Current path for canonical URL
  * @param {string} [options.type='website'] - OG type
+ * @param {boolean} [options.noindex=false] - Prevent search engine indexing
  */
-export function useSeoMeta({ title, description, image, path, type = 'website' }) {
+export function useSeoMeta({ title, description, image, path, type = 'website', noindex = false }) {
   useHead({
     title: computed(() => {
       const t = unref(title)
@@ -30,8 +31,10 @@ export function useSeoMeta({ title, description, image, path, type = 'website' }
       const canonical = p ? `${BASE_URL}${p}` : BASE_URL
       const absoluteImg = img.startsWith('http') ? img : `${BASE_URL}${img}`
 
-      return [
+      const tags = [
         { name: 'description', content: d },
+        // Robots
+        ...(noindex ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
         // Open Graph
         { property: 'og:title', content: t },
         { property: 'og:description', content: d },
@@ -46,6 +49,8 @@ export function useSeoMeta({ title, description, image, path, type = 'website' }
         { name: 'twitter:description', content: d },
         { name: 'twitter:image', content: absoluteImg },
       ]
+
+      return tags
     }),
     link: computed(() => {
       const p = unref(path)

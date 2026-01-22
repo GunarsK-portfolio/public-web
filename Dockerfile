@@ -23,6 +23,9 @@ ENV VITE_API_URL=$VITE_API_URL
 ENV VITE_MESSAGE_API_URL=$VITE_MESSAGE_API_URL
 ENV VITE_USE_MOCK_DATA=$VITE_USE_MOCK_DATA
 
+# Generate sitemap from API data
+RUN node scripts/generate-sitemap.js
+
 # Build for production
 RUN npm run build
 

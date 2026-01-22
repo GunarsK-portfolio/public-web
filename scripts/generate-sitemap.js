@@ -5,13 +5,12 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BASE_URL = 'https://gunarsk.com'
 
-// API URL from environment variable (required)
+// API URL from environment variable
 const API_URL = process.env.VITE_API_URL
 
 if (!API_URL) {
-  console.error('Error: VITE_API_URL environment variable is required')
-  console.error('Usage: VITE_API_URL=http://localhost:8082 node scripts/generate-sitemap.js')
-  process.exit(1)
+  console.warn('Warning: VITE_API_URL not set, skipping sitemap generation')
+  process.exit(0)
 }
 
 async function fetchFromApi(endpoint, timeoutMs = 30000) {
@@ -117,6 +116,7 @@ ${allRoutes
 }
 
 main().catch((error) => {
-  console.error('Failed to generate sitemap:', error)
-  process.exit(1)
+  console.warn('Warning: Failed to generate sitemap:', error.message)
+  console.warn('Sitemap can be regenerated via the sitemap workflow')
+  process.exit(0)
 })

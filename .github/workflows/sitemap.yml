@@ -24,6 +24,7 @@ jobs:
   regenerate:
     name: Regenerate Sitemap and Redeploy
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout code
@@ -73,7 +74,7 @@ jobs:
             --query "ServiceSummaryList[?ServiceName=='$APP_RUNNER_SERVICE'].ServiceArn" \
             --output text)
 
-          if [ -z "$SERVICE_ARN" ]; then
+          if [ -z "$SERVICE_ARN" ] || [ "$SERVICE_ARN" = "None" ]; then
             echo "Service not found: $APP_RUNNER_SERVICE"
             exit 1
           fi

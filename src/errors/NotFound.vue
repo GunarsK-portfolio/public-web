@@ -33,8 +33,14 @@
 <script setup>
 import { NSpace, NIcon, NText, NButton, NDivider, useThemeVars } from 'naive-ui'
 import { AlertCircleOutline, HomeOutline } from '@vicons/ionicons5'
+import { useSeoMeta } from '../composables/useSeoMeta'
 
 const themeVars = useThemeVars()
+
+useSeoMeta({
+  title: '404 - Page Not Found',
+  description: "The page you're looking for doesn't exist or has been moved.",
+})
 </script>
 
 <style scoped>

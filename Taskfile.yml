@@ -1,5 +1,7 @@
 version: '3'
 
+dotenv: ['.env']
+
 tasks:
   # Top-level tasks
   install:
@@ -11,6 +13,11 @@ tasks:
     desc: Build for production
     cmds:
       - npm run build
+
+  sitemap:generate:
+    desc: Generate sitemap.xml from API (requires VITE_API_URL env var)
+    cmds:
+      - node scripts/generate-sitemap.js
 
   preview:
     desc: Preview production build

@@ -31,8 +31,8 @@ export default [
     },
   },
   {
-    // Node.js globals for config files
-    files: ['*.config.js', '*.config.mjs'],
+    // Node.js globals for config files and scripts
+    files: ['*.config.js', '*.config.mjs', 'scripts/**/*.js'],
     languageOptions: {
       globals: {
         process: 'readonly',

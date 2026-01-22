@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   NSpace,
@@ -86,12 +86,20 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { createItemLoader } from '../utils/crudHelpers'
 
 const route = useRoute()
 const { handleError } = useErrorHandler()
 const loading = ref(true)
 const theme = ref(null)
+
+useSeoMeta({
+  title: computed(() => theme.value?.name || 'Miniature Theme'),
+  description: computed(() => theme.value?.description || ''),
+  image: computed(() => theme.value?.coverImageFile?.url || null),
+  path: computed(() => `/miniatures/themes/${route.params.id}`),
+})
 
 const loadTheme = createItemLoader({
   loading,

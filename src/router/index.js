@@ -66,9 +66,4 @@ const router = createRouter({
   routes,
 })
 
-router.afterEach((to) => {
-  const title = to.meta.title
-  document.title = title ? `${title} | Gunārs Kunakovs` : 'Gunārs Kunakovs - Full-Stack Developer'
-})
-
 export default router

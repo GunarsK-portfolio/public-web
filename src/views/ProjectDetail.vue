@@ -153,6 +153,7 @@ import {
 } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { createItemLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
 import { addSourceToFileUrl } from '../utils/fileUrl'
@@ -164,6 +165,16 @@ const router = useRouter()
 const { handleError } = useErrorHandler()
 const project = ref(null)
 const loading = ref(true)
+
+useSeoMeta({
+  title: computed(() => project.value?.title || 'Project Details'),
+  description: computed(() => project.value?.description || ''),
+  image: computed(() => {
+    const img = project.value?.imageFile?.url
+    return img ? addSourceToFileUrl(img) : null
+  }),
+  path: computed(() => `/projects/${route.params.id}`),
+})
 
 // Render markdown long description
 const renderedDescription = computed(() => {

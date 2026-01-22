@@ -24,6 +24,11 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
+// Mock @unhead/vue for SEO composable
+vi.mock('@unhead/vue', () => ({
+  useHead: vi.fn(),
+}))
+
 // Mock naive-ui notification
 vi.mock('naive-ui', async () => {
   const actual = await vi.importActual('naive-ui')

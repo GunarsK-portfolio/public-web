@@ -68,7 +68,15 @@ import {
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { createDataLoader } from '../utils/crudHelpers'
+
+useSeoMeta({
+  title: 'Miniatures',
+  description:
+    'Explore my miniature painting projects organized by theme, featuring fantasy, sci-fi, and historical miniatures.',
+  path: '/miniatures',
+})
 
 const router = useRouter()
 const { handleError } = useErrorHandler()

@@ -1,0 +1,130 @@
+name: Regenerate Sitemap
+
+on:
+  schedule:
+    # Run weekly on Sunday at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for regeneration'
+        required: false
+        default: 'Manual trigger'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: eu-west-1
+  ECR_REPOSITORY: portfolio/${{ github.event.repository.name }}
+  APP_RUNNER_SERVICE: portfolio-prod-${{ github.event.repository.name }}
+
+jobs:
+  regenerate:
+    name: Regenerate Sitemap and Redeploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate version tag
+        id: version
+        run: |
+          echo "version=sitemap-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image (includes sitemap generation)
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
+        run: |
+          docker build \
+            --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+            --build-arg VITE_MESSAGE_API_URL=${{ secrets.VITE_MESSAGE_API_URL }} \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+            .
+
+      - name: Push Docker image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Get Service ARN
+        id: service-arn
+        run: |
+          SERVICE_ARN=$(aws apprunner list-services \
+            --region ${{ env.AWS_REGION }} \
+            --query "ServiceSummaryList[?ServiceName=='$APP_RUNNER_SERVICE'].ServiceArn" \
+            --output text)
+
+          if [ -z "$SERVICE_ARN" ] || [ "$SERVICE_ARN" = "None" ]; then
+            echo "Service not found: $APP_RUNNER_SERVICE"
+            exit 1
+          fi
+
+          echo "arn=$SERVICE_ARN" >> $GITHUB_OUTPUT
+
+      - name: Update App Runner service
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
+        run: |
+          CURRENT_CONFIG=$(aws apprunner describe-service \
+            --region ${{ env.AWS_REGION }} \
+            --service-arn ${{ steps.service-arn.outputs.arn }} \
+            --query 'Service.SourceConfiguration' \
+            --output json)
+
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          UPDATED_CONFIG=$(echo "$CURRENT_CONFIG" | jq \
+            --arg image "$IMAGE_URI" \
+            '.ImageRepository.ImageIdentifier = $image')
+
+          aws apprunner update-service \
+            --region ${{ env.AWS_REGION }} \
+            --service-arn ${{ steps.service-arn.outputs.arn }} \
+            --source-configuration "$UPDATED_CONFIG"
+          echo "Sitemap regeneration deployed with tag $IMAGE_TAG"
+
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for deployment..."
+          SERVICE_ARN="${{ steps.service-arn.outputs.arn }}"
+          MAX_ATTEMPTS=60
+          ATTEMPT=0
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            STATUS=$(aws apprunner describe-service \
+              --region ${{ env.AWS_REGION }} \
+              --service-arn "$SERVICE_ARN" \
+              --query 'Service.Status' \
+              --output text)
+            echo "Attempt $((ATTEMPT + 1))/$MAX_ATTEMPTS: Status = $STATUS"
+            if [ "$STATUS" = "RUNNING" ]; then
+              echo "Deployment completed"
+              exit 0
+            elif [ "$STATUS" = "CREATE_FAILED" ] || [ "$STATUS" = "DELETE_FAILED" ] || [ "$STATUS" = "UPDATE_FAILED" ]; then
+              echo "Deployment failed: $STATUS"
+              exit 1
+            fi
+            ATTEMPT=$((ATTEMPT + 1))
+            sleep 10
+          done
+          echo "Timeout after $MAX_ATTEMPTS attempts. Last status: $STATUS"
+          exit 1

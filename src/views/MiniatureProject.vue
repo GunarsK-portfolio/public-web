@@ -163,6 +163,7 @@ import {
 } from 'naive-ui'
 import { ArrowBackOutline } from '@vicons/ionicons5'
 import api from '../services/api'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { addSourceToFileUrl } from '../utils/fileUrl'
 import { formatDate } from '../utils/date'
 
@@ -171,6 +172,16 @@ const router = useRouter()
 const loading = ref(true)
 const miniature = ref(null)
 const error = ref(null)
+
+useSeoMeta({
+  title: computed(() => miniature.value?.name || 'Miniature Project'),
+  description: computed(() => miniature.value?.description || ''),
+  image: computed(() => {
+    const firstImage = miniature.value?.images?.[0]?.url
+    return firstImage ? addSourceToFileUrl(firstImage) : null
+  }),
+  path: computed(() => `/miniatures/projects/${route.params.id}`),
+})
 
 // Extract techniques from junction table structure
 const techniques = computed(() => {

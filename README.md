@@ -16,6 +16,8 @@ Public-facing portfolio website built with Vue.js.
 - Mock data support for development
 - Error pages (404, 403)
 - Smooth scroll navigation
+- SEO with dynamic meta tags
+- Automatic sitemap generation
 
 ## Tech Stack
 
@@ -40,7 +42,7 @@ public-web/
 │   ├── components/       # Vue components
 │   │   ├── home/         # Home page sections
 │   │   └── shared/       # Reusable components
-│   ├── composables/      # Reusable logic (theme, error handling)
+│   ├── composables/      # Reusable logic (theme, SEO, error handling)
 │   ├── constants/        # Shared constants
 │   ├── views/            # Page components
 │   ├── errors/           # Error pages (404, 403)
@@ -50,6 +52,7 @@ public-web/
 │   ├── config/           # Configuration
 │   ├── App.vue           # Root component
 │   └── main.js           # Application entry
+├── scripts/              # Build scripts (sitemap generation)
 ├── public/               # Public static files
 └── index.html            # HTML template
 ```
@@ -110,6 +113,9 @@ task lint                # Run ESLint
 task lint:fix            # Run ESLint and auto-fix issues
 task format              # Format code with Prettier
 task format:check        # Check code formatting
+
+# SEO
+task sitemap:generate    # Generate sitemap.xml (requires VITE_API_URL)
 
 # Security
 task security:audit      # Run npm security audit (high/critical only)
@@ -204,6 +210,40 @@ Set `VITE_USE_MOCK_DATA=false` to connect to the public-api service.
 - `GET /miniatures/themes` - Miniature themes with grouped items
 
 API service configuration is in `src/services/api.js`.
+
+## SEO
+
+The application includes SEO optimizations:
+
+### Dynamic Meta Tags
+
+Each page uses `useSeoMeta` composable to set:
+
+- Page title with site name suffix
+- Meta description
+- Open Graph tags (title, description, image, URL)
+- Twitter Card tags
+- Canonical URLs
+
+### Sitemap Generation
+
+Sitemap is generated from the API during Docker build:
+
+```bash
+# Local generation (requires API running)
+VITE_API_URL=http://localhost:8082 task sitemap:generate
+```
+
+The sitemap includes all static routes plus dynamic routes for projects, miniature
+themes, and individual miniatures.
+
+### Regenerating Sitemap
+
+After adding content via admin portal:
+
+1. **Manual**: Go to GitHub Actions → "Regenerate Sitemap" → Run workflow
+2. **Automatic**: Runs weekly on Sundays at 2 AM UTC
+3. **On deploy**: Sitemap regenerates with each deployment
 
 ## Theme System
 

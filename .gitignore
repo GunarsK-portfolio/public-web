@@ -35,5 +35,8 @@ coverage/
 .eslintcache
 *.tsbuildinfo
 
+# Generated
+public/sitemap.xml
+
 # Misc
 *.local

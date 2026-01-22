@@ -28,6 +28,12 @@ import SkillsSection from '../components/home/SkillsSection.vue'
 import ProjectsSection from '../components/home/ProjectsSection.vue'
 import MiniaturesSection from '../components/home/MiniaturesSection.vue'
 import ContactSection from '../components/home/ContactSection.vue'
+import { useSeoMeta } from '../composables/useSeoMeta'
+
+useSeoMeta({
+  title: '',
+  path: '/',
+})
 </script>
 
 <style scoped>

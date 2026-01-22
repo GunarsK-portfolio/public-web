@@ -170,8 +170,16 @@ import api from '../services/api'
 import contactApi from '../services/contactApi'
 import { useViewServices } from '../composables/useViewServices'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { createDataLoader, createSubmitHandler } from '../utils/crudHelpers'
 import { required, email, minLength, validateForm } from '../utils/validation'
+
+useSeoMeta({
+  title: 'Contact',
+  description:
+    'Get in touch with me for collaboration opportunities, project inquiries, or technical discussions.',
+  path: '/contact',
+})
 
 const { router, message } = useViewServices()
 const { handleError } = useErrorHandler()

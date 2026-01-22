@@ -78,8 +78,16 @@ import { ref, computed, onMounted } from 'vue'
 import { NSpace, NDivider, NGrid, NGridItem, NCard, NText, NTag, NButton, NSpin } from 'naive-ui'
 import api from '../services/api'
 import { useErrorHandler } from '../composables/useErrorHandler'
+import { useSeoMeta } from '../composables/useSeoMeta'
 import { createDataLoader } from '../utils/crudHelpers'
 import { getCategoryTagType } from '../constants/skills'
+
+useSeoMeta({
+  title: 'Projects',
+  description:
+    'Browse my portfolio of full-stack development projects including microservices, e-commerce, and SaaS applications.',
+  path: '/projects',
+})
 
 const { handleError } = useErrorHandler()
 const projects = ref([])

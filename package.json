@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@iconify-json/logos": "^1.2.10",
+    "@iconify-json/logos": "^1.2.11",
     "@unhead/vue": "^2.1.12",
     "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.14.0",

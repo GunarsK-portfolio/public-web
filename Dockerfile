@@ -30,7 +30,7 @@ RUN node scripts/generate-sitemap.js
 RUN npm run build
 
 # Production stage
-FROM nginx:1.29-alpine3.23
+FROM nginx:1.31-alpine3.23
 
 # Update Alpine packages including libpng security fixes (CVE-2025-65018, CVE-2025-64720)
 RUN apk update && apk upgrade --no-cache && rm -rf /var/cache/apk/*

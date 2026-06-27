@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@iconify-json/logos": "^1.2.11",
-    "@unhead/vue": "^3.1.4",
+    "@unhead/vue": "^3.1.6",
     "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.18.1",
     "dompurify": "^3.4.10",

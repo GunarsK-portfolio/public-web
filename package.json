@@ -19,7 +19,7 @@
     "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.18.1",
     "dompurify": "^3.4.11",
-    "marked": "^18.0.5",
+    "marked": "^18.0.6",
     "mermaid": "^11.16.0",
     "naive-ui": "^2.44.1",
     "pino": "^10.3.1",

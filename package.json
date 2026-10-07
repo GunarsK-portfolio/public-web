@@ -15,16 +15,16 @@
   },
   "dependencies": {
     "@iconify-json/logos": "^1.2.11",
-    "@unhead/vue": "^3.1.8",
+    "@unhead/vue": "^3.4.2",
     "@vicons/ionicons5": "^0.13.0",
     "axios": "^1.18.1",
     "dompurify": "^3.4.12",
-    "marked": "^18.0.6",
+    "marked": "^18.1.0",
     "mermaid": "^11.16.0",
     "naive-ui": "^2.44.1",
-    "pino": "^10.3.1",
+    "pino": "^10.4.0",
     "vue": "^3.5.40",
-    "vue-router": "^5.2.0"
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
